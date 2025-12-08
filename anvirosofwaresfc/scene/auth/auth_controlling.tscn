@@ -1,0 +1,219 @@
+[gd_scene load_steps=5 format=3 uid="uid://52r5nsr6cu5r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j7wyv"]
+bg_color = Color(0.035361312, 0.113827296, 0.13682011, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j7wyv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k3cvh"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k8ok6"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="AuthControlling" type="Control"]
+layout_mode = 3
+anchor_left = 0.14479166
+anchor_top = 0.15324074
+anchor_right = 0.85520834
+anchor_bottom = 0.84675926
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_j7wyv")
+
+[node name="Panel" type="Panel" parent="PanelContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_j7wyv")
+
+[node name="AuthCreateAccount" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5762463
+anchor_top = 0.056742333
+anchor_right = 0.9633431
+anchor_bottom = 0.93333334
+theme_override_styles/panel = SubResource("StyleBoxFlat_k3cvh")
+metadata/_edit_use_anchors_ = true
+
+[node name="HeadlineCA" type="Label" parent="AuthCreateAccount"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.094046995
+anchor_top = 0.03350765
+anchor_right = 0.73360455
+anchor_bottom = 0.09747677
+offset_left = -1.6568146
+offset_right = 1.6567993
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Erstelle deinen Account"
+metadata/_edit_use_anchors_ = true
+
+[node name="LoginInfo" type="Label" parent="AuthCreateAccount"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09090909
+anchor_top = 0.09747677
+anchor_right = 0.530303
+anchor_bottom = 0.13250749
+theme_override_font_sizes/font_size = 16
+text = "Du hast schon einen Account?"
+metadata/_edit_use_anchors_ = true
+
+[node name="Vorname" type="LineEdit" parent="AuthCreateAccount"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.090909205
+anchor_top = 0.19495353
+anchor_right = 0.4696971
+anchor_bottom = 0.25435343
+theme_override_font_sizes/font_size = 22
+placeholder_text = "Vorname"
+metadata/_edit_use_anchors_ = true
+
+[node name="Nachname" type="LineEdit" parent="AuthCreateAccount"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.51515156
+anchor_top = 0.19495353
+anchor_right = 0.909091
+anchor_bottom = 0.25435343
+theme_override_font_sizes/font_size = 22
+placeholder_text = "Nachname"
+metadata/_edit_use_anchors_ = true
+
+[node name="EMail" type="LineEdit" parent="AuthCreateAccount"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.090909205
+anchor_top = 0.3046149
+anchor_right = 0.909091
+anchor_bottom = 0.3640148
+theme_override_font_sizes/font_size = 22
+placeholder_text = "E-Mail"
+metadata/_edit_use_anchors_ = true
+
+[node name="Passwort" type="LineEdit" parent="AuthCreateAccount"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.090909205
+anchor_top = 0.4020917
+anchor_right = 0.909091
+anchor_bottom = 0.4614916
+theme_override_font_sizes/font_size = 22
+placeholder_text = "Passwort"
+secret = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Passwortsecond" type="LineEdit" parent="AuthCreateAccount"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.090909205
+anchor_top = 0.49956846
+anchor_right = 0.909091
+anchor_bottom = 0.55896837
+theme_override_font_sizes/font_size = 22
+placeholder_text = "Passwort wiederholen"
+secret = true
+metadata/_edit_use_anchors_ = true
+
+[node name="CreateAccount" type="Button" parent="AuthCreateAccount"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28787878
+anchor_top = 0.7798142
+anchor_right = 0.7121212
+anchor_bottom = 0.87729096
+grow_horizontal = 2
+grow_vertical = 0
+text = "Account erstellen"
+metadata/_edit_use_anchors_ = true
+
+[node name="LoginButton" type="LinkButton" parent="AuthCreateAccount"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5416667
+anchor_top = 0.09747677
+anchor_right = 0.6931818
+anchor_bottom = 0.1325075
+theme_override_colors/font_color = Color(0.20784314, 0.3137255, 0.8745098, 1)
+theme_override_font_sizes/font_size = 16
+text = "Anmelden"
+metadata/_edit_use_anchors_ = true
+
+[node name="AuthLogin" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5762463
+anchor_top = 0.056742333
+anchor_right = 0.9633431
+anchor_bottom = 0.93333334
+theme_override_styles/panel = SubResource("StyleBoxFlat_k8ok6")
+metadata/_edit_use_anchors_ = true
+
+[node name="HeadlineCA" type="Label" parent="AuthLogin"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.094046995
+anchor_top = 0.03350765
+anchor_right = 0.62565
+anchor_bottom = 0.09747677
+offset_left = -1.6568146
+offset_right = 1.6567993
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Anmelden"
+metadata/_edit_use_anchors_ = true
+
+[node name="EMail" type="LineEdit" parent="AuthLogin"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.090909205
+anchor_top = 0.17515355
+anchor_right = 0.909091
+anchor_bottom = 0.23455347
+theme_override_font_sizes/font_size = 22
+placeholder_text = "E-Mail"
+metadata/_edit_use_anchors_ = true
+
+[node name="Passwort" type="LineEdit" parent="AuthLogin"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.090909205
+anchor_top = 0.26501498
+anchor_right = 0.909091
+anchor_bottom = 0.32441488
+theme_override_font_sizes/font_size = 22
+placeholder_text = "Passwort"
+secret = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Login" type="Button" parent="AuthLogin"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28787878
+anchor_top = 0.5391684
+anchor_right = 0.7121212
+anchor_bottom = 0.6366452
+grow_horizontal = 2
+grow_vertical = 0
+text = "Anmelden"
+metadata/_edit_use_anchors_ = true
