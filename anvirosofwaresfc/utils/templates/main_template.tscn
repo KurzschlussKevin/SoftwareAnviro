@@ -1,0 +1,200 @@
+[gd_scene load_steps=12 format=3 uid="uid://c53ca6sarap42"]
+
+[ext_resource type="Texture2D" uid="uid://c20dfha2jb4q3" path="res://icon.svg" id="logo"]
+[ext_resource type="Texture2D" uid="uid://7i5fgkglwaij" path="res://assets/icons/heim.png" id="icon_home"]
+[ext_resource type="Texture2D" uid="uid://brf7w3dun03m2" path="res://assets/icons/benutzer.png" id="icon_user"]
+[ext_resource type="Texture2D" uid="uid://ddn6aelmo1gd2" path="res://assets/icons/einkaufstasche.png" id="icon_sales"]
+[ext_resource type="Texture2D" uid="uid://chdxm7pq3rj8g" path="res://assets/icons/kreisbenutzer.png" id="icon_employees"]
+[ext_resource type="Texture2D" uid="uid://b31cythinm6pr" path="res://assets/icons/sperren.png" id="icon_logout"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sidebar"]
+bg_color = Color(0.05, 0.05, 0.05, 1)
+border_width_right = 1
+border_color = Color(0.2, 0.2, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+bg_color = Color(0, 0, 0, 0)
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.15, 0.15, 0.18, 1)
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+content_margin_left = 20.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_topbar"]
+bg_color = Color(0.1, 0.1, 0.12, 1)
+border_width_bottom = 1
+border_color = Color(0.2, 0.2, 0.2, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_content_bg"]
+bg_color = Color(0.08, 0.08, 0.1, 1)
+
+[node name="MainTemplate" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Sidebar" type="PanelContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sidebar")
+
+[node name="VBox" type="VBoxContainer" parent="HBoxContainer/Sidebar"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LogoArea" type="MarginContainer" parent="HBoxContainer/Sidebar/VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="HBox" type="HBoxContainer" parent="HBoxContainer/Sidebar/VBox/LogoArea"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer/Sidebar/VBox/LogoArea/HBox"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="HBoxContainer/Sidebar/VBox/LogoArea/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "ANVIRO"
+
+[node name="NavButtons" type="VBoxContainer" parent="HBoxContainer/Sidebar/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="BtnDashboard" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_constants/icon_max_width = 24
+text = "  Dashboard"
+icon = ExtResource("icon_home")
+alignment = 0
+
+[node name="BtnKunden" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_constants/icon_max_width = 24
+text = "  Kundenverwaltung"
+icon = ExtResource("icon_user")
+alignment = 0
+
+[node name="BtnVertrieb" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_constants/icon_max_width = 24
+text = "  Vertrieb"
+icon = ExtResource("icon_sales")
+alignment = 0
+
+[node name="BtnMitarbeiter" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_constants/icon_max_width = 24
+text = "  Mitarbeiter"
+icon = ExtResource("icon_employees")
+alignment = 0
+
+[node name="Spacer" type="Control" parent="HBoxContainer/Sidebar/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LogoutArea" type="MarginContainer" parent="HBoxContainer/Sidebar/VBox"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 20
+
+[node name="BtnLogout" type="Button" parent="HBoxContainer/Sidebar/VBox/LogoutArea"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.8, 0.3, 0.3, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_constants/icon_max_width = 24
+text = "  Abmelden"
+icon = ExtResource("icon_logout")
+alignment = 0
+
+[node name="ContentArea" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="TopBar" type="PanelContainer" parent="HBoxContainer/ContentArea"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_topbar")
+
+[node name="Margin" type="MarginContainer" parent="HBoxContainer/ContentArea/TopBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 30
+
+[node name="HBox" type="HBoxContainer" parent="HBoxContainer/ContentArea/TopBar/Margin"]
+layout_mode = 2
+
+[node name="PageTitle" type="Label" parent="HBoxContainer/ContentArea/TopBar/Margin/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+text = "Dashboard"
+
+[node name="Spacer" type="Control" parent="HBoxContainer/ContentArea/TopBar/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UserInfo" type="Label" parent="HBoxContainer/ContentArea/TopBar/Margin/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+text = "Angemeldet als Admin"
+
+[node name="MainContent" type="Panel" parent="HBoxContainer/ContentArea"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_content_bg")
+
+[node name="SceneContainer" type="MarginContainer" parent="HBoxContainer/ContentArea/MainContent"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30

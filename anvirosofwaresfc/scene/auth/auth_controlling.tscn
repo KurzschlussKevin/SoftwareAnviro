@@ -1,219 +1,254 @@
-[gd_scene load_steps=5 format=3 uid="uid://52r5nsr6cu5r"]
+[gd_scene load_steps=11 format=3 uid="uid://52r5nsr6cu5r"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j7wyv"]
-bg_color = Color(0.035361312, 0.113827296, 0.13682011, 1)
+[ext_resource type="Texture2D" uid="uid://c20dfha2jb4q3" path="res://icon.svg" id="1_logo"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j7wyv"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.05, 0.05, 0.05, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k3cvh"]
-bg_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+bg_color = Color(0.141176, 0.141176, 0.160784, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.239216, 0.239216, 0.270588, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 20
+shadow_offset = Vector2(0, 10)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k8ok6"]
-bg_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 28
+font_color = Color(0.9, 0.9, 0.9, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_subtitle"]
+font_size = 14
+font_color = Color(0.6, 0.6, 0.6, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_input_normal"]
+content_margin_left = 15.0
+content_margin_top = 10.0
+content_margin_right = 15.0
+content_margin_bottom = 10.0
+bg_color = Color(0.0901961, 0.0901961, 0.101961, 1)
+border_width_bottom = 2
+border_color = Color(0.239216, 0.239216, 0.270588, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_input_focus"]
+content_margin_left = 15.0
+content_margin_top = 10.0
+content_margin_right = 15.0
+content_margin_bottom = 10.0
+bg_color = Color(0.0901961, 0.0901961, 0.101961, 1)
+border_width_bottom = 2
+border_color = Color(0.337255, 0.490196, 0.968627, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+content_margin_top = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.207843, 0.313726, 0.87451, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+content_margin_top = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.15, 0.25, 0.75, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+content_margin_top = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(0.29, 0.4, 0.95, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="AuthControlling" type="Control"]
 layout_mode = 3
-anchor_left = 0.14479166
-anchor_top = 0.15324074
-anchor_right = 0.85520834
-anchor_bottom = 0.84675926
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_use_anchors_ = true
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="BackgroundPanel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_j7wyv")
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 
-[node name="Panel" type="Panel" parent="PanelContainer"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_j7wyv")
-
-[node name="AuthCreateAccount" type="Panel" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5762463
-anchor_top = 0.056742333
-anchor_right = 0.9633431
-anchor_bottom = 0.93333334
-theme_override_styles/panel = SubResource("StyleBoxFlat_k3cvh")
-metadata/_edit_use_anchors_ = true
-
-[node name="HeadlineCA" type="Label" parent="AuthCreateAccount"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.094046995
-anchor_top = 0.03350765
-anchor_right = 0.73360455
-anchor_bottom = 0.09747677
-offset_left = -1.6568146
-offset_right = 1.6567993
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 30
+grow_vertical = 2
+
+[node name="CardPanel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/CardPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="AuthCreateAccount" type="VBoxContainer" parent="CenterContainer/CardPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Logo" type="TextureRect" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+texture = ExtResource("1_logo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HeadlineCA" type="Label" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount"]
+layout_mode = 2
 text = "Erstelle deinen Account"
-metadata/_edit_use_anchors_ = true
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
 
-[node name="LoginInfo" type="Label" parent="AuthCreateAccount"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.09090909
-anchor_top = 0.09747677
-anchor_right = 0.530303
-anchor_bottom = 0.13250749
-theme_override_font_sizes/font_size = 16
-text = "Du hast schon einen Account?"
-metadata/_edit_use_anchors_ = true
+[node name="LoginInfoBox" type="HBoxContainer" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount"]
+layout_mode = 2
+theme_override_constants/separation = 5
+alignment = 1
 
-[node name="Vorname" type="LineEdit" parent="AuthCreateAccount"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.090909205
-anchor_top = 0.19495353
-anchor_right = 0.4696971
-anchor_bottom = 0.25435343
-theme_override_font_sizes/font_size = 22
+[node name="InfoText" type="Label" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount/LoginInfoBox"]
+layout_mode = 2
+text = "Schon einen Account?"
+label_settings = SubResource("LabelSettings_subtitle")
+
+[node name="LoginButton" type="LinkButton" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount/LoginInfoBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.337255, 0.490196, 0.968627, 1)
+theme_override_font_sizes/font_size = 14
+text = "Anmelden"
+underline = 1
+
+[node name="Spacer" type="Control" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="NameRow" type="HBoxContainer" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Vorname" type="LineEdit" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount/NameRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input_normal")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Vorname"
-metadata/_edit_use_anchors_ = true
 
-[node name="Nachname" type="LineEdit" parent="AuthCreateAccount"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.51515156
-anchor_top = 0.19495353
-anchor_right = 0.909091
-anchor_bottom = 0.25435343
-theme_override_font_sizes/font_size = 22
+[node name="Nachname" type="LineEdit" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount/NameRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input_normal")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Nachname"
-metadata/_edit_use_anchors_ = true
 
-[node name="EMail" type="LineEdit" parent="AuthCreateAccount"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.090909205
-anchor_top = 0.3046149
-anchor_right = 0.909091
-anchor_bottom = 0.3640148
-theme_override_font_sizes/font_size = 22
-placeholder_text = "E-Mail"
-metadata/_edit_use_anchors_ = true
+[node name="EMail" type="LineEdit" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input_normal")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
+placeholder_text = "E-Mail Adresse"
 
-[node name="Passwort" type="LineEdit" parent="AuthCreateAccount"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.090909205
-anchor_top = 0.4020917
-anchor_right = 0.909091
-anchor_bottom = 0.4614916
-theme_override_font_sizes/font_size = 22
+[node name="Passwort" type="LineEdit" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input_normal")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Passwort"
 secret = true
-metadata/_edit_use_anchors_ = true
 
-[node name="Passwortsecond" type="LineEdit" parent="AuthCreateAccount"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.090909205
-anchor_top = 0.49956846
-anchor_right = 0.909091
-anchor_bottom = 0.55896837
-theme_override_font_sizes/font_size = 22
+[node name="Passwortsecond" type="LineEdit" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input_normal")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Passwort wiederholen"
 secret = true
-metadata/_edit_use_anchors_ = true
 
-[node name="CreateAccount" type="Button" parent="AuthCreateAccount"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.28787878
-anchor_top = 0.7798142
-anchor_right = 0.7121212
-anchor_bottom = 0.87729096
-grow_horizontal = 2
-grow_vertical = 0
+[node name="Spacer2" type="Control" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="CreateAccountBtn" type="Button" parent="CenterContainer/CardPanel/MarginContainer/AuthCreateAccount"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Account erstellen"
-metadata/_edit_use_anchors_ = true
 
-[node name="LoginButton" type="LinkButton" parent="AuthCreateAccount"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5416667
-anchor_top = 0.09747677
-anchor_right = 0.6931818
-anchor_bottom = 0.1325075
-theme_override_colors/font_color = Color(0.20784314, 0.3137255, 0.8745098, 1)
-theme_override_font_sizes/font_size = 16
-text = "Anmelden"
-metadata/_edit_use_anchors_ = true
-
-[node name="AuthLogin" type="Panel" parent="."]
+[node name="AuthLogin" type="VBoxContainer" parent="CenterContainer/CardPanel/MarginContainer"]
 visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5762463
-anchor_top = 0.056742333
-anchor_right = 0.9633431
-anchor_bottom = 0.93333334
-theme_override_styles/panel = SubResource("StyleBoxFlat_k8ok6")
-metadata/_edit_use_anchors_ = true
+layout_mode = 2
+theme_override_constants/separation = 15
 
-[node name="HeadlineCA" type="Label" parent="AuthLogin"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.094046995
-anchor_top = 0.03350765
-anchor_right = 0.62565
-anchor_bottom = 0.09747677
-offset_left = -1.6568146
-offset_right = 1.6567993
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 30
-text = "Anmelden"
-metadata/_edit_use_anchors_ = true
+[node name="Logo" type="TextureRect" parent="CenterContainer/CardPanel/MarginContainer/AuthLogin"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+texture = ExtResource("1_logo")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="EMail" type="LineEdit" parent="AuthLogin"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.090909205
-anchor_top = 0.17515355
-anchor_right = 0.909091
-anchor_bottom = 0.23455347
-theme_override_font_sizes/font_size = 22
-placeholder_text = "E-Mail"
-metadata/_edit_use_anchors_ = true
+[node name="HeadlineCA" type="Label" parent="CenterContainer/CardPanel/MarginContainer/AuthLogin"]
+layout_mode = 2
+text = "Willkommen zurück"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
 
-[node name="Passwort" type="LineEdit" parent="AuthLogin"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.090909205
-anchor_top = 0.26501498
-anchor_right = 0.909091
-anchor_bottom = 0.32441488
-theme_override_font_sizes/font_size = 22
+[node name="Spacer" type="Control" parent="CenterContainer/CardPanel/MarginContainer/AuthLogin"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="EMail" type="LineEdit" parent="CenterContainer/CardPanel/MarginContainer/AuthLogin"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input_normal")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
+placeholder_text = "E-Mail Adresse"
+
+[node name="Passwort" type="LineEdit" parent="CenterContainer/CardPanel/MarginContainer/AuthLogin"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input_normal")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Passwort"
 secret = true
-metadata/_edit_use_anchors_ = true
 
-[node name="Login" type="Button" parent="AuthLogin"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.28787878
-anchor_top = 0.5391684
-anchor_right = 0.7121212
-anchor_bottom = 0.6366452
-grow_horizontal = 2
-grow_vertical = 0
+[node name="Spacer2" type="Control" parent="CenterContainer/CardPanel/MarginContainer/AuthLogin"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="LoginBtn" type="Button" parent="CenterContainer/CardPanel/MarginContainer/AuthLogin"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Anmelden"
-metadata/_edit_use_anchors_ = true

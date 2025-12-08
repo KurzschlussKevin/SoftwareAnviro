@@ -1,0 +1,210 @@
+[gd_scene load_steps=11 format=3 uid="uid://cf8fx1iy3sfhc"]
+
+[ext_resource type="Texture2D" uid="uid://b1v5dp5spbltr" path="res://assets/icons/user/bleistift.png" id="2_edit"]
+[ext_resource type="Texture2D" uid="uid://cyj23066lh80j" path="res://assets/icons/user/mull.png" id="3_delete"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_input"]
+content_margin_left = 15.0
+content_margin_right = 15.0
+bg_color = Color(0.09, 0.09, 0.1, 1)
+border_width_bottom = 2
+border_color = Color(0.24, 0.24, 0.27, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+bg_color = Color(0.141176, 0.141176, 0.160784, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="LabelSettings" id="LabelSettings_card_title"]
+font_color = Color(0.9, 0.9, 0.9, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_status_badge"]
+bg_color = Color(0.2, 0.6, 0.3, 0.2)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.6, 0.3, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_card_label"]
+font_size = 12
+font_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_card_value"]
+font_size = 13
+font_color = Color(0.8, 0.8, 0.8, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_icon"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.3, 0.3, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_icon_hover"]
+bg_color = Color(1, 1, 1, 0.1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Kundenverwaltung" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="TopBar" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="SearchKunden" type="LineEdit" parent="VBox/TopBar"]
+custom_minimum_size = Vector2(300, 45)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "🔎 Kunden suchen..."
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="VBox/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 3
+
+[node name="KundenTemplate" type="PanelContainer" parent="VBox/ScrollContainer/GridContainer"]
+custom_minimum_size = Vector2(0, 220)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="M" type="MarginContainer" parent="VBox/ScrollContainer/GridContainer/KundenTemplate"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox"]
+layout_mode = 2
+
+[node name="Firma" type="Label" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Musterfirma GmbH"
+label_settings = SubResource("LabelSettings_card_title")
+
+[node name="StatusBadge" type="Label" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox/Header"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBoxFlat_status_badge")
+text = "  Aktiv  "
+
+[node name="HSeparator" type="HSeparator" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="InfoRow1" type="HBoxContainer" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox/InfoRow1"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Kundennr:"
+label_settings = SubResource("LabelSettings_card_label")
+
+[node name="Value" type="Label" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox/InfoRow1"]
+layout_mode = 2
+text = "KD-2023-001"
+label_settings = SubResource("LabelSettings_card_value")
+
+[node name="InfoRow2" type="HBoxContainer" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox/InfoRow2"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Stadt:"
+label_settings = SubResource("LabelSettings_card_label")
+
+[node name="Value" type="Label" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox/InfoRow2"]
+layout_mode = 2
+text = "Berlin, 10115"
+label_settings = SubResource("LabelSettings_card_value")
+
+[node name="InfoRow3" type="HBoxContainer" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox/InfoRow3"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Kontakt:"
+label_settings = SubResource("LabelSettings_card_label")
+
+[node name="Value" type="Label" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox/InfoRow3"]
+layout_mode = 2
+text = "Max Mustermann"
+label_settings = SubResource("LabelSettings_card_value")
+
+[node name="Spacer" type="Control" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Actions" type="HBoxContainer" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 2
+
+[node name="Settings" type="Button" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox/Actions"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_icon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_icon_hover")
+icon = ExtResource("2_edit")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Delete" type="Button" parent="VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox/Actions"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_icon")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_icon_hover")
+icon = ExtResource("3_delete")
+icon_alignment = 1
+expand_icon = true

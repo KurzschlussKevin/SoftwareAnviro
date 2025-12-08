@@ -1,0 +1,253 @@
+[gd_scene load_steps=7 format=3 uid="uid://8cwtxhcmyfyi"]
+
+[ext_resource type="Script" uid="uid://3ho80dv83x8p" path="res://scene/vertriebsbereich/vertriebsbereich.gd" id="1_qdbm0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.141176, 0.141176, 0.160784, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_section_title"]
+font_size = 20
+font_color = Color(0.9, 0.9, 0.9, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_input"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.09, 0.09, 0.1, 1)
+border_width_bottom = 2
+border_color = Color(0.24, 0.24, 0.27, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_primary"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.207843, 0.313726, 0.87451, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_table_header"]
+bg_color = Color(0.2, 0.2, 0.22, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Vertiebsbereich" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qdbm0")
+
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="LeftCol" type="VBoxContainer" parent="HBox"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="KundenPanel" type="PanelContainer" parent="HBox/LeftCol"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="M" type="MarginContainer" parent="HBox/LeftCol/KundenPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="HBox/LeftCol/KundenPanel/M"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="HBox/LeftCol/KundenPanel/M/VBox"]
+layout_mode = 2
+text = "Kundendaten"
+label_settings = SubResource("LabelSettings_section_title")
+
+[node name="Firma" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/VBox"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Firma"
+
+[node name="Kundennr" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/VBox"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Kundennummer"
+
+[node name="Row" type="HBoxContainer" parent="HBox/LeftCol/KundenPanel/M/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PLZ" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/VBox/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "PLZ"
+
+[node name="Stadt" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/VBox/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Stadt"
+
+[node name="Strasse" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/VBox"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Straße & Hausnummer"
+
+[node name="Email" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/VBox"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "E-Mail"
+
+[node name="SaveCustomerBtn" type="Button" parent="HBox/LeftCol/KundenPanel/M/VBox"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
+text = "Kunde speichern"
+
+[node name="RightCol" type="VBoxContainer" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="PositionsPanel" type="PanelContainer" parent="HBox/RightCol"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="M" type="MarginContainer" parent="HBox/RightCol/PositionsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="HBox/RightCol/PositionsPanel/M"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="HBox/RightCol/PositionsPanel/M/VBox"]
+layout_mode = 2
+text = "Positionen"
+label_settings = SubResource("LabelSettings_section_title")
+
+[node name="HeaderRow" type="PanelContainer" parent="HBox/RightCol/PositionsPanel/M/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_table_header")
+
+[node name="HBox" type="HBoxContainer" parent="HBox/RightCol/PositionsPanel/M/VBox/HeaderRow"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Pos" type="Label" parent="HBox/RightCol/PositionsPanel/M/VBox/HeaderRow/HBox"]
+custom_minimum_size = Vector2(40, 30)
+layout_mode = 2
+text = " Pos"
+vertical_alignment = 1
+
+[node name="Bez" type="Label" parent="HBox/RightCol/PositionsPanel/M/VBox/HeaderRow/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Bezeichnung"
+vertical_alignment = 1
+
+[node name="Menge" type="Label" parent="HBox/RightCol/PositionsPanel/M/VBox/HeaderRow/HBox"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Menge"
+vertical_alignment = 1
+
+[node name="Preis" type="Label" parent="HBox/RightCol/PositionsPanel/M/VBox/HeaderRow/HBox"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Preis"
+vertical_alignment = 1
+
+[node name="Gesamt" type="Label" parent="HBox/RightCol/PositionsPanel/M/VBox/HeaderRow/HBox"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "Gesamt"
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBox/RightCol/PositionsPanel/M/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PositionsList" type="VBoxContainer" parent="HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="PositionTemplate" type="HBoxContainer" parent="HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer/PositionsList"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Pos" type="LineEdit" parent="HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "1"
+alignment = 1
+
+[node name="Bez" type="LineEdit" parent="HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Artikelbeschreibung"
+
+[node name="Menge" type="LineEdit" parent="HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "1"
+alignment = 2
+
+[node name="Preis" type="LineEdit" parent="HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "0.00"
+alignment = 2
+
+[node name="Gesamt" type="LineEdit" parent="HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "0.00"
+alignment = 2
+editable = false
+
+[node name="ButtonsRow" type="HBoxContainer" parent="HBox/RightCol"]
+layout_mode = 2
+alignment = 2
+
+[node name="AddPosBtn" type="Button" parent="HBox/RightCol/ButtonsRow"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
+text = " + Neue Position "
+
+[node name="SaveAllBtn" type="Button" parent="HBox/RightCol/ButtonsRow"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
+text = " Angebot Speichern "
