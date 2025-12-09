@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://u7iousoecjne"]
 
-[ext_resource type="Script" path="res://anviro/scene/mitarbeiter/mitarbeiterverwaltung.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://lkiw5e6rvkyb" path="res://scene/mitarbeiterverwaltung/mitarbeiterverwaltung.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://chdxm7pq3rj8g" path="res://assets/icons/kreisbenutzer.png" id="2_avatar"]
 [ext_resource type="Texture2D" uid="uid://b1v5dp5spbltr" path="res://assets/icons/user/bleistift.png" id="3_edit"]
 [ext_resource type="Texture2D" uid="uid://cyj23066lh80j" path="res://assets/icons/user/mull.png" id="4_delete"]
