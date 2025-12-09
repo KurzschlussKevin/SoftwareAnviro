@@ -495,7 +495,7 @@ alignment = 1
 [node name="BtnComment" type="Button" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxActions"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-tooltip_text = "Kommentar / Mangel melden"
+tooltip_text = "Kommentar hinzufügen"
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_action_active")

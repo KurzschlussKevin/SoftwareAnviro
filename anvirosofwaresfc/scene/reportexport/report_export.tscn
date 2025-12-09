@@ -1,0 +1,382 @@
+[gd_scene load_steps=11 format=3 uid="uid://ba5dfp0mhltpu"]
+
+[ext_resource type="Script" uid="uid://cuad75ls8ejyi" path="res://scene/reportexport/report_export.gd" id="1_n5nhd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header_panel"]
+bg_color = Color(0.05, 0.05, 0.08, 0.95)
+border_width_bottom = 2
+border_color = Color(0.5, 0.2, 0.9, 0.5)
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_glass"]
+bg_color = Color(0.08, 0.08, 0.12, 0.6)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.3, 0.5, 0.4)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_section"]
+font_size = 18
+font_color = Color(0, 0.96, 0.83, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_primary"]
+bg_color = Color(0, 0.8, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0.8, 0.4, 0.4)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_action"]
+bg_color = Color(0.15, 0.15, 0.2, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.2, 0.9, 0.5)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_action_hover"]
+bg_color = Color(0.5, 0.2, 0.9, 0.2)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.2, 0.9, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_paper_preview"]
+bg_color = Color(0.95, 0.95, 0.95, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_signature"]
+bg_color = Color(1, 1, 1, 0.5)
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[node name="ReportExport" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n5nhd")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Header" type="PanelContainer" parent="VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_header_panel")
+
+[node name="M" type="MarginContainer" parent="VBox/Header"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="HBox" type="HBoxContainer" parent="VBox/Header/M"]
+layout_mode = 2
+
+[node name="LabelTitle" type="Label" parent="VBox/Header/M/HBox"]
+layout_mode = 2
+text = "Export & Berichte"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="Spacer" type="Control" parent="VBox/Header/M/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelDate" type="Label" parent="VBox/Header/M/HBox"]
+layout_mode = 2
+text = "09.12.2025"
+
+[node name="HBoxContent" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+
+[node name="MarginLeft" type="MarginContainer" parent="VBox/HBoxContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.8
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="SettingsPanel" type="PanelContainer" parent="VBox/HBoxContent/MarginLeft"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_glass")
+
+[node name="M" type="MarginContainer" parent="VBox/HBoxContent/MarginLeft/SettingsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxSet" type="VBoxContainer" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LabelFilter" type="Label" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet"]
+layout_mode = 2
+text = "Filter & Zeitraum"
+label_settings = SubResource("LabelSettings_section")
+
+[node name="OptionCustomer" type="OptionButton" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Kunde wählen..."
+popup/item_0/id = 0
+popup/item_1/text = "Musterfirma GmbH"
+popup/item_1/id = 1
+
+[node name="HBoxTime" type="HBoxContainer" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SpinKW" type="SpinBox" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet/HBoxTime"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 53.0
+value = 50.0
+prefix = "KW"
+
+[node name="SpinYear" type="SpinBox" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet/HBoxTime"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 2020.0
+max_value = 2030.0
+value = 2025.0
+prefix = "Jahr"
+
+[node name="HSeparator" type="HSeparator" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet"]
+layout_mode = 2
+
+[node name="LabelFormat" type="Label" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet"]
+layout_mode = 2
+text = "Format & Optionen"
+label_settings = SubResource("LabelSettings_section")
+
+[node name="HBoxFormat" type="HBoxContainer" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="BtnPDF" type="Button" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet/HBoxFormat"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+button_pressed = true
+text = "PDF (Bericht)"
+
+[node name="BtnCSV" type="Button" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet/HBoxFormat"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+text = "CSV (Excel)"
+
+[node name="CheckSignature" type="CheckBox" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet"]
+layout_mode = 2
+button_pressed = true
+text = "Unterschriftenfeld einfügen"
+
+[node name="CheckDetails" type="CheckBox" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet"]
+layout_mode = 2
+text = "Alle Einzelpositionen auflisten"
+
+[node name="Spacer" type="Control" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LabelActions" type="Label" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet"]
+layout_mode = 2
+text = "Aktionen"
+label_settings = SubResource("LabelSettings_section")
+
+[node name="BtnExport" type="Button" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
+text = "HERUNTERLADEN"
+
+[node name="BtnEmail" type="Button" parent="VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_action_hover")
+text = "Per E-Mail senden"
+
+[node name="MarginRight" type="MarginContainer" parent="VBox/HBoxContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="PreviewPanel" type="PanelContainer" parent="VBox/HBoxContent/MarginRight"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_paper_preview")
+
+[node name="M" type="MarginContainer" parent="VBox/HBoxContent/MarginRight/PreviewPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxDoc" type="VBoxContainer" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HeaderDoc" type="HBoxContainer" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc"]
+layout_mode = 2
+
+[node name="LabelLogo" type="Label" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/HeaderDoc"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 24
+text = "ANVIRO"
+
+[node name="Spacer" type="Control" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/HeaderDoc"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelDocType" type="Label" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/HeaderDoc"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+text = "ARBEITSNACHWEIS"
+
+[node name="HSeparator" type="HSeparator" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc"]
+layout_mode = 2
+
+[node name="GridInfo" type="GridContainer" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc"]
+layout_mode = 2
+columns = 2
+
+[node name="L1" type="Label" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/GridInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+text = "Kunde:"
+
+[node name="ValCustomer" type="Label" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/GridInfo"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "---"
+
+[node name="L2" type="Label" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/GridInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+text = "Zeitraum:"
+
+[node name="ValTime" type="Label" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/GridInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "KW 50 / 2025"
+
+[node name="Spacer2" type="Control" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="LabelPosHeader" type="Label" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 14
+text = "Leistungsübersicht"
+
+[node name="PanelTable" type="PanelContainer" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_signature")
+
+[node name="Margin" type="MarginContainer" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/PanelTable"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+
+[node name="LabelPlaceholder" type="Label" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/PanelTable/Margin"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+text = "- Filterwechsel Anlage A (10 Stk)
+- Reinigung (5 Stk)
+- Anfahrt (1x)"
+
+[node name="Spacer3" type="Control" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="HBoxSign" type="HBoxContainer" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VBoxS1" type="VBoxContainer" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/HBoxSign"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SignBox" type="Panel" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/HBoxSign/VBoxS1"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_signature")
+
+[node name="Label" type="Label" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/HBoxSign/VBoxS1"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 10
+text = "Datum / Unterschrift Auftragnehmer"
+
+[node name="VBoxS2" type="VBoxContainer" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/HBoxSign"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SignBox" type="Panel" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/HBoxSign/VBoxS2"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_signature")
+
+[node name="Label" type="Label" parent="VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/HBoxSign/VBoxS2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 10
+text = "Datum / Unterschrift Kunde"
