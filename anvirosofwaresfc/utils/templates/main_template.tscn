@@ -68,6 +68,7 @@ environment = SubResource("Environment_main")
 
 [node name="BackgroundVibe" parent="." instance=ExtResource("2_vibe")]
 modulate = Color(0.5, 0.5, 0.5, 1)
+layout_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1

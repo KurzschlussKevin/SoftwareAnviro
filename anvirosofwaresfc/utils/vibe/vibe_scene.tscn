@@ -1,33 +1,43 @@
-[gd_scene load_steps=5 format=3 uid="uid://cg37ous7ht23c"]
+[gd_scene load_steps=4 format=3 uid="uid://cg37ous7ht23c"]
 
-[ext_resource type="Script" uid="uid://ydgoxnleovtq" path="res://utils/vibe/vibe_scene.gd" id="1_jcvj2"]
+[ext_resource type="Script" path="res://utils/vibe/vibe_scene.gd" id="1_jcvj2"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ball"]
-radius = 45.0
+[sub_resource type="Shader" id="Shader_bg"]
+code = "shader_type canvas_item;
 
-[sub_resource type="Gradient" id="Gradient_texture"]
-interpolation_mode = 2
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+uniform vec4 color_top : source_color = vec4(0.1, 0.05, 0.2, 1.0); // Dunkles Lila
+uniform vec4 color_bottom : source_color = vec4(0.0, 0.0, 0.05, 1.0); // Fast Schwarz
+uniform vec4 color_glow : source_color = vec4(0.0, 0.9, 0.8, 0.5); // Neon Türkis
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ball"]
-gradient = SubResource("Gradient_texture")
-width = 128
-height = 128
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 0)
+void fragment() {
+    // 1. Einfacher Farbverlauf von oben nach unten
+    vec4 bg = mix(color_top, color_bottom, UV.y);
+    
+    // 2. Bewegende 'Plasma'-Wellen
+    float wave = sin(UV.x * 10.0 + TIME * 0.5) * cos(UV.y * 10.0 + TIME * 0.3);
+    float glow_intensity = smoothstep(0.8, 1.0, wave); // Nur die Spitzen leuchten lassen
+    
+    // 3. Alles zusammenmischen
+    COLOR = bg + (color_glow * glow_intensity * 0.3);
+}"
 
-[node name="VibeScene" type="Node2D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vibe"]
+shader = SubResource("Shader_bg")
+
+[node name="VibeScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_jcvj2")
 
-[node name="MainBall" type="RigidBody2D" parent="."]
-position = Vector2(960, 540)
-input_pickable = true
-gravity_scale = 0.0
-linear_damp = 1.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainBall"]
-shape = SubResource("CircleShape2D_ball")
-
-[node name="Sprite2D" type="Sprite2D" parent="MainBall"]
-texture = SubResource("GradientTexture2D_ball")
+[node name="BackgroundShader" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_vibe")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
