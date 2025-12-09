@@ -1,6 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://docu_scene_v3_fixed_layout"]
+[gd_scene load_steps=17 format=3 uid="uid://bjmxcfn711nxf"]
 
-[ext_resource type="Script" path="res://scene/dokumentation/dokumentation.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://bb55yp3tse36v" path="res://scene/dokumentation/dokumentation.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://c20dfha2jb4q3" path="res://icon.svg" id="2_icon"]
 
 [sub_resource type="Shader" id="Shader_blur"]
@@ -23,7 +23,7 @@ border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.0, 0.8, 0.5, 0.5)
+border_color = Color(0, 0.8, 0.5, 0.5)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -31,23 +31,22 @@ corner_radius_bottom_left = 16
 shadow_color = Color(0, 0, 0, 0.4)
 shadow_size = 20
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_primary"]
+bg_color = Color(0, 0.6, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header"]
 bg_color = Color(0.05, 0.05, 0.08, 0.95)
 border_width_bottom = 2
-border_color = Color(0.0, 0.8, 0.5, 0.5)
+border_color = Color(0, 0.8, 0.5, 0.5)
 shadow_color = Color(0, 0, 0, 0.3)
 shadow_size = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font_size = 24
-font_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_primary"]
-bg_color = Color(0.0, 0.6, 1.0, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_glass"]
 bg_color = Color(0.08, 0.08, 0.12, 0.6)
@@ -65,7 +64,7 @@ shadow_size = 5
 
 [sub_resource type="LabelSettings" id="LabelSettings_section"]
 font_size = 18
-font_color = Color(0.0, 0.8, 0.5, 1)
+font_color = Color(0, 0.8, 0.5, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_list_bg"]
 bg_color = Color(0.05, 0.05, 0.07, 0.8)
@@ -80,7 +79,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_counter_btn"]
-bg_color = Color(0.0, 0.0, 0.0, 0.5)
+bg_color = Color(0, 0, 0, 0.5)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -92,12 +91,12 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_counter_btn_hover"]
-bg_color = Color(0.0, 0.8, 0.5, 0.1)
+bg_color = Color(0, 0.8, 0.5, 0.1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.0, 0.8, 0.5, 1)
+border_color = Color(0, 0.8, 0.5, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -105,19 +104,18 @@ corner_radius_bottom_left = 8
 
 [sub_resource type="LabelSettings" id="LabelSettings_counter"]
 font_size = 42
-font_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_item_socket"]
-bg_color = Color(0.1, 0.1, 0.15, 1)
-border_width_left = 4
-border_color = Color(0.0, 0.6, 1.0, 1)
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_defect_item"]
 bg_color = Color(0.12, 0.12, 0.15, 1)
 border_width_left = 4
 border_color = Color(1, 0.4, 0.4, 1)
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_item_socket"]
+bg_color = Color(0.1, 0.1, 0.15, 1)
+border_width_left = 4
+border_color = Color(0, 0.6, 1, 1)
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 
@@ -176,8 +174,8 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 mouse_default_cursor_shape = 2
-item_count = 2
 selected = 0
+item_count = 2
 popup/item_0/text = "Bitte Kunde wählen..."
 popup/item_0/id = 0
 popup/item_1/text = "Musterfirma GmbH"
@@ -308,7 +306,7 @@ size_flags_horizontal = 3
 
 [node name="LabelReportTitle" type="Label" parent="ViewMain/HBoxContent/RightCol/PanelReport/M/VBoxOut/HeaderReport/VBoxInfo"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0, 0.8, 0.5, 1)
+theme_override_colors/font_color = Color(0, 0.8, 0.5, 1)
 theme_override_font_sizes/font_size = 22
 text = "Bitte Bericht auswählen..."
 
@@ -332,8 +330,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_counter_btn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_counter_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_counter_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_counter_btn_hover")
 
 [node name="VBox" type="VBoxContainer" parent="ViewMain/HBoxContent/RightCol/PanelReport/M/VBoxOut/HBoxStats/Btn230"]
 layout_mode = 1
@@ -361,8 +359,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_counter_btn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_counter_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_counter_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_counter_btn_hover")
 
 [node name="VBox" type="VBoxContainer" parent="ViewMain/HBoxContent/RightCol/PanelReport/M/VBoxOut/HBoxStats/Btn400"]
 layout_mode = 1
@@ -390,8 +388,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_counter_btn")
-theme_override_styles/hover = SubResource("StyleBoxFlat_counter_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_counter_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_counter_btn_hover")
 
 [node name="VBox" type="VBoxContainer" parent="ViewMain/HBoxContent/RightCol/PanelReport/M/VBoxOut/HBoxStats/BtnTotal"]
 layout_mode = 1
@@ -404,13 +402,13 @@ alignment = 1
 
 [node name="Label" type="Label" parent="ViewMain/HBoxContent/RightCol/PanelReport/M/VBoxOut/HBoxStats/BtnTotal/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0, 0.96, 0.83, 1)
+theme_override_colors/font_color = Color(0, 0.96, 0.83, 1)
 text = "GESAMT"
 horizontal_alignment = 1
 
 [node name="LabelCountTotal" type="Label" parent="ViewMain/HBoxContent/RightCol/PanelReport/M/VBoxOut/HBoxStats/BtnTotal/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0, 0.96, 0.83, 1)
+theme_override_colors/font_color = Color(0, 0.96, 0.83, 1)
 text = "-"
 label_settings = SubResource("LabelSettings_counter")
 horizontal_alignment = 1
