@@ -2,11 +2,11 @@ extends Control
 
 # --- SZENEN REFERENZEN ---
 # Hier laden wir die Szenen vor, damit der Wechsel sofort passiert ohne Ladezeit.
-# ACHTUNG: Prüfe bitte, ob diese Pfade genau mit deiner Ordnerstruktur übereinstimmen!
 var scene_dashboard = preload("res://scene/dashboard/dashboard.tscn")
 var scene_kunden = preload("res://scene/kundenverwaltung/kundenverwaltung.tscn")
 var scene_vertrieb = preload("res://scene/vertriebsbereich/vertriebsbereich.tscn")
 var scene_mitarbeiter = preload("res://scene/mitarbeiterverwaltung/mitarbeiterverwaltung.tscn")
+var scene_arbeitsnachweis = preload("res://scene/arbeitsnachweis/arbeitsnachweis.tscn")
 # var scene_auth = preload("res://scene/auth/auth_controlling.tscn") # Falls du Logout brauchst
 
 # --- UI REFERENZEN ---
@@ -18,6 +18,7 @@ var scene_mitarbeiter = preload("res://scene/mitarbeiterverwaltung/mitarbeiterve
 @onready var btn_kunden = $HBoxContainer/Sidebar/VBox/NavButtons/BtnKunden
 @onready var btn_vertrieb = $HBoxContainer/Sidebar/VBox/NavButtons/BtnVertrieb
 @onready var btn_mitarbeiter = $HBoxContainer/Sidebar/VBox/NavButtons/BtnMitarbeiter
+@onready var btn_arbeitsnachweis = $HBoxContainer/Sidebar/VBox/NavButtons/BtnArbeitsnachweis
 @onready var btn_logout = $HBoxContainer/Sidebar/VBox/LogoutArea/BtnLogout
 
 func _ready():
@@ -26,6 +27,9 @@ func _ready():
 	btn_kunden.pressed.connect(func(): load_scene(scene_kunden, "Kundenverwaltung"))
 	btn_vertrieb.pressed.connect(func(): load_scene(scene_vertrieb, "Vertriebsbereich"))
 	btn_mitarbeiter.pressed.connect(func(): load_scene(scene_mitarbeiter, "Mitarbeiter"))
+	
+	# Neuer Button für Arbeitsnachweis
+	btn_arbeitsnachweis.pressed.connect(func(): load_scene(scene_arbeitsnachweis, "Arbeitsnachweis"))
 	
 	btn_logout.pressed.connect(_on_logout_pressed)
 	

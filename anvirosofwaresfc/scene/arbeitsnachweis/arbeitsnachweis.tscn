@@ -1,0 +1,527 @@
+[gd_scene load_steps=15 format=3 uid="uid://b21uncaudoufn"]
+
+[ext_resource type="Script" uid="uid://bq6j3y1cg1i67" path="res://scene/arbeitsnachweis/arbeitsnachweis.gd" id="1_script"]
+
+[sub_resource type="Shader" id="Shader_blur"]
+code = "shader_type canvas_item;
+uniform float lod: hint_range(0.0, 5.0) = 3.0;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+void fragment(){
+	vec4 color = texture(SCREEN_TEXTURE, SCREEN_UV, lod);
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
+shader = SubResource("Shader_blur")
+shader_parameter/lod = 2.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal_bg"]
+bg_color = Color(0.1, 0.1, 0.12, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.8, 1, 0.5)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dropdown"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.1, 0.1, 0.15, 1)
+border_width_bottom = 2
+border_color = Color(0, 0.8, 1, 0.5)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_finish"]
+bg_color = Color(0, 0.8, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0.8, 0.4, 0.4)
+shadow_size = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_finish_hover"]
+bg_color = Color(0.2, 0.9, 0.5, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.2, 0.9, 0.5, 0.6)
+shadow_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header_panel"]
+bg_color = Color(0.05, 0.05, 0.08, 0.95)
+border_width_bottom = 2
+border_color = Color(0, 0.8, 1, 0.5)
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_action"]
+bg_color = Color(0.15, 0.15, 0.2, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.3, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_task_card"]
+bg_color = Color(0.08, 0.08, 0.12, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.3, 0.4, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_bg"]
+bg_color = Color(0.15, 0.15, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_fill"]
+bg_color = Color(0, 0.8, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0.8, 1, 0.4)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_action_active"]
+bg_color = Color(0, 0.8, 1, 0.2)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.8, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Arbeitsnachweis" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="BlurLayer" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_blur")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ViewSelect" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="ViewSelect"]
+custom_minimum_size = Vector2(400, 250)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_bg")
+
+[node name="M" type="MarginContainer" parent="ViewSelect/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBox" type="VBoxContainer" parent="ViewSelect/Panel/M"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Label" type="Label" parent="ViewSelect/Panel/M/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Arbeitsnachweis starten"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="ViewSelect/Panel/M/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+text = "Bitte wähle den Kunden aus:"
+horizontal_alignment = 1
+
+[node name="OptionCustomerSelect" type="OptionButton" parent="ViewSelect/Panel/M/VBox"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_dropdown")
+selected = 0
+item_count = 2
+popup/item_0/text = "Bitte wählen..."
+popup/item_0/id = 0
+popup/item_1/text = "Musterfirma GmbH"
+popup/item_1/id = 1
+
+[node name="BtnStart" type="Button" parent="ViewSelect/Panel/M/VBox"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_finish")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_finish_hover")
+text = "Weiter zum Kalender"
+
+[node name="ViewCalendar" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="ViewCalendar"]
+custom_minimum_size = Vector2(800, 600)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_bg")
+
+[node name="M" type="MarginContainer" parent="ViewCalendar/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBox" type="VBoxContainer" parent="ViewCalendar/Panel/M"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HBoxHeader" type="HBoxContainer" parent="ViewCalendar/Panel/M/VBox"]
+layout_mode = 2
+
+[node name="BtnBackToSelect" type="Button" parent="ViewCalendar/Panel/M/VBox/HBoxHeader"]
+layout_mode = 2
+text = "<- Kunden wechseln"
+
+[node name="Spacer" type="Control" parent="ViewCalendar/Panel/M/VBox/HBoxHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelSelectedCustomer" type="Label" parent="ViewCalendar/Panel/M/VBox/HBoxHeader"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Kunde: Musterfirma GmbH"
+
+[node name="HBoxNav" type="HBoxContainer" parent="ViewCalendar/Panel/M/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="BtnPrevMonth" type="Button" parent="ViewCalendar/Panel/M/VBox/HBoxNav"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "<"
+
+[node name="LabelMonthYear" type="Label" parent="ViewCalendar/Panel/M/VBox/HBoxNav"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Dezember 2025"
+horizontal_alignment = 1
+
+[node name="BtnNextMonth" type="Button" parent="ViewCalendar/Panel/M/VBox/HBoxNav"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = ">"
+
+[node name="GridDays" type="GridContainer" parent="ViewCalendar/Panel/M/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 7
+
+[node name="ViewDetails" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="HeaderInfo" type="PanelContainer" parent="ViewDetails"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_header_panel")
+
+[node name="M" type="MarginContainer" parent="ViewDetails/HeaderInfo"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="HBox" type="HBoxContainer" parent="ViewDetails/HeaderInfo/M"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="BtnBackToCal" type="Button" parent="ViewDetails/HeaderInfo/M/HBox"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "<"
+
+[node name="VBoxInfo" type="VBoxContainer" parent="ViewDetails/HeaderInfo/M/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="JobTitle" type="Label" parent="ViewDetails/HeaderInfo/M/HBox/VBoxInfo"]
+layout_mode = 2
+text = "Tagesbericht"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="LabelDetailCustomer" type="Label" parent="ViewDetails/HeaderInfo/M/HBox/VBoxInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.8, 1, 1)
+text = "Musterfirma GmbH"
+
+[node name="HBoxUser" type="HBoxContainer" parent="ViewDetails/HeaderInfo/M/HBox/VBoxInfo"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="ViewDetails/HeaderInfo/M/HBox/VBoxInfo/HBoxUser"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+text = "Erfassung für:"
+
+[node name="OptionEmployee" type="OptionButton" parent="ViewDetails/HeaderInfo/M/HBox/VBoxInfo/HBoxUser"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_dropdown")
+selected = 0
+item_count = 1
+popup/item_0/text = "Mir selbst (Admin)"
+popup/item_0/id = 0
+
+[node name="BtnAddColleague" type="Button" parent="ViewDetails/HeaderInfo/M/HBox/VBoxInfo/HBoxUser"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "+ Kollege"
+
+[node name="DateSelector" type="HBoxContainer" parent="ViewDetails/HeaderInfo/M/HBox"]
+layout_mode = 2
+alignment = 2
+
+[node name="BtnPrevDay" type="Button" parent="ViewDetails/HeaderInfo/M/HBox/DateSelector"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
+text = "<"
+
+[node name="LabelDate" type="Label" parent="ViewDetails/HeaderInfo/M/HBox/DateSelector"]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+text = "09.12.2025"
+horizontal_alignment = 1
+
+[node name="BtnNextDay" type="Button" parent="ViewDetails/HeaderInfo/M/HBox/DateSelector"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
+text = ">"
+
+[node name="BtnToday" type="Button" parent="ViewDetails/HeaderInfo/M/HBox/DateSelector"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
+text = "Heute"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ViewDetails"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="TaskList" type="VBoxContainer" parent="ViewDetails/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="Margin" type="MarginContainer" parent="ViewDetails/ScrollContainer/TaskList"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxTasks" type="VBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TaskTemplate" type="PanelContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks"]
+custom_minimum_size = Vector2(0, 160)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_task_card")
+
+[node name="M" type="MarginContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxMain" type="HBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="VBoxLeft" type="VBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="HBoxTitle" type="HBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft"]
+layout_mode = 2
+
+[node name="PosNum" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxTitle"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_font_sizes/font_size = 18
+text = "#01"
+
+[node name="PosTitle" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxTitle"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Filterwechsel Typ A"
+
+[node name="Spacer" type="Control" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxTitle"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StatusLabel" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxTitle"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "IN ARBEIT"
+
+[node name="ProgressBar" type="ProgressBar" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft"]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_progress_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_progress_fill")
+value = 50.0
+show_percentage = false
+
+[node name="HBoxDetails" type="HBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="LabelTotal" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxDetails"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+text = "Gesamt: 10 Stk"
+
+[node name="LabelDonePrev" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxDetails"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+text = "Team Gesamt: 2"
+
+[node name="LabelRest" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxDetails"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+text = "Offen: 8"
+
+[node name="VSeparator" type="VSeparator" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain"]
+layout_mode = 2
+
+[node name="VBoxInput" type="VBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelInput" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxInput"]
+layout_mode = 2
+text = "Heute erledigt (Du):"
+horizontal_alignment = 1
+
+[node name="HBoxSpin" type="HBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxInput"]
+layout_mode = 2
+alignment = 1
+
+[node name="SpinBoxAmount" type="SpinBox" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxInput/HBoxSpin"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxActions" type="VBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="BtnComment" type="Button" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxActions"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+tooltip_text = "Kommentar / Mangel melden"
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_action_active")
+text = "📝"
+
+[node name="FooterBar" type="PanelContainer" parent="ViewDetails"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_header_panel")
+
+[node name="M" type="MarginContainer" parent="ViewDetails/FooterBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="HBox" type="HBoxContainer" parent="ViewDetails/FooterBar/M"]
+layout_mode = 2
+alignment = 2
+
+[node name="BtnFinish" type="Button" parent="ViewDetails/FooterBar/M/HBox"]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_finish")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_finish_hover")
+text = "Speichern & Schließen"

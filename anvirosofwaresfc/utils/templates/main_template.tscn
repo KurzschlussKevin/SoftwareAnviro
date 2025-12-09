@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c53ca6sarap42"]
+[gd_scene load_steps=16 format=3 uid="uid://c53ca6sarap42"]
 
 [ext_resource type="Script" uid="uid://cpfd2hsjr3ok2" path="res://utils/templates/main_template.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://cg37ous7ht23c" path="res://utils/vibe/vibe_scene.tscn" id="2_vibe"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://ddn6aelmo1gd2" path="res://assets/icons/einkaufstasche.png" id="6_sales"]
 [ext_resource type="Texture2D" uid="uid://chdxm7pq3rj8g" path="res://assets/icons/kreisbenutzer.png" id="7_employees"]
 [ext_resource type="Texture2D" uid="uid://b31cythinm6pr" path="res://assets/icons/sperren.png" id="8_logout"]
+[ext_resource type="Texture2D" uid="uid://cy4li6s6o3bkb" path="res://assets/icons/user/prufen.png" id="9_check"]
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 3
@@ -173,6 +174,21 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Mitarbeiter"
 icon = ExtResource("7_employees")
+alignment = 0
+expand_icon = true
+
+[node name="BtnArbeitsnachweis" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
+theme_override_constants/h_separation = 15
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "Arbeitsnachweis"
+icon = ExtResource("9_check")
 alignment = 0
 expand_icon = true
 
