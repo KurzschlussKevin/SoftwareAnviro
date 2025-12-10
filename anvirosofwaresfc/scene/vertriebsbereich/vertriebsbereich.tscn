@@ -314,6 +314,54 @@ mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
 text = "Kunde speichern"
 
+[node name="ReportPanel" type="PanelContainer" parent="HBox/LeftCol"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_glass")
+
+[node name="M" type="MarginContainer" parent="HBox/LeftCol/ReportPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="HBox/LeftCol/ReportPanel/M"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="HBox/LeftCol/ReportPanel/M/VBox"]
+layout_mode = 2
+text = "Montageberichte"
+label_settings = SubResource("LabelSettings_section_title")
+
+[node name="LabelInfo" type="Label" parent="HBox/LeftCol/ReportPanel/M/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "Bitte wählen Sie den Berichtstyp:"
+autowrap_mode = 2
+
+[node name="BtnReportGeneral" type="Button" parent="HBox/LeftCol/ReportPanel/M/VBox"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
+text = "📄 Montagebericht (Allgemein)"
+alignment = 0
+
+[node name="BtnReportTravel" type="Button" parent="HBox/LeftCol/ReportPanel/M/VBox"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
+text = "🏨 Reise / Übernachtung"
+alignment = 0
+
+[node name="BtnReportCombined" type="Button" parent="HBox/LeftCol/ReportPanel/M/VBox"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
+text = "📑 Kombi (Montage & Reise)"
+alignment = 0
+
 [node name="RightCol" type="VBoxContainer" parent="HBox"]
 layout_mode = 2
 size_flags_horizontal = 3

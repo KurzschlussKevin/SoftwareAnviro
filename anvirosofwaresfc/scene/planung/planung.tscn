@@ -1,0 +1,234 @@
+[gd_scene load_steps=9 format=3 uid="uid://be6au127hl3g5"]
+
+[ext_resource type="Script" uid="uid://br3g1uq3bf1bs" path="res://scene/planung/planung.gd" id="1_plan_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_glass"]
+bg_color = Color(0.08, 0.08, 0.12, 0.6)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.3, 0.5, 0.4)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_primary"]
+content_margin_left = 15.0
+content_margin_right = 15.0
+bg_color = Color(0.2, 0.4, 0.9, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header_col"]
+bg_color = Color(0.1, 0.1, 0.15, 0.8)
+border_width_bottom = 2
+border_color = Color(0.2, 0.4, 0.8, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_employee_card"]
+content_margin_left = 10.0
+bg_color = Color(0.15, 0.15, 0.2, 1)
+border_width_left = 4
+border_color = Color(0, 0.96, 0.83, 1)
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_day_column"]
+bg_color = Color(1, 1, 1, 0.03)
+border_width_right = 1
+border_color = Color(1, 1, 1, 0.1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_task_block"]
+bg_color = Color(0.2, 0.4, 0.9, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.6, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 3
+
+[node name="Planung" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_plan_script")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="HeaderPanel" type="PanelContainer" parent="VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_glass")
+
+[node name="M" type="MarginContainer" parent="VBox/HeaderPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 15
+
+[node name="HBox" type="HBoxContainer" parent="VBox/HeaderPanel/M"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="VBox/HeaderPanel/M/HBox"]
+layout_mode = 2
+text = "Einsatzplanung & Disposition"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="VSeparator" type="VSeparator" parent="VBox/HeaderPanel/M/HBox"]
+layout_mode = 2
+
+[node name="DateLabel" type="Label" parent="VBox/HeaderPanel/M/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.8, 1)
+text = "Dezember 2025 - Woche 50"
+
+[node name="Spacer" type="Control" parent="VBox/HeaderPanel/M/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BtnPrev" type="Button" parent="VBox/HeaderPanel/M/HBox"]
+layout_mode = 2
+text = " < Woche "
+
+[node name="BtnNext" type="Button" parent="VBox/HeaderPanel/M/HBox"]
+layout_mode = 2
+text = " Woche > "
+
+[node name="BtnNewTask" type="Button" parent="VBox/HeaderPanel/M/HBox"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
+text = "+ Neuer Einsatz"
+
+[node name="PlanContainer" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="LeftColEmployees" type="VBoxContainer" parent="VBox/PlanContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="HeaderEmpty" type="Panel" parent="VBox/PlanContainer/LeftColEmployees"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_header_col")
+
+[node name="Label" type="Label" parent="VBox/PlanContainer/LeftColEmployees/HeaderEmpty"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mitarbeiter"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollEmp" type="ScrollContainer" parent="VBox/PlanContainer/LeftColEmployees"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="EmpList" type="VBoxContainer" parent="VBox/PlanContainer/LeftColEmployees/ScrollEmp"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="EmpTemplate" type="PanelContainer" parent="VBox/PlanContainer/LeftColEmployees/ScrollEmp/EmpList"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_employee_card")
+
+[node name="Name" type="Label" parent="VBox/PlanContainer/LeftColEmployees/ScrollEmp/EmpList/EmpTemplate"]
+layout_mode = 2
+text = "Max Mustermann"
+vertical_alignment = 1
+
+[node name="RightColTimeline" type="VBoxContainer" parent="VBox/PlanContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HeaderDays" type="HBoxContainer" parent="VBox/PlanContainer/RightColTimeline"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="DayTemplate" type="Panel" parent="VBox/PlanContainer/RightColTimeline/HeaderDays"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_header_col")
+
+[node name="Label" type="Label" parent="VBox/PlanContainer/RightColTimeline/HeaderDays/DayTemplate"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mo, 09.12."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollTime" type="ScrollContainer" parent="VBox/PlanContainer/RightColTimeline"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Grid" type="VBoxContainer" parent="VBox/PlanContainer/RightColTimeline/ScrollTime"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 5
+
+[node name="RowTemplate" type="HBoxContainer" parent="VBox/PlanContainer/RightColTimeline/ScrollTime/Grid"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="DaySlot1" type="Panel" parent="VBox/PlanContainer/RightColTimeline/ScrollTime/Grid/RowTemplate"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_day_column")
+
+[node name="TaskBlock" type="PanelContainer" parent="VBox/PlanContainer/RightColTimeline/ScrollTime/Grid/RowTemplate/DaySlot1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.1
+anchor_right = 0.95
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_task_block")
+
+[node name="Label" type="Label" parent="VBox/PlanContainer/RightColTimeline/ScrollTime/Grid/RowTemplate/DaySlot1/TaskBlock"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Kunde: Müller GmbH
+Montage Anlage X"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3

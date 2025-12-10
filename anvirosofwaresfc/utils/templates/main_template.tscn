@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c53ca6sarap42"]
+[gd_scene load_steps=20 format=3 uid="uid://c53ca6sarap42"]
 
 [ext_resource type="Script" path="res://utils/templates/main_template.gd" id="1_script"]
 [ext_resource type="PackedScene" path="res://utils/vibe/vibe_scene.tscn" id="2_vibe"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" path="res://assets/icons/user/prufen.png" id="9_check"]
 [ext_resource type="Texture2D" path="res://assets/icons/rechnung-einreichen.png" id="10_docs"]
 [ext_resource type="Texture2D" path="res://assets/icons/umschlag.png" id="11_export"]
+[ext_resource type="Texture2D" path="res://assets/icons/marker.png" id="12_marker"]
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 3
@@ -161,6 +162,21 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 text = "Vertrieb"
 icon = ExtResource("6_sales")
+alignment = 0
+expand_icon = true
+
+[node name="BtnPlanung" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_constants/h_separation = 15
+theme_override_font_sizes/font_size = 15
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "Einsatzplanung"
+icon = ExtResource("12_marker")
 alignment = 0
 expand_icon = true
 
