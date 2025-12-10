@@ -3,28 +3,31 @@ extends Control
 @onready var blur_layer = $BlurLayer
 @onready var edit_modal = $EditModal
 
-# Referenzen UI (Buttons)
+# UI Referenzen
 @onready var btn_save = $EditModal/Panel/M/VBox/HBoxButtons/SaveBtn
 @onready var btn_cancel = $EditModal/Panel/M/VBox/HBoxButtons/CancelBtn
 @onready var demo_edit_btn = $VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox/Actions/Settings
 
-# Logik Stammdaten
+# Referenz zur Hauptliste (damit wir sie ausblenden können)
+@onready var main_list_container = $VBox/ScrollContainer
+
+# Stammdaten
 @onready var tab_container = $EditModal/Panel/M/VBox/TabContainer
 @onready var check_work_loc = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/CheckWorkLoc
 @onready var container_work_loc = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerWorkLoc
 @onready var check_ap2 = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/CheckAP2
 @onready var container_ap2 = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerAP2
 
-# Eingabefelder Stammdaten (Beispiele zum Leeren)
+# Eingabefelder (für Reset)
 @onready var input_firma = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/Firma
 @onready var input_kundennr = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/Kundennr
 
-# Logik Arbeitsauftrag (Mitarbeiter)
+# Arbeitsauftrag (Mitarbeiter)
 @onready var emp_list = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList
 @onready var emp_template = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList/EmployeeTemplate
 @onready var btn_add_emp = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/AddEmployeeBtn
 
-# Logik Arbeitsauftrag (Positionen)
+# Arbeitsauftrag (Positionen)
 @onready var btn_add_pos = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/AddPosBtn
 @onready var positions_list = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList
 @onready var pos_template = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList/PositionTemplate
@@ -38,7 +41,7 @@ func _ready():
 	container_work_loc.visible = false
 	container_ap2.visible = false
 	
-	# Scrollbar fix (Tabelle)
+	# Scrollbar Fix
 	await get_tree().process_frame
 	if is_instance_valid(scroll_container_table):
 		var scroll_width = scroll_container_table.get_v_scroll_bar().size.x
@@ -50,7 +53,8 @@ func _ready():
 	# Signale verbinden
 	btn_cancel.pressed.connect(close_modal)
 	btn_save.pressed.connect(_on_save_pressed)
-	demo_edit_btn.pressed.connect(open_modal)
+	if demo_edit_btn:
+		demo_edit_btn.pressed.connect(open_modal)
 	
 	check_work_loc.toggled.connect(func(toggled): container_work_loc.visible = toggled)
 	check_ap2.toggled.connect(func(toggled): container_ap2.visible = toggled)
@@ -62,6 +66,7 @@ func open_modal():
 	blur_layer.visible = true
 	edit_modal.visible = true
 	
+	# Animation
 	edit_modal.scale = Vector2(0.9, 0.9)
 	var tween = create_tween()
 	tween.tween_property(edit_modal, "scale", Vector2(1.0, 1.0), 0.1).set_trans(Tween.TRANS_CUBIC)
@@ -69,6 +74,10 @@ func open_modal():
 func close_modal():
 	blur_layer.visible = false
 	edit_modal.visible = false
+	
+	# WICHTIG: Wenn wir aus dem "Erstellen-Modus" kommen, Liste wieder anzeigen
+	if main_list_container:
+		main_list_container.visible = true
 
 func _on_save_pressed():
 	print("Gespeichert!")
@@ -77,42 +86,42 @@ func _on_save_pressed():
 func _on_add_emp_pressed():
 	var new_row = emp_template.duplicate()
 	new_row.visible = true
-	
-	# Löschen-Button Logik
-	var delete_btn = new_row.get_node("DeleteEmpBtn")
+	var delete_btn = new_row.get_node_or_null("DeleteEmpBtn")
 	if delete_btn:
 		delete_btn.pressed.connect(func(): new_row.queue_free())
-	
 	emp_list.add_child(new_row)
 
 func _on_add_pos_pressed():
 	var new_row = pos_template.duplicate()
 	new_row.visible = true
-	
-	# Felder leeren und Standardwerte setzen
 	for child in new_row.get_children():
 		if child is LineEdit:
 			child.text = ""
 			if child.name == "Menge": child.text = "1"
 			if child.name == "Preis" or child.name == "Gesamt": child.text = "0.00"
 			if child.name == "Pos": child.text = str(positions_list.get_child_count() + 1)
-			
 	positions_list.add_child(new_row)
 
-# --- NEU: WIRD VOM DASHBOARD AUFGERUFEN ---
+# --- WIRD VOM DASHBOARD AUFGERUFEN ---
 func start_new_customer():
-	print("Kundenverwaltung: Öffne Modal für neuen Kunden...")
+	print("Kundenverwaltung: Erstellen-Modus gestartet")
 	
-	# 1. Modal öffnen
+	# 1. Liste im Hintergrund ausblenden (Fokus pur!)
+	if main_list_container:
+		main_list_container.visible = false
+	
+	# 2. Modal öffnen
 	open_modal()
 	
-	# 2. Tab auf den ersten Reiter zurücksetzen
-	if tab_container:
-		tab_container.current_tab = 0
-		
-	# 3. Felder leeren
+	# 3. Reset
+	if tab_container: tab_container.current_tab = 0
 	if input_firma: input_firma.text = ""
 	if input_kundennr: input_kundennr.text = ""
 	
-	# 4. Checkboxen/Container resetten
-	check
+	check_work_loc.button_pressed = false
+	check_ap2.button_pressed = false
+	container_work_loc.visible = false
+	container_ap2.visible = false
+	
+	if input_firma:
+		input_firma.grab_focus()

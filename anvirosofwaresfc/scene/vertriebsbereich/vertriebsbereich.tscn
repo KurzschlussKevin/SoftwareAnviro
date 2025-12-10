@@ -548,3 +548,63 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
 text = " Angebot Speichern "
+
+[node name="CustomerSelectModal" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_glass")
+
+[node name="Center" type="CenterContainer" parent="CustomerSelectModal"]
+layout_mode = 2
+
+[node name="Panel" type="PanelContainer" parent="CustomerSelectModal/Center"]
+custom_minimum_size = Vector2(500, 400)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_glass")
+
+[node name="VBox" type="VBoxContainer" parent="CustomerSelectModal/Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="CustomerSelectModal/Center/Panel/VBox"]
+layout_mode = 2
+text = "Kunde für Angebot auswählen"
+label_settings = SubResource("LabelSettings_section_title")
+horizontal_alignment = 1
+
+[node name="Search" type="LineEdit" parent="CustomerSelectModal/Center/Panel/VBox"]
+layout_mode = 2
+placeholder_text = "Kunde suchen..."
+
+[node name="Scroll" type="ScrollContainer" parent="CustomerSelectModal/Center/Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CustomerList" type="VBoxContainer" parent="CustomerSelectModal/Center/Panel/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="BtnCust1" type="Button" parent="CustomerSelectModal/Center/Panel/VBox/Scroll/CustomerList"]
+layout_mode = 2
+text = "Musterfirma GmbH (KD-1001)"
+alignment = 0
+
+[node name="BtnCust2" type="Button" parent="CustomerSelectModal/Center/Panel/VBox/Scroll/CustomerList"]
+layout_mode = 2
+text = "Bäckerei Müller (KD-1002)"
+alignment = 0
+
+[node name="BtnCust3" type="Button" parent="CustomerSelectModal/Center/Panel/VBox/Scroll/CustomerList"]
+layout_mode = 2
+text = "Elektro Schmidt (KD-1003)"
+alignment = 0
+
+[node name="CancelSelectBtn" type="Button" parent="CustomerSelectModal/Center/Panel/VBox"]
+layout_mode = 2
+text = "Abbrechen"

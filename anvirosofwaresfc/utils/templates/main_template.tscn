@@ -1,17 +1,17 @@
-[gd_scene load_steps=20 format=3 uid="uid://c53ca6sarap42"]
+[gd_scene load_steps=19 format=3 uid="uid://c53ca6sarap42"]
 
-[ext_resource type="Script" path="res://utils/templates/main_template.gd" id="1_script"]
-[ext_resource type="PackedScene" path="res://utils/vibe/vibe_scene.tscn" id="2_vibe"]
+[ext_resource type="Script" uid="uid://cpfd2hsjr3ok2" path="res://utils/templates/main_template.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://cg37ous7ht23c" path="res://utils/vibe/vibe_scene.tscn" id="2_vibe"]
 [ext_resource type="Texture2D" uid="uid://c20dfha2jb4q3" path="res://icon.svg" id="3_logo"]
 [ext_resource type="Texture2D" uid="uid://7i5fgkglwaij" path="res://assets/icons/heim.png" id="4_home"]
 [ext_resource type="Texture2D" uid="uid://brf7w3dun03m2" path="res://assets/icons/benutzer.png" id="5_user"]
 [ext_resource type="Texture2D" uid="uid://ddn6aelmo1gd2" path="res://assets/icons/einkaufstasche.png" id="6_sales"]
 [ext_resource type="Texture2D" uid="uid://chdxm7pq3rj8g" path="res://assets/icons/kreisbenutzer.png" id="7_employees"]
 [ext_resource type="Texture2D" uid="uid://b31cythinm6pr" path="res://assets/icons/sperren.png" id="8_logout"]
-[ext_resource type="Texture2D" path="res://assets/icons/user/prufen.png" id="9_check"]
-[ext_resource type="Texture2D" path="res://assets/icons/rechnung-einreichen.png" id="10_docs"]
-[ext_resource type="Texture2D" path="res://assets/icons/umschlag.png" id="11_export"]
-[ext_resource type="Texture2D" path="res://assets/icons/marker.png" id="12_marker"]
+[ext_resource type="Texture2D" uid="uid://cy4li6s6o3bkb" path="res://assets/icons/user/prufen.png" id="9_check"]
+[ext_resource type="Texture2D" uid="uid://bmel4bifldxoq" path="res://assets/icons/rechnung-einreichen.png" id="10_docs"]
+[ext_resource type="Texture2D" uid="uid://boxha6sllors6" path="res://assets/icons/umschlag.png" id="11_export"]
+[ext_resource type="Texture2D" uid="uid://hy622hmnfkss" path="res://assets/icons/marker.png" id="12_marker"]
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 3
@@ -28,28 +28,28 @@ border_color = Color(1, 1, 1, 0.1)
 corner_radius_bottom_right = 20
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
-bg_color = Color(1, 1, 1, 0)
 content_margin_left = 25.0
 content_margin_top = 12.0
 content_margin_bottom = 12.0
+bg_color = Color(1, 1, 1, 0)
 border_width_left = 3
 border_color = Color(1, 1, 1, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
-bg_color = Color(1, 1, 1, 0.05)
-content_margin_left = 25.0
-content_margin_top = 12.0
-content_margin_bottom = 12.0
-border_width_left = 3
-border_color = Color(0, 0.96, 0.83, 0.5)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
-bg_color = Color(0, 0.96, 0.83, 0.1)
 content_margin_left = 25.0
 content_margin_top = 12.0
 content_margin_bottom = 12.0
+bg_color = Color(0, 0.96, 0.83, 0.1)
 border_width_left = 3
 border_color = Color(0, 0.96, 0.83, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+content_margin_left = 25.0
+content_margin_top = 12.0
+content_margin_bottom = 12.0
+bg_color = Color(1, 1, 1, 0.05)
+border_width_left = 3
+border_color = Color(0, 0.96, 0.83, 0.5)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_topbar_glass"]
 bg_color = Color(0.05, 0.05, 0.08, 0.6)
@@ -71,8 +71,8 @@ script = ExtResource("1_script")
 environment = SubResource("Environment_main")
 
 [node name="BackgroundVibe" parent="." instance=ExtResource("2_vibe")]
-layout_mode = 1
 modulate = Color(0.5, 0.5, 0.5, 1)
+layout_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -123,13 +123,13 @@ theme_override_constants/separation = 8
 [node name="BtnDashboard" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
-theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_constants/h_separation = 15
 theme_override_font_sizes/font_size = 15
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Dashboard"
 icon = ExtResource("4_home")
 alignment = 0
@@ -138,13 +138,13 @@ expand_icon = true
 [node name="BtnKunden" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
-theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_constants/h_separation = 15
 theme_override_font_sizes/font_size = 15
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Kundenverwaltung"
 icon = ExtResource("5_user")
 alignment = 0
@@ -153,13 +153,13 @@ expand_icon = true
 [node name="BtnVertrieb" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
-theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_constants/h_separation = 15
 theme_override_font_sizes/font_size = 15
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Vertrieb"
 icon = ExtResource("6_sales")
 alignment = 0
@@ -168,13 +168,13 @@ expand_icon = true
 [node name="BtnPlanung" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
-theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_constants/h_separation = 15
 theme_override_font_sizes/font_size = 15
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Einsatzplanung"
 icon = ExtResource("12_marker")
 alignment = 0
@@ -183,13 +183,13 @@ expand_icon = true
 [node name="BtnMitarbeiter" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
-theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_constants/h_separation = 15
 theme_override_font_sizes/font_size = 15
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Mitarbeiter"
 icon = ExtResource("7_employees")
 alignment = 0
@@ -198,13 +198,13 @@ expand_icon = true
 [node name="BtnArbeitsnachweis" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
-theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_constants/h_separation = 15
 theme_override_font_sizes/font_size = 15
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Arbeitsnachweis"
 icon = ExtResource("9_check")
 alignment = 0
@@ -213,13 +213,13 @@ expand_icon = true
 [node name="BtnDokumentation" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
-theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_constants/h_separation = 15
 theme_override_font_sizes/font_size = 15
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Dokumentation"
 icon = ExtResource("10_docs")
 alignment = 0
@@ -228,13 +228,13 @@ expand_icon = true
 [node name="BtnExport" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
-theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
 theme_override_constants/h_separation = 15
 theme_override_font_sizes/font_size = 15
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Export & Berichte"
 icon = ExtResource("11_export")
 alignment = 0
@@ -251,12 +251,12 @@ theme_override_constants/margin_bottom = 30
 [node name="BtnLogout" type="Button" parent="HBoxContainer/Sidebar/VBox/LogoutArea"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
-theme_override_colors/font_hover_color = Color(1, 0.3, 0.3, 1)
 theme_override_colors/font_color = Color(0.8, 0.4, 0.4, 1)
+theme_override_colors/font_hover_color = Color(1, 0.3, 0.3, 1)
 theme_override_constants/h_separation = 15
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Abmelden"
 icon = ExtResource("8_logout")
 alignment = 0

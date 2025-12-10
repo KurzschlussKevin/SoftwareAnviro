@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://dkh06tcyp2nv2"]
 
-[ext_resource type="Script" uid="uid://dr7syk6gf2k70" path="res://scene/dashboard/dashboard.gd" id="1_script"]
+[ext_resource type="Script" path="res://scene/dashboard/dashboard.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://c20dfha2jb4q3" path="res://icon.svg" id="2_icon"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header_bg"]
@@ -180,36 +180,36 @@ label_settings = SubResource("LabelSettings_subtitle")
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="BtnNewCust" type="Button" parent="VBox/ScrollContainer/Content/QuickActions/VBox/HBoxBtns"]
+[node name="BtnNavKunden" type="Button" parent="VBox/ScrollContainer/Content/QuickActions/VBox/HBoxBtns"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_quick")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_quick_hover")
-text = "+ Neuer Kunde"
+text = "Kundenverwaltung"
 icon = ExtResource("2_icon")
 expand_icon = true
 
-[node name="BtnNewOffer" type="Button" parent="VBox/ScrollContainer/Content/QuickActions/VBox/HBoxBtns"]
+[node name="BtnNavVertrieb" type="Button" parent="VBox/ScrollContainer/Content/QuickActions/VBox/HBoxBtns"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_quick")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_quick_hover")
-text = "+ Neues Angebot"
+text = "Vertrieb / Angebote"
 icon = ExtResource("2_icon")
 expand_icon = true
 
-[node name="BtnStats" type="Button" parent="VBox/ScrollContainer/Content/QuickActions/VBox/HBoxBtns"]
+[node name="BtnNavStats" type="Button" parent="VBox/ScrollContainer/Content/QuickActions/VBox/HBoxBtns"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_quick")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_quick_hover")
-text = "Statistik ansehen"
+text = "Export & Berichte"
 icon = ExtResource("2_icon")
 expand_icon = true
 
@@ -219,7 +219,7 @@ theme_override_constants/margin_left = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
-[node name="VBox" type="VBoxContainer" parent="VBox/ScrollContainer/Content/StatsArea"]
+[node name="VBox" type="VBoxContainer" parent="VBox/ScrollContainer/Content/StatsArea/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 15
 
