@@ -9,10 +9,15 @@ extends Control
 @onready var demo_edit_btn = $VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox/Actions/Settings
 
 # Logik Stammdaten
+@onready var tab_container = $EditModal/Panel/M/VBox/TabContainer
 @onready var check_work_loc = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/CheckWorkLoc
 @onready var container_work_loc = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerWorkLoc
 @onready var check_ap2 = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/CheckAP2
 @onready var container_ap2 = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerAP2
+
+# Eingabefelder Stammdaten (Beispiele zum Leeren)
+@onready var input_firma = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/Firma
+@onready var input_kundennr = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/Kundennr
 
 # Logik Arbeitsauftrag (Mitarbeiter)
 @onready var emp_list = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList
@@ -35,11 +40,12 @@ func _ready():
 	
 	# Scrollbar fix (Tabelle)
 	await get_tree().process_frame
-	var scroll_width = scroll_container_table.get_v_scroll_bar().size.x
-	if scroll_width > 0:
-		header_spacer.custom_minimum_size.x = scroll_width
-	else:
-		header_spacer.custom_minimum_size.x = 12.0
+	if is_instance_valid(scroll_container_table):
+		var scroll_width = scroll_container_table.get_v_scroll_bar().size.x
+		if scroll_width > 0:
+			header_spacer.custom_minimum_size.x = scroll_width
+		else:
+			header_spacer.custom_minimum_size.x = 12.0
 	
 	# Signale verbinden
 	btn_cancel.pressed.connect(close_modal)
@@ -51,11 +57,6 @@ func _ready():
 	
 	btn_add_emp.pressed.connect(_on_add_emp_pressed)
 	btn_add_pos.pressed.connect(_on_add_pos_pressed)
-	
-	# Templates verstecken (wir nutzen sie nur zum Kopieren)
-	# (Alternativ kann man das erste sichtbar lassen, aber so ist es sauberer)
-	# emp_template.visible = false 
-	# pos_template.visible = false
 
 func open_modal():
 	blur_layer.visible = true
@@ -79,7 +80,8 @@ func _on_add_emp_pressed():
 	
 	# Löschen-Button Logik
 	var delete_btn = new_row.get_node("DeleteEmpBtn")
-	delete_btn.pressed.connect(func(): new_row.queue_free())
+	if delete_btn:
+		delete_btn.pressed.connect(func(): new_row.queue_free())
 	
 	emp_list.add_child(new_row)
 
@@ -96,3 +98,21 @@ func _on_add_pos_pressed():
 			if child.name == "Pos": child.text = str(positions_list.get_child_count() + 1)
 			
 	positions_list.add_child(new_row)
+
+# --- NEU: WIRD VOM DASHBOARD AUFGERUFEN ---
+func start_new_customer():
+	print("Kundenverwaltung: Öffne Modal für neuen Kunden...")
+	
+	# 1. Modal öffnen
+	open_modal()
+	
+	# 2. Tab auf den ersten Reiter zurücksetzen
+	if tab_container:
+		tab_container.current_tab = 0
+		
+	# 3. Felder leeren
+	if input_firma: input_firma.text = ""
+	if input_kundennr: input_kundennr.text = ""
+	
+	# 4. Checkboxen/Container resetten
+	check

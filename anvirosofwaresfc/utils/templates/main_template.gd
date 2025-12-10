@@ -14,7 +14,7 @@ var scene_export = preload("res://scene/reportexport/report_export.tscn")
 @onready var content_container = $HBoxContainer/ContentArea/MainContent/SceneContainer
 @onready var page_title = $HBoxContainer/ContentArea/TopBar/Margin/HBox/PageTitle
 
-# Sidebar Buttons
+# Buttons
 @onready var btn_dashboard = $HBoxContainer/Sidebar/VBox/NavButtons/BtnDashboard
 @onready var btn_kunden = $HBoxContainer/Sidebar/VBox/NavButtons/BtnKunden
 @onready var btn_vertrieb = $HBoxContainer/Sidebar/VBox/NavButtons/BtnVertrieb
@@ -26,7 +26,7 @@ var scene_export = preload("res://scene/reportexport/report_export.tscn")
 @onready var btn_logout = $HBoxContainer/Sidebar/VBox/LogoutArea/BtnLogout
 
 func _ready():
-	# Navigation Sidebar
+	# Navigation (Standard-Links ohne speziellen Modus)
 	btn_dashboard.pressed.connect(func(): load_scene(scene_dashboard, "Dashboard"))
 	btn_kunden.pressed.connect(func(): load_scene(scene_kunden, "Kundenverwaltung"))
 	btn_vertrieb.pressed.connect(func(): load_scene(scene_vertrieb, "Vertriebsbereich"))
@@ -39,53 +39,52 @@ func _ready():
 	
 	btn_logout.pressed.connect(_on_logout_pressed)
 	
-	# Start
 	load_scene(scene_dashboard, "Dashboard")
 
-func load_scene(scene_resource: PackedScene, title: String):
-	# 1. Titel setzen
+# Gibt jetzt die Szene zurück, damit wir darauf zugreifen können
+func load_scene(scene_resource: PackedScene, title: String) -> Node:
 	page_title.text = title
 	
-	# 2. Alte Szene entfernen
 	for child in content_container.get_children():
 		child.queue_free()
 	
-	# 3. Neue Szene instanziieren
 	var new_scene = scene_resource.instantiate()
-	
-	# Layout Einstellungen
 	new_scene.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	new_scene.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	
-	# --- NEU: SIGNAL VERBINDEN ---
-	# Wenn die Szene das Signal 'request_navigation' hat (wie unser Dashboard), verbinden wir es
+	# Signal vom Dashboard verbinden
 	if new_scene.has_signal("request_navigation"):
 		new_scene.request_navigation.connect(_on_navigation_requested)
 	
 	content_container.add_child(new_scene)
+	return new_scene
 
-# --- NEU: NAVIGATIONS-HANDLER ---
-func _on_navigation_requested(target_name: String):
+# Erweiterter Handler mit 'mode'
+func _on_navigation_requested(target_name: String, mode: String = ""):
+	var current_scene = null
+	
 	match target_name:
 		"Kundenverwaltung":
-			load_scene(scene_kunden, "Kundenverwaltung")
+			current_scene = load_scene(scene_kunden, "Kundenverwaltung")
+			# Spezielle Logik für "create"
+			if mode == "create" and current_scene.has_method("start_new_customer"):
+				current_scene.start_new_customer()
+				
 		"Vertriebsbereich":
-			load_scene(scene_vertrieb, "Vertriebsbereich")
-		"Einsatzplanung":
-			load_scene(scene_planung, "Einsatzplanung")
-		"Mitarbeiter":
-			load_scene(scene_mitarbeiter, "Mitarbeiter")
-		"Arbeitsnachweis":
-			load_scene(scene_arbeitsnachweis, "Arbeitsnachweis")
-		"Dokumentation":
-			load_scene(scene_dokumentation, "Dokumentation")
+			current_scene = load_scene(scene_vertrieb, "Vertriebsbereich")
+			if mode == "create" and current_scene.has_method("start_new_offer"):
+				current_scene.start_new_offer()
+				
 		"Export & Berichte":
 			load_scene(scene_export, "Export & Berichte")
-		"Dashboard":
-			load_scene(scene_dashboard, "Dashboard")
-		_:
-			print("Unbekanntes Ziel: ", target_name)
+			
+		# ... Andere Fälle (Standard)
+		"Einsatzplanung": load_scene(scene_planung, "Einsatzplanung")
+		"Mitarbeiter": load_scene(scene_mitarbeiter, "Mitarbeiter")
+		"Arbeitsnachweis": load_scene(scene_arbeitsnachweis, "Arbeitsnachweis")
+		"Dokumentation": load_scene(scene_dokumentation, "Dokumentation")
+		"Dashboard": load_scene(scene_dashboard, "Dashboard")
 
 func _on_logout_pressed():
-	print("Logout gedrückt")
-	# get_tree().change_scene_to_file("res://scene/auth/auth_controlling.tscn")
+	print("Logout...")
+	# get_tree().change_scene_to_file(...)
