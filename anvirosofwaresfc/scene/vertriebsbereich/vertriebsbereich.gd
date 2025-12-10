@@ -1,18 +1,18 @@
 extends Control
 
-# --- UI REFERENZEN RECHTS ---
+# --- UI REFERENZEN RECHTS (Tabelle) ---
 @onready var scroll_container_table = $HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer
 @onready var header_spacer = $HBox/RightCol/PositionsPanel/M/VBox/HeaderRow/HBox/ScrollbarSpacer
 @onready var positions_list = $HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer/PositionsList
 @onready var pos_template = $HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer/PositionsList/PositionTemplate
 
-# --- UI REFERENZEN LINKS ---
+# --- UI REFERENZEN LINKS (Formular) ---
 @onready var check_work_loc = $HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/CheckWorkLoc
 @onready var check_ap2 = $HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/CheckAP2
 @onready var container_work_loc = $HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/ContainerWorkLoc
 @onready var container_ap2 = $HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/ContainerAP2
 
-# Eingabefelder
+# Eingabefelder (für Reset)
 @onready var input_firma = $HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/Firma
 @onready var input_kundennr = $HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/Kundennr
 @onready var input_plz = $HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/Row/PLZ
@@ -32,24 +32,32 @@ extends Control
 @onready var btn_cust_2 = $CustomerSelectModal/Center/Panel/VBox/Scroll/CustomerList/BtnCust2
 
 func _ready():
-	# Scrollbar Fix
+	# 1. Tabellen-Fix (Scrollbar-Breite)
 	await get_tree().process_frame
 	if is_instance_valid(scroll_container_table):
-		var width = scroll_container_table.get_v_scroll_bar().size.x
-		header_spacer.custom_minimum_size.x = width if width > 0 else 12.0
+		var scrollbar_width = scroll_container_table.get_v_scroll_bar().size.x
+		if scrollbar_width > 0:
+			header_spacer.custom_minimum_size.x = scrollbar_width
+		else:
+			header_spacer.custom_minimum_size.x = 12.0
 	
-	# Formular
+	# 2. Signale für Formular verbinden
 	check_work_loc.toggled.connect(_on_work_loc_toggled)
 	check_ap2.toggled.connect(_on_ap2_toggled)
+	
+	# 3. Initialzustand setzen
 	container_work_loc.visible = false
 	container_ap2.visible = false
 	
-	# Berichte
-	if btn_report_general: btn_report_general.pressed.connect(_on_btn_report_general_pressed)
-	if btn_report_travel: btn_report_travel.pressed.connect(_on_btn_report_travel_pressed)
-	if btn_report_combined: btn_report_combined.pressed.connect(_on_btn_report_combined_pressed)
-	
-	# Auswahl Modal
+	# 4. Signale für Berichte verbinden
+	if btn_report_general:
+		btn_report_general.pressed.connect(_on_btn_report_general_pressed)
+	if btn_report_travel:
+		btn_report_travel.pressed.connect(_on_btn_report_travel_pressed)
+	if btn_report_combined:
+		btn_report_combined.pressed.connect(_on_btn_report_combined_pressed)
+		
+	# 5. Auswahl Modal
 	if select_modal: select_modal.visible = false
 	if btn_cancel_select: btn_cancel_select.pressed.connect(func(): select_modal.visible = false)
 	
@@ -63,9 +71,16 @@ func _on_work_loc_toggled(toggled_on: bool):
 func _on_ap2_toggled(toggled_on: bool):
 	container_ap2.visible = toggled_on
 
-func _on_btn_report_general_pressed(): print("Bericht Allgemein")
-func _on_btn_report_travel_pressed(): print("Bericht Reise")
-func _on_btn_report_combined_pressed(): print("Bericht Kombi")
+# --- FUNKTIONEN FÜR BERICHTE ---
+
+func _on_btn_report_general_pressed():
+	print("Erstelle allgemeinen Montagebericht (für diverse Typen)...")
+
+func _on_btn_report_travel_pressed():
+	print("Erstelle Reise-/Übernachtungsbericht...")
+
+func _on_btn_report_combined_pressed():
+	print("Erstelle Kombi-Bericht (Montage + Reise)...")
 
 # Helper: Kunde auswählen
 func _select_customer(firma: String, nr: String):
@@ -74,28 +89,28 @@ func _select_customer(firma: String, nr: String):
 	select_modal.visible = false
 	print("Kunde übernommen: ", firma)
 
-# --- WIRD VOM DASHBOARD AUFGERUFEN ---
+# --- NEU: WIRD VOM DASHBOARD AUFGERUFEN ---
 func start_new_offer():
 	print("Vertrieb: Starte neues Angebot mit Auswahl...")
 	
-	# 1. Reset Formular
+	# 1. Hauptfelder leeren
 	if input_firma: input_firma.text = ""
 	if input_kundennr: input_kundennr.text = ""
 	if input_plz: input_plz.text = ""
 	if input_stadt: input_stadt.text = ""
 	if input_strasse: input_strasse.text = ""
 	
+	# 2. Checkboxen zurücksetzen
 	check_work_loc.button_pressed = false
 	check_ap2.button_pressed = false
 	container_work_loc.visible = false
 	container_ap2.visible = false
 	
-	# 2. Positionen leeren
-	if positions_list:
-		for child in positions_list.get_children():
-			if child != pos_template:
-				child.queue_free()
-	
-	# 3. Auswahl-Modal anzeigen (anstatt direkt Fokus)
+	# 3. Positionstabelle leeren (alle außer das Template)
+	for child in positions_list.get_children():
+		if child != pos_template:
+			child.queue_free()
+			
+	# 4. Auswahl-Modal anzeigen (statt direkt Fokus)
 	if select_modal:
 		select_modal.visible = true
