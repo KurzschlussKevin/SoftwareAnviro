@@ -21,12 +21,12 @@ func _ready():
 	# --- NAVIGATION LOGIK ---
 	
 	if btn_nav_kunden:
-		# Modus "create_customer": Nur Erstellen-Dialog
-		btn_nav_kunden.pressed.connect(func(): _on_nav_request("Kundenverwaltung", "create_customer"))
+		# WICHTIG: Hier "create" senden, damit es zum MainTemplate passt
+		btn_nav_kunden.pressed.connect(func(): _on_nav_request("Kundenverwaltung", "create"))
 	
 	if btn_nav_vertrieb:
-		# Modus "create_offer": Erst Auswahl-Modal
-		btn_nav_vertrieb.pressed.connect(func(): _on_nav_request("Vertriebsbereich", "create_offer"))
+		# Auch hier "create" verwenden
+		btn_nav_vertrieb.pressed.connect(func(): _on_nav_request("Vertriebsbereich", "create"))
 	
 	if btn_nav_stats:
 		# Geht zum Profil
