@@ -1,6 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://8cwtxhcmyfyi"]
+[gd_scene load_steps=15 format=3 uid="uid://b8y4x6q2w8j9k"]
 
-[ext_resource type="Script" path="res://scene/vertriebsbereich/vertriebsbereich.gd" id="1_qdbm0"]
+[ext_resource type="Script" path="res://scene/vertriebsbereich/vertriebsbereich.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b1v5dp5spbltr" path="res://assets/icons/user/bleistift.png" id="2_edit"]
+[ext_resource type="Texture2D" uid="uid://cyj23066lh80j" path="res://assets/icons/user/mull.png" id="3_delete"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_glass"]
 bg_color = Color(0.08, 0.08, 0.12, 0.6)
@@ -57,6 +59,41 @@ shadow_color = Color(0.2, 0.4, 0.9, 0.3)
 shadow_size = 8
 shadow_offset = Vector2(0, 2)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_icon_hover"]
+bg_color = Color(0.0, 0.6, 0.8, 0.2)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="Shader" id="Shader_blur"]
+code = "shader_type canvas_item;
+uniform float lod: hint_range(0.0, 5.0) = 3.0;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+void fragment(){
+	vec4 color = texture(SCREEN_TEXTURE, SCREEN_UV, lod);
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
+shader = SubResource("Shader_blur")
+shader_parameter/lod = 2.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal_bg"]
+bg_color = Color(0.1, 0.1, 0.12, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0, 0.6, 0.8, 0.5)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 20
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_table_header"]
 bg_color = Color(0.2, 0.3, 0.5, 0.2)
 border_width_bottom = 1
@@ -71,14 +108,14 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 content_margin_left = 10.0
 content_margin_right = 10.0
 
-[node name="Vertiebsbereich" type="Control"]
+[node name="Vertriebsbereich" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_qdbm0")
+script = ExtResource("1_script")
 
 [node name="HBox" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -331,21 +368,21 @@ theme_override_constants/separation = 15
 
 [node name="Label" type="Label" parent="HBox/LeftCol/ReportPanel/M/VBox"]
 layout_mode = 2
-text = "Montageberichte"
+text = "Montageberichte erstellen"
 label_settings = SubResource("LabelSettings_section_title")
 
 [node name="LabelInfo" type="Label" parent="HBox/LeftCol/ReportPanel/M/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.7, 0.8, 1)
 theme_override_font_sizes/font_size = 14
-text = "Bitte wählen Sie den Berichtstyp:"
+text = "Neuen Bericht anlegen:"
 autowrap_mode = 2
 
 [node name="BtnReportGeneral" type="Button" parent="HBox/LeftCol/ReportPanel/M/VBox"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
-text = "📄 Montagebericht (Allgemein)"
+text = "📄 Montagebericht (Typen)"
 alignment = 0
 
 [node name="BtnReportTravel" type="Button" parent="HBox/LeftCol/ReportPanel/M/VBox"]
@@ -549,7 +586,17 @@ mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
 text = " Angebot Speichern "
 
-[node name="CustomerSelectModal" type="PanelContainer" parent="."]
+[node name="BlurLayer" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_blur")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SelectCustomerModal" type="CenterContainer" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -557,54 +604,245 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_panel_glass")
 
-[node name="Center" type="CenterContainer" parent="CustomerSelectModal"]
+[node name="Panel" type="PanelContainer" parent="SelectCustomerModal"]
+custom_minimum_size = Vector2(500, 300)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_bg")
 
-[node name="Panel" type="PanelContainer" parent="CustomerSelectModal/Center"]
-custom_minimum_size = Vector2(500, 400)
+[node name="M" type="MarginContainer" parent="SelectCustomerModal/Panel"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_panel_glass")
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
 
-[node name="VBox" type="VBoxContainer" parent="CustomerSelectModal/Center/Panel"]
+[node name="VBox" type="VBoxContainer" parent="SelectCustomerModal/Panel/M"]
+layout_mode = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="Title" type="Label" parent="SelectCustomerModal/Panel/M/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Kunde auswählen"
+horizontal_alignment = 1
+
+[node name="CustomerOption" type="OptionButton" parent="SelectCustomerModal/Panel/M/VBox"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "Bitte wählen..."
+popup/item_0/id = 0
+popup/item_1/text = "Musterfirma GmbH"
+popup/item_1/id = 1
+popup/item_2/text = "Bäckerei Müller"
+popup/item_2/id = 2
+
+[node name="HBoxButtons" type="HBoxContainer" parent="SelectCustomerModal/Panel/M/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="CancelSelect" type="Button" parent="SelectCustomerModal/Panel/M/VBox/HBoxButtons"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "Abbrechen"
+
+[node name="NextBtn" type="Button" parent="SelectCustomerModal/Panel/M/VBox/HBoxButtons"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.6, 0.8, 1)
+text = "Weiter"
+
+[node name="CreateOfferModal" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CreateOfferModal"]
+custom_minimum_size = Vector2(900, 600)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_bg")
+
+[node name="M" type="MarginContainer" parent="CreateOfferModal/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="CreateOfferModal/Panel/M"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="CreateOfferModal/Panel/M/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Neues Angebot erstellen"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="CreateOfferModal/Panel/M/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
+text = "für Musterfirma GmbH"
+horizontal_alignment = 1
+
+[node name="TemplateHBox" type="HBoxContainer" parent="CreateOfferModal/Panel/M/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="Label" type="Label" parent="CreateOfferModal/Panel/M/VBox/TemplateHBox"]
+layout_mode = 2
+text = "Vorlage wählen:"
+
+[node name="TemplateOption" type="OptionButton" parent="CreateOfferModal/Panel/M/VBox/TemplateHBox"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "Bitte wählen..."
+popup/item_0/id = 0
+popup/item_1/text = "Paket: Website Standard"
+popup/item_1/id = 1
+popup/item_2/text = "Paket: SEO Optimierung"
+popup/item_2/id = 2
+
+[node name="LoadTemplateBtn" type="Button" parent="CreateOfferModal/Panel/M/VBox/TemplateHBox"]
+layout_mode = 2
+text = "Laden"
+
+[node name="HSeparator" type="HSeparator" parent="CreateOfferModal/Panel/M/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Label" type="Label" parent="CustomerSelectModal/Center/Panel/VBox"]
+[node name="HeaderRow" type="PanelContainer" parent="CreateOfferModal/Panel/M/VBox"]
 layout_mode = 2
-text = "Kunde für Angebot auswählen"
-label_settings = SubResource("LabelSettings_section_title")
+theme_override_styles/panel = SubResource("StyleBoxFlat_table_header")
+
+[node name="HBox" type="HBoxContainer" parent="CreateOfferModal/Panel/M/VBox/HeaderRow"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Pos" type="Label" parent="CreateOfferModal/Panel/M/VBox/HeaderRow/HBox"]
+custom_minimum_size = Vector2(40, 30)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
+text = "Pos"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Search" type="LineEdit" parent="CustomerSelectModal/Center/Panel/VBox"]
+[node name="Bez" type="Label" parent="CreateOfferModal/Panel/M/VBox/HeaderRow/HBox"]
 layout_mode = 2
-placeholder_text = "Kunde suchen..."
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
+text = "Leistungsbeschreibung"
+vertical_alignment = 1
 
-[node name="Scroll" type="ScrollContainer" parent="CustomerSelectModal/Center/Panel/VBox"]
+[node name="Menge" type="Label" parent="CreateOfferModal/Panel/M/VBox/HeaderRow/HBox"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
+text = "Menge"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Preis" type="Label" parent="CreateOfferModal/Panel/M/VBox/HeaderRow/HBox"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
+text = "Einzelpreis"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Gesamt" type="Label" parent="CreateOfferModal/Panel/M/VBox/HeaderRow/HBox"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
+text = "Gesamt"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ScrollbarSpacer" type="Control" parent="CreateOfferModal/Panel/M/VBox/HeaderRow/HBox"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CreateOfferModal/Panel/M/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
+vertical_scroll_mode = 2
 
-[node name="CustomerList" type="VBoxContainer" parent="CustomerSelectModal/Center/Panel/VBox/Scroll"]
+[node name="PositionsList" type="VBoxContainer" parent="CreateOfferModal/Panel/M/VBox/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 5
 
-[node name="BtnCust1" type="Button" parent="CustomerSelectModal/Center/Panel/VBox/Scroll/CustomerList"]
+[node name="PositionTemplate" type="HBoxContainer" parent="CreateOfferModal/Panel/M/VBox/ScrollContainer/PositionsList"]
 layout_mode = 2
-text = "Musterfirma GmbH (KD-1001)"
-alignment = 0
+theme_override_constants/separation = 0
 
-[node name="BtnCust2" type="Button" parent="CustomerSelectModal/Center/Panel/VBox/Scroll/CustomerList"]
+[node name="Pos" type="LineEdit" parent="CreateOfferModal/Panel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
-text = "Bäckerei Müller (KD-1002)"
-alignment = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "1"
+alignment = 1
 
-[node name="BtnCust3" type="Button" parent="CustomerSelectModal/Center/Panel/VBox/Scroll/CustomerList"]
+[node name="Bez" type="LineEdit" parent="CreateOfferModal/Panel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
 layout_mode = 2
-text = "Elektro Schmidt (KD-1003)"
-alignment = 0
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Artikel / Leistung"
 
-[node name="CancelSelectBtn" type="Button" parent="CustomerSelectModal/Center/Panel/VBox"]
+[node name="Menge" type="LineEdit" parent="CreateOfferModal/Panel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "1"
+alignment = 2
+
+[node name="Preis" type="LineEdit" parent="CreateOfferModal/Panel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "0.00"
+alignment = 2
+
+[node name="Gesamt" type="LineEdit" parent="CreateOfferModal/Panel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "0.00"
+alignment = 2
+editable = false
+
+[node name="AddPosBtn" type="Button" parent="CreateOfferModal/Panel/M/VBox"]
+layout_mode = 2
+text = "+ Position hinzufügen"
+
+[node name="Spacer" type="Control" parent="CreateOfferModal/Panel/M/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="HBoxButtons" type="HBoxContainer" parent="CreateOfferModal/Panel/M/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="CancelCreate" type="Button" parent="CreateOfferModal/Panel/M/VBox/HBoxButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Abbrechen"
+
+[node name="SaveCreate" type="Button" parent="CreateOfferModal/Panel/M/VBox/HBoxButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_icon_hover")
+text = "Angebot erstellen"
