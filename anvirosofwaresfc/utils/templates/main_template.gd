@@ -1,10 +1,9 @@
 extends Control
 
-# Szenen laden
 var scene_dashboard = preload("res://scene/dashboard/dashboard.tscn")
 var scene_kunden = preload("res://scene/kundenverwaltung/kundenverwaltung.tscn")
 var scene_vertrieb = preload("res://scene/vertriebsbereich/vertriebsbereich.tscn")
-var scene_profil = preload("res://scene/profil/profil.tscn") # NEU
+var scene_profil = preload("res://scene/profil/profil.tscn")
 var scene_planung = preload("res://scene/planung/planung.tscn")
 var scene_mitarbeiter = preload("res://scene/mitarbeiterverwaltung/mitarbeiterverwaltung.tscn")
 var scene_arbeitsnachweis = preload("res://scene/arbeitsnachweis/arbeitsnachweis.tscn")
@@ -14,7 +13,6 @@ var scene_export = preload("res://scene/reportexport/report_export.tscn")
 @onready var content_container = $HBoxContainer/ContentArea/MainContent/SceneContainer
 @onready var page_title = $HBoxContainer/ContentArea/TopBar/Margin/HBox/PageTitle
 
-# Sidebar
 @onready var btn_dashboard = $HBoxContainer/Sidebar/VBox/NavButtons/BtnDashboard
 @onready var btn_kunden = $HBoxContainer/Sidebar/VBox/NavButtons/BtnKunden
 @onready var btn_vertrieb = $HBoxContainer/Sidebar/VBox/NavButtons/BtnVertrieb
@@ -26,7 +24,6 @@ var scene_export = preload("res://scene/reportexport/report_export.tscn")
 @onready var btn_logout = $HBoxContainer/Sidebar/VBox/LogoutArea/BtnLogout
 
 func _ready():
-	# Navigation verbinden
 	btn_dashboard.pressed.connect(func(): load_scene(scene_dashboard, "Dashboard"))
 	btn_kunden.pressed.connect(func(): load_scene(scene_kunden, "Kundenverwaltung"))
 	btn_vertrieb.pressed.connect(func(): load_scene(scene_vertrieb, "Vertriebsbereich"))
@@ -61,20 +58,19 @@ func _on_navigation_requested(target_name: String, mode: String = ""):
 	match target_name:
 		"Kundenverwaltung":
 			current_scene = load_scene(scene_kunden, "Kundenverwaltung")
-			if current_scene and mode == "create" and current_scene.has_method("start_new_customer"):
-				current_scene.start_new_customer()
+			if mode == "create_customer" and current_scene.has_method("start_create_mode"):
+				current_scene.start_create_mode()
 				
 		"Vertriebsbereich":
 			current_scene = load_scene(scene_vertrieb, "Vertriebsbereich")
-			if current_scene and mode == "create" and current_scene.has_method("start_new_offer"):
-				current_scene.start_new_offer()
+			if mode == "create_offer" and current_scene.has_method("start_offer_selection"):
+				current_scene.start_offer_selection()
 		
-		"Profil": # NEU
-			load_scene(scene_profil, "Mein Profil & Statistik")
+		"Profil":
+			load_scene(scene_profil, "Mein Profil")
 			
 		"Export & Berichte":
 			load_scene(scene_export, "Export & Berichte")
 			
-		"Einsatzplanung": load_scene(scene_planung, "Einsatzplanung")
 		"Dashboard": load_scene(scene_dashboard, "Dashboard")
 		_: print("Unbekanntes Ziel: ", target_name)

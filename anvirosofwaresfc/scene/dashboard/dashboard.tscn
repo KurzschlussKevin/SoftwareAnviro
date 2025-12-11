@@ -1,6 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://dkh06tcyp2nv2"]
+[gd_scene load_steps=11 format=3 uid="uid://dkh06tcyp2nv2"]
 
-[ext_resource type="Script" path="res://scene/dashboard/dashboard.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://dr7syk6gf2k70" path="res://scene/dashboard/dashboard.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://c20dfha2jb4q3" path="res://icon.svg" id="2_icon"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header"]
@@ -12,7 +12,6 @@ shadow_size = 5
 
 [sub_resource type="LabelSettings" id="LabelSettings_welcome"]
 font_size = 24
-font_weight = 700
 font_color = Color(0.9, 0.9, 0.95, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
@@ -31,8 +30,6 @@ shadow_size = 4
 
 [sub_resource type="LabelSettings" id="LabelSettings_card_value"]
 font_size = 32
-font_weight = 700
-font_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_progress_bg"]
 bg_color = Color(0.2, 0.2, 0.25, 1)
@@ -47,6 +44,8 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+shadow_color = Color(1, 0, 0.43, 0.5)
+shadow_size = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_action"]
 bg_color = Color(0.15, 0.15, 0.2, 0.7)
@@ -158,9 +157,9 @@ theme_override_constants/separation = 15
 
 [node name="Title" type="Label" parent="VBox/ScrollContent/ContentM/VMain/SectionStats"]
 layout_mode = 2
-text = "ÜBERSICHT"
 theme_override_colors/font_color = Color(0.5, 0.5, 0.6, 1)
 theme_override_font_sizes/font_size = 14
+text = "ÜBERSICHT"
 
 [node name="GridStats" type="HBoxContainer" parent="VBox/ScrollContent/ContentM/VMain/SectionStats"]
 layout_mode = 2
@@ -183,8 +182,8 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="VBox/ScrollContent/ContentM/VMain/SectionStats/GridStats/CardKunden/M/V"]
 layout_mode = 2
-text = "Aktive Kunden"
 theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
+text = "Aktive Kunden"
 
 [node name="Value" type="Label" parent="VBox/ScrollContent/ContentM/VMain/SectionStats/GridStats/CardKunden/M/V"]
 layout_mode = 2
@@ -213,13 +212,13 @@ layout_mode = 2
 [node name="Title" type="Label" parent="VBox/ScrollContent/ContentM/VMain/SectionStats/GridStats/CardUmsatz/M/V/H"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Monatsziel"
 theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
+text = "Monatsziel"
 
 [node name="Perc" type="Label" parent="VBox/ScrollContent/ContentM/VMain/SectionStats/GridStats/CardUmsatz/M/V/H"]
 layout_mode = 2
-text = "65%"
 theme_override_colors/font_color = Color(0, 0.96, 0.83, 1)
+text = "65%"
 
 [node name="ProgressBar" type="ProgressBar" parent="VBox/ScrollContent/ContentM/VMain/SectionStats/GridStats/CardUmsatz/M/V"]
 unique_name_in_owner = true
@@ -252,8 +251,8 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="VBox/ScrollContent/ContentM/VMain/SectionStats/GridStats/CardAngebote/M/V"]
 layout_mode = 2
-text = "Offene Angebote"
 theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
+text = "Offene Angebote"
 
 [node name="Value" type="Label" parent="VBox/ScrollContent/ContentM/VMain/SectionStats/GridStats/CardAngebote/M/V"]
 layout_mode = 2
@@ -266,9 +265,9 @@ theme_override_constants/separation = 15
 
 [node name="Title" type="Label" parent="VBox/ScrollContent/ContentM/VMain/SectionActions"]
 layout_mode = 2
-text = "SCHNELLZUGRIFF"
 theme_override_colors/font_color = Color(0.5, 0.5, 0.6, 1)
 theme_override_font_sizes/font_size = 14
+text = "SCHNELLZUGRIFF"
 
 [node name="HBoxBtns" type="HBoxContainer" parent="VBox/ScrollContent/ContentM/VMain/SectionActions"]
 layout_mode = 2
@@ -282,8 +281,8 @@ size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
 theme_override_constants/h_separation = 15
 theme_override_font_sizes/font_size = 18
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_action_hover")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_action_hover")
 text = "Neuer Kunde"
 icon = ExtResource("2_icon")
 alignment = 0
@@ -297,8 +296,8 @@ size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
 theme_override_constants/h_separation = 15
 theme_override_font_sizes/font_size = 18
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_action_hover")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_action_hover")
 text = "Neues Angebot"
 icon = ExtResource("2_icon")
 alignment = 0
@@ -312,8 +311,8 @@ size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
 theme_override_constants/h_separation = 15
 theme_override_font_sizes/font_size = 18
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_action_hover")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_action_hover")
 text = "Mein Profil"
 icon = ExtResource("2_icon")
 alignment = 0
@@ -325,9 +324,9 @@ theme_override_constants/separation = 15
 
 [node name="Title" type="Label" parent="VBox/ScrollContent/ContentM/VMain/SectionRecent"]
 layout_mode = 2
-text = "LETZTE AKTIVITÄTEN"
 theme_override_colors/font_color = Color(0.5, 0.5, 0.6, 1)
 theme_override_font_sizes/font_size = 14
+text = "LETZTE AKTIVITÄTEN"
 
 [node name="ActivityPanel" type="PanelContainer" parent="VBox/ScrollContent/ContentM/VMain/SectionRecent"]
 layout_mode = 2

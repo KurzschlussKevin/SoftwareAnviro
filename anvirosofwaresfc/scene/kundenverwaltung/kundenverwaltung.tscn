@@ -660,3 +660,389 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_icon_hover")
 text = "Speichern & Zuweisen"
+
+[node name="CreateModal" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CreateModal"]
+custom_minimum_size = Vector2(800, 650)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_bg")
+
+[node name="M" type="MarginContainer" parent="CreateModal/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="CreateModal/Panel/M"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="CreateModal/Panel/M/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Neuen Kunden anlegen"
+horizontal_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="CreateModal/Panel/M/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+tab_alignment = 1
+
+[node name="Stammdaten" type="MarginContainer" parent="CreateModal/Panel/M/VBox/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten"]
+layout_mode = 2
+vertical_scroll_mode = 2
+
+[node name="VBoxData" type="VBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="InputFirma" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Firma"
+
+[node name="InputAddress" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Straße & Hausnummer"
+
+[node name="RowCity" type="HBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="InputPLZ" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/RowCity"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "PLZ"
+
+[node name="InputCity" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/RowCity"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Stadt"
+
+[node name="HSeparator" type="HSeparator" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="CheckWorkLoc" type="CheckButton" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Abweichender Leistungsort?"
+
+[node name="ContainerWorkLoc" type="VBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelLoc" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerWorkLoc"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.96, 0.83, 1)
+theme_override_font_sizes/font_size = 14
+text = "Adresse des Leistungsorts / Prüforts:"
+
+[node name="InputAddressLoc" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerWorkLoc"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Straße & Hausnummer"
+
+[node name="RowLoc" type="HBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerWorkLoc"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="InputPLZLoc" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerWorkLoc/RowLoc"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "PLZ"
+
+[node name="InputCityLoc" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerWorkLoc/RowLoc"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Stadt"
+
+[node name="HSeparator2" type="HSeparator" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="SelectAP" type="OptionButton" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "Ansprechpartner wählen..."
+popup/item_0/id = 0
+popup/item_1/text = "Max Mustermann (Haupt)"
+popup/item_1/id = 1
+popup/item_2/text = "Maria Musterfrau (Buchhaltung)"
+popup/item_2/id = 2
+
+[node name="RowName" type="HBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="InputName" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/RowName"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Vorname"
+
+[node name="InputSurname" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/RowName"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Nachname"
+
+[node name="InputEmail" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "E-Mail Adresse"
+
+[node name="InputPhone" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Telefon"
+
+[node name="CheckAP2" type="CheckButton" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
+layout_mode = 2
+text = "Weiteren Ansprechpartner hinzufügen"
+
+[node name="ContainerAP2" type="VBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelAP2" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerAP2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.96, 0.83, 1)
+text = "2. Ansprechpartner"
+
+[node name="RowNameAP2" type="HBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerAP2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="InputNameAP2" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerAP2/RowNameAP2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Vorname"
+
+[node name="InputSurnameAP2" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerAP2/RowNameAP2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Nachname"
+
+[node name="InputEmailAP2" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerAP2"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "E-Mail (2)"
+
+[node name="Arbeitsauftrag" type="MarginContainer" parent="CreateModal/Panel/M/VBox/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxTask" type="VBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="LabelInfo" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.96, 0.83, 1)
+text = "Zuständige Mitarbeiter"
+
+[node name="ScrollContainerEmployees" type="ScrollContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+vertical_scroll_mode = 2
+
+[node name="EmployeeList" type="VBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="EmployeeTemplate" type="HBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="EmployeeOption" type="OptionButton" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList/EmployeeTemplate"]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 3
+selected = 0
+popup/item_0/text = "Mitarbeiter wählen..."
+popup/item_0/id = 0
+popup/item_1/text = "Max Mustermann"
+popup/item_1/id = 1
+popup/item_2/text = "Lisa Müller"
+popup/item_2/id = 2
+
+[node name="WeekSpin" type="SpinBox" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList/EmployeeTemplate"]
+layout_mode = 2
+min_value = 1.0
+max_value = 52.0
+value = 1.0
+prefix = "KW"
+
+[node name="DeleteEmpBtn" type="Button" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList/EmployeeTemplate"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+icon = ExtResource("3_delete")
+icon_alignment = 1
+expand_icon = true
+
+[node name="AddEmployeeBtn" type="Button" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
+layout_mode = 2
+text = "+ Mitarbeiter hinzufügen"
+
+[node name="HSeparator" type="HSeparator" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelPos" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
+layout_mode = 2
+text = "Leistungsbeschreibung / Positionen:"
+
+[node name="HeaderRow" type="PanelContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_table_header")
+
+[node name="HBox" type="HBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Pos" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow/HBox"]
+custom_minimum_size = Vector2(40, 30)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
+text = "Pos"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Bez" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
+text = "Bezeichnung"
+vertical_alignment = 1
+
+[node name="Menge" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow/HBox"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
+text = "Menge"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Preis" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow/HBox"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
+text = "Preis"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Gesamt" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow/HBox"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
+text = "Gesamt"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ScrollbarSpacer" type="Control" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow/HBox"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
+layout_mode = 2
+size_flags_vertical = 3
+vertical_scroll_mode = 2
+
+[node name="PositionsList" type="VBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="PositionTemplate" type="HBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Pos" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList/PositionTemplate"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "1"
+alignment = 1
+
+[node name="Bez" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList/PositionTemplate"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "Artikelbeschreibung"
+
+[node name="Menge" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList/PositionTemplate"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "1"
+alignment = 2
+
+[node name="Preis" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList/PositionTemplate"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "0.00"
+alignment = 2
+
+[node name="Gesamt" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList/PositionTemplate"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "0.00"
+alignment = 2
+editable = false
+
+[node name="AddPosBtn" type="Button" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
+layout_mode = 2
+text = "+ Position hinzufügen"
+
+[node name="HBoxButtons" type="HBoxContainer" parent="CreateModal/Panel/M/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="CancelBtn" type="Button" parent="CreateModal/Panel/M/VBox/HBoxButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Abbrechen"
+
+[node name="SaveBtn" type="Button" parent="CreateModal/Panel/M/VBox/HBoxButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_icon_hover")
+text = "Speichern & Zuweisen"

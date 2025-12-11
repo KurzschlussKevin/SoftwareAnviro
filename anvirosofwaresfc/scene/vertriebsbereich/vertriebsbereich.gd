@@ -27,90 +27,46 @@ extends Control
 # --- AUSWAHL MODAL (NEU) ---
 @onready var select_modal = $CustomerSelectModal
 @onready var btn_cancel_select = $CustomerSelectModal/Center/Panel/VBox/CancelSelectBtn
-# Mock-Buttons für Demo
 @onready var btn_cust_1 = $CustomerSelectModal/Center/Panel/VBox/Scroll/CustomerList/BtnCust1
 @onready var btn_cust_2 = $CustomerSelectModal/Center/Panel/VBox/Scroll/CustomerList/BtnCust2
 
 func _ready():
-	# 1. Tabellen-Fix (Scrollbar-Breite)
 	await get_tree().process_frame
 	if is_instance_valid(scroll_container_table):
-		var scrollbar_width = scroll_container_table.get_v_scroll_bar().size.x
-		if scrollbar_width > 0:
-			header_spacer.custom_minimum_size.x = scrollbar_width
-		else:
-			header_spacer.custom_minimum_size.x = 12.0
+		var width = scroll_container_table.get_v_scroll_bar().size.x
+		header_spacer.custom_minimum_size.x = width if width > 0 else 12.0
 	
-	# 2. Signale für Formular verbinden
-	check_work_loc.toggled.connect(_on_work_loc_toggled)
-	check_ap2.toggled.connect(_on_ap2_toggled)
-	
-	# 3. Initialzustand setzen
+	check_work_loc.toggled.connect(func(t): container_work_loc.visible = t)
+	check_ap2.toggled.connect(func(t): container_ap2.visible = t)
 	container_work_loc.visible = false
 	container_ap2.visible = false
 	
-	# 4. Signale für Berichte verbinden
-	if btn_report_general:
-		btn_report_general.pressed.connect(_on_btn_report_general_pressed)
-	if btn_report_travel:
-		btn_report_travel.pressed.connect(_on_btn_report_travel_pressed)
-	if btn_report_combined:
-		btn_report_combined.pressed.connect(_on_btn_report_combined_pressed)
-		
-	# 5. Auswahl Modal
+	if btn_report_general: btn_report_general.pressed.connect(func(): print("Bericht General"))
+	if btn_report_travel: btn_report_travel.pressed.connect(func(): print("Bericht Reise"))
+	if btn_report_combined: btn_report_combined.pressed.connect(func(): print("Bericht Kombi"))
+	
+	# Auswahl Modal Logik
 	if select_modal: select_modal.visible = false
 	if btn_cancel_select: btn_cancel_select.pressed.connect(func(): select_modal.visible = false)
 	
-	# Demo-Auswahl Logik
+	# Demo: Kunde wählen
 	if btn_cust_1: btn_cust_1.pressed.connect(func(): _select_customer("Musterfirma GmbH", "KD-1001"))
 	if btn_cust_2: btn_cust_2.pressed.connect(func(): _select_customer("Bäckerei Müller", "KD-1002"))
 
-func _on_work_loc_toggled(toggled_on: bool):
-	container_work_loc.visible = toggled_on
-
-func _on_ap2_toggled(toggled_on: bool):
-	container_ap2.visible = toggled_on
-
-# --- FUNKTIONEN FÜR BERICHTE ---
-
-func _on_btn_report_general_pressed():
-	print("Erstelle allgemeinen Montagebericht (für diverse Typen)...")
-
-func _on_btn_report_travel_pressed():
-	print("Erstelle Reise-/Übernachtungsbericht...")
-
-func _on_btn_report_combined_pressed():
-	print("Erstelle Kombi-Bericht (Montage + Reise)...")
-
-# Helper: Kunde auswählen
 func _select_customer(firma: String, nr: String):
 	input_firma.text = firma
 	input_kundennr.text = nr
 	select_modal.visible = false
-	print("Kunde übernommen: ", firma)
+	print("Kunde gewählt: ", firma)
 
-# --- NEU: WIRD VOM DASHBOARD AUFGERUFEN ---
-func start_new_offer():
-	print("Vertrieb: Starte neues Angebot mit Auswahl...")
+# --- NEU: Startet den Prozess "Neues Angebot" ---
+func start_offer_selection():
+	print("Vertrieb: Öffne Kundenauswahl...")
 	
-	# 1. Hauptfelder leeren
-	if input_firma: input_firma.text = ""
-	if input_kundennr: input_kundennr.text = ""
-	if input_plz: input_plz.text = ""
-	if input_stadt: input_stadt.text = ""
-	if input_strasse: input_strasse.text = ""
+	# 1. Alles leeren
+	input_firma.text = ""
+	input_kundennr.text = ""
 	
-	# 2. Checkboxen zurücksetzen
-	check_work_loc.button_pressed = false
-	check_ap2.button_pressed = false
-	container_work_loc.visible = false
-	container_ap2.visible = false
-	
-	# 3. Positionstabelle leeren (alle außer das Template)
-	for child in positions_list.get_children():
-		if child != pos_template:
-			child.queue_free()
-			
-	# 4. Auswahl-Modal anzeigen (statt direkt Fokus)
+	# 2. Modal öffnen
 	if select_modal:
 		select_modal.visible = true
