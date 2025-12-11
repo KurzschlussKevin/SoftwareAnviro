@@ -1,6 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://cf8fx1iy3sfhc"]
+[gd_scene load_steps=17 format=3 uid="uid://cf8fx1iy3sfhc"]
 
-[ext_resource type="Script" path="res://scene/kundenverwaltung/kundenverwaltung.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://kjd3ie3qv8tq" path="res://scene/kundenverwaltung/kundenverwaltung.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://b1v5dp5spbltr" path="res://assets/icons/user/bleistift.png" id="2_edit"]
 [ext_resource type="Texture2D" uid="uid://cyj23066lh80j" path="res://assets/icons/user/mull.png" id="3_delete"]
 
@@ -21,27 +21,24 @@ border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.0, 0.8, 0.5, 0.3)
+border_color = Color(0, 0.8, 0.5, 0.3)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
-shadow_color = Color(0.0, 0.8, 0.5, 0.1)
+shadow_color = Color(0, 0.8, 0.5, 0.1)
 shadow_size = 10
 shadow_offset = Vector2(0, 4)
 
 [sub_resource type="LabelSettings" id="LabelSettings_card_title"]
-font_size = 16
-font_color = Color(1, 1, 1, 1)
-font_style = "BOLD"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_status_badge"]
-bg_color = Color(0.0, 0.8, 0.5, 0.1)
+bg_color = Color(0, 0.8, 0.5, 0.1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.0, 0.8, 0.5, 1)
+border_color = Color(0, 0.8, 0.5, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -54,13 +51,6 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_icon_hover"]
-bg_color = Color(0.0, 0.8, 0.5, 0.2)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
 [sub_resource type="LabelSettings" id="LabelSettings_card_label"]
 font_size = 12
 font_color = Color(0.5, 0.55, 0.6, 1)
@@ -68,6 +58,13 @@ font_color = Color(0.5, 0.55, 0.6, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_card_value"]
 font_size = 13
 font_color = Color(0.9, 0.9, 0.9, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_icon_hover"]
+bg_color = Color(0, 0.8, 0.5, 0.2)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="Shader" id="Shader_blur"]
 code = "shader_type canvas_item;
@@ -89,7 +86,7 @@ border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.0, 0.96, 0.83, 0.5)
+border_color = Color(0, 0.96, 0.83, 0.5)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -107,9 +104,9 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header_label"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
 content_margin_left = 10.0
 content_margin_right = 10.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="Kundenverwaltung" type="Control"]
 layout_mode = 3
@@ -247,8 +244,8 @@ custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_icon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_icon_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_icon_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_icon_hover")
 icon = ExtResource("2_edit")
 icon_alignment = 1
 expand_icon = true
@@ -259,8 +256,8 @@ layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_colors/icon_normal_color = Color(0.9, 0.4, 0.4, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_icon")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_icon_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_icon_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_icon_hover")
 icon = ExtResource("3_delete")
 icon_alignment = 1
 expand_icon = true
@@ -310,6 +307,7 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 tab_alignment = 1
+current_tab = 0
 
 [node name="Stammdaten" type="MarginContainer" parent="EditModal/Panel/M/VBox/TabContainer"]
 layout_mode = 2
@@ -317,6 +315,7 @@ theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
+metadata/_tab_index = 0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="EditModal/Panel/M/VBox/TabContainer/Stammdaten"]
 layout_mode = 2
@@ -402,8 +401,8 @@ theme_override_constants/separation = 15
 
 [node name="SelectAP" type="OptionButton" parent="EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
 layout_mode = 2
-item_count = 3
 selected = 0
+item_count = 3
 popup/item_0/text = "Ansprechpartner wählen..."
 popup/item_0/id = 0
 popup/item_1/text = "Max Mustermann (Haupt)"
@@ -479,6 +478,7 @@ theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
+metadata/_tab_index = 1
 
 [node name="VBoxTask" type="VBoxContainer" parent="EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag"]
 layout_mode = 2
@@ -506,8 +506,8 @@ theme_override_constants/separation = 10
 [node name="EmployeeOption" type="OptionButton" parent="EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList/EmployeeTemplate"]
 layout_mode = 2
 size_flags_horizontal = 3
-item_count = 3
 selected = 0
+item_count = 3
 popup/item_0/text = "Mitarbeiter wählen..."
 popup/item_0/id = 0
 popup/item_1/text = "Max Mustermann"
@@ -696,6 +696,7 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 tab_alignment = 1
+current_tab = 0
 
 [node name="Stammdaten" type="MarginContainer" parent="CreateModal/Panel/M/VBox/TabContainer"]
 layout_mode = 2
@@ -703,6 +704,7 @@ theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
+metadata/_tab_index = 0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten"]
 layout_mode = 2
@@ -788,8 +790,8 @@ theme_override_constants/separation = 15
 
 [node name="SelectAP" type="OptionButton" parent="CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData"]
 layout_mode = 2
-item_count = 3
 selected = 0
+item_count = 3
 popup/item_0/text = "Ansprechpartner wählen..."
 popup/item_0/id = 0
 popup/item_1/text = "Max Mustermann (Haupt)"
@@ -858,179 +860,6 @@ layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
 placeholder_text = "E-Mail (2)"
 
-[node name="Arbeitsauftrag" type="MarginContainer" parent="CreateModal/Panel/M/VBox/TabContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="VBoxTask" type="VBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag"]
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="LabelInfo" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0.96, 0.83, 1)
-text = "Zuständige Mitarbeiter"
-
-[node name="ScrollContainerEmployees" type="ScrollContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-vertical_scroll_mode = 2
-
-[node name="EmployeeList" type="VBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 10
-
-[node name="EmployeeTemplate" type="HBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="EmployeeOption" type="OptionButton" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList/EmployeeTemplate"]
-layout_mode = 2
-size_flags_horizontal = 3
-item_count = 3
-selected = 0
-popup/item_0/text = "Mitarbeiter wählen..."
-popup/item_0/id = 0
-popup/item_1/text = "Max Mustermann"
-popup/item_1/id = 1
-popup/item_2/text = "Lisa Müller"
-popup/item_2/id = 2
-
-[node name="WeekSpin" type="SpinBox" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList/EmployeeTemplate"]
-layout_mode = 2
-min_value = 1.0
-max_value = 52.0
-value = 1.0
-prefix = "KW"
-
-[node name="DeleteEmpBtn" type="Button" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList/EmployeeTemplate"]
-custom_minimum_size = Vector2(32, 0)
-layout_mode = 2
-icon = ExtResource("3_delete")
-icon_alignment = 1
-expand_icon = true
-
-[node name="AddEmployeeBtn" type="Button" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
-layout_mode = 2
-text = "+ Mitarbeiter hinzufügen"
-
-[node name="HSeparator" type="HSeparator" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
-layout_mode = 2
-theme_override_constants/separation = 10
-
-[node name="LabelPos" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
-layout_mode = 2
-text = "Leistungsbeschreibung / Positionen:"
-
-[node name="HeaderRow" type="PanelContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_table_header")
-
-[node name="HBox" type="HBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Pos" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow/HBox"]
-custom_minimum_size = Vector2(40, 30)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
-text = "Pos"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Bez" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow/HBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
-text = "Bezeichnung"
-vertical_alignment = 1
-
-[node name="Menge" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow/HBox"]
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
-text = "Menge"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Preis" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow/HBox"]
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
-text = "Preis"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="Gesamt" type="Label" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow/HBox"]
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_header_label")
-text = "Gesamt"
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[node name="ScrollbarSpacer" type="Control" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow/HBox"]
-custom_minimum_size = Vector2(12, 0)
-layout_mode = 2
-
-[node name="ScrollContainer" type="ScrollContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
-layout_mode = 2
-size_flags_vertical = 3
-vertical_scroll_mode = 2
-
-[node name="PositionsList" type="VBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 5
-
-[node name="PositionTemplate" type="HBoxContainer" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Pos" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList/PositionTemplate"]
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_input")
-placeholder_text = "1"
-alignment = 1
-
-[node name="Bez" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList/PositionTemplate"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/normal = SubResource("StyleBoxFlat_input")
-placeholder_text = "Artikelbeschreibung"
-
-[node name="Menge" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList/PositionTemplate"]
-custom_minimum_size = Vector2(60, 0)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_input")
-placeholder_text = "1"
-alignment = 2
-
-[node name="Preis" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList/PositionTemplate"]
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_input")
-placeholder_text = "0.00"
-alignment = 2
-
-[node name="Gesamt" type="LineEdit" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList/PositionTemplate"]
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_input")
-placeholder_text = "0.00"
-alignment = 2
-editable = false
-
-[node name="AddPosBtn" type="Button" parent="CreateModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask"]
-layout_mode = 2
-text = "+ Position hinzufügen"
-
 [node name="HBoxButtons" type="HBoxContainer" parent="CreateModal/Panel/M/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 20
@@ -1045,4 +874,4 @@ text = "Abbrechen"
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_icon_hover")
-text = "Speichern & Zuweisen"
+text = "Kunde anlegen"
