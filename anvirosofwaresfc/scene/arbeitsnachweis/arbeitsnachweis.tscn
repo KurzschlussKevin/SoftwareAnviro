@@ -157,31 +157,31 @@ custom_minimum_size = Vector2(400, 250)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_modal_bg")
 
-[node name="M" type="MarginContainer" parent="ViewSelect/Panel"]
+[node name="MarginSelect" type="MarginContainer" parent="ViewSelect/Panel"]
 layout_mode = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
-[node name="VBox" type="VBoxContainer" parent="ViewSelect/Panel/M"]
+[node name="VBoxSelect" type="VBoxContainer" parent="ViewSelect/Panel/MarginSelect"]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="Label" type="Label" parent="ViewSelect/Panel/M/VBox"]
+[node name="Label" type="Label" parent="ViewSelect/Panel/MarginSelect/VBoxSelect"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Arbeitsnachweis starten"
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="ViewSelect/Panel/M/VBox"]
+[node name="Label2" type="Label" parent="ViewSelect/Panel/MarginSelect/VBoxSelect"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
 text = "Bitte wähle den Kunden aus:"
 horizontal_alignment = 1
 
-[node name="OptionCustomerSelect" type="OptionButton" parent="ViewSelect/Panel/M/VBox"]
+[node name="OptionCustomerSelect" type="OptionButton" parent="ViewSelect/Panel/MarginSelect/VBoxSelect"]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 mouse_default_cursor_shape = 2
@@ -193,7 +193,7 @@ popup/item_0/id = 0
 popup/item_1/text = "Musterfirma GmbH"
 popup/item_1/id = 1
 
-[node name="BtnStart" type="Button" parent="ViewSelect/Panel/M/VBox"]
+[node name="BtnStart" type="Button" parent="ViewSelect/Panel/MarginSelect/VBoxSelect"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 mouse_default_cursor_shape = 2
@@ -215,56 +215,56 @@ custom_minimum_size = Vector2(800, 600)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_modal_bg")
 
-[node name="M" type="MarginContainer" parent="ViewCalendar/Panel"]
+[node name="MarginCal" type="MarginContainer" parent="ViewCalendar/Panel"]
 layout_mode = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
-[node name="VBox" type="VBoxContainer" parent="ViewCalendar/Panel/M"]
+[node name="VBoxCal" type="VBoxContainer" parent="ViewCalendar/Panel/MarginCal"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="HBoxHeader" type="HBoxContainer" parent="ViewCalendar/Panel/M/VBox"]
+[node name="HBoxHeader" type="HBoxContainer" parent="ViewCalendar/Panel/MarginCal/VBoxCal"]
 layout_mode = 2
 
-[node name="BtnBackToSelect" type="Button" parent="ViewCalendar/Panel/M/VBox/HBoxHeader"]
+[node name="BtnBackToSelect" type="Button" parent="ViewCalendar/Panel/MarginCal/VBoxCal/HBoxHeader"]
 layout_mode = 2
 text = "<- Kunden wechseln"
 
-[node name="Spacer" type="Control" parent="ViewCalendar/Panel/M/VBox/HBoxHeader"]
+[node name="Spacer" type="Control" parent="ViewCalendar/Panel/MarginCal/VBoxCal/HBoxHeader"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LabelSelectedCustomer" type="Label" parent="ViewCalendar/Panel/M/VBox/HBoxHeader"]
+[node name="LabelSelectedCustomer" type="Label" parent="ViewCalendar/Panel/MarginCal/VBoxCal/HBoxHeader"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.8, 1, 1)
 theme_override_font_sizes/font_size = 18
 text = "Kunde: Musterfirma GmbH"
 
-[node name="HBoxNav" type="HBoxContainer" parent="ViewCalendar/Panel/M/VBox"]
+[node name="HBoxNav" type="HBoxContainer" parent="ViewCalendar/Panel/MarginCal/VBoxCal"]
 layout_mode = 2
 alignment = 1
 
-[node name="BtnPrevMonth" type="Button" parent="ViewCalendar/Panel/M/VBox/HBoxNav"]
+[node name="BtnPrevMonth" type="Button" parent="ViewCalendar/Panel/MarginCal/VBoxCal/HBoxNav"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 text = "<"
 
-[node name="LabelMonthYear" type="Label" parent="ViewCalendar/Panel/M/VBox/HBoxNav"]
+[node name="LabelMonthYear" type="Label" parent="ViewCalendar/Panel/MarginCal/VBoxCal/HBoxNav"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Dezember 2025"
 horizontal_alignment = 1
 
-[node name="BtnNextMonth" type="Button" parent="ViewCalendar/Panel/M/VBox/HBoxNav"]
+[node name="BtnNextMonth" type="Button" parent="ViewCalendar/Panel/MarginCal/VBoxCal/HBoxNav"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 text = ">"
 
-[node name="GridDays" type="GridContainer" parent="ViewCalendar/Panel/M/VBox"]
+[node name="GridDays" type="GridContainer" parent="ViewCalendar/Panel/MarginCal/VBoxCal"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/h_separation = 10
@@ -285,48 +285,71 @@ theme_override_constants/separation = 0
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_header_panel")
 
-[node name="M" type="MarginContainer" parent="ViewDetails/HeaderInfo"]
+[node name="MarginHeader" type="MarginContainer" parent="ViewDetails/HeaderInfo"]
 layout_mode = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 20
 
-[node name="HBox" type="HBoxContainer" parent="ViewDetails/HeaderInfo/M"]
+[node name="HBoxHeaderInfo" type="HBoxContainer" parent="ViewDetails/HeaderInfo/MarginHeader"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="BtnBackToCal" type="Button" parent="ViewDetails/HeaderInfo/M/HBox"]
+[node name="BtnBackToCal" type="Button" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo"]
 custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "<"
 
-[node name="VBoxInfo" type="VBoxContainer" parent="ViewDetails/HeaderInfo/M/HBox"]
+[node name="VBoxInfo" type="VBoxContainer" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 5
 
-[node name="JobTitle" type="Label" parent="ViewDetails/HeaderInfo/M/HBox/VBoxInfo"]
+[node name="JobTitle" type="Label" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo"]
 layout_mode = 2
 text = "Tagesbericht"
 label_settings = SubResource("LabelSettings_title")
 
-[node name="LabelDetailCustomer" type="Label" parent="ViewDetails/HeaderInfo/M/HBox/VBoxInfo"]
+[node name="LabelDetailCustomer" type="Label" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.8, 1, 1)
 text = "Musterfirma GmbH"
 
-[node name="HBoxUser" type="HBoxContainer" parent="ViewDetails/HeaderInfo/M/HBox/VBoxInfo"]
+[node name="HBoxTypeSelect" type="HBoxContainer" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Label" type="Label" parent="ViewDetails/HeaderInfo/M/HBox/VBoxInfo/HBoxUser"]
+[node name="Label" type="Label" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo/HBoxTypeSelect"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+text = "Bereich:"
+
+[node name="OptionReportType" type="OptionButton" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo/HBoxTypeSelect"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_dropdown")
+selected = 0
+item_count = 3
+popup/item_0/text = "Montagebericht"
+popup/item_0/id = 0
+popup/item_1/text = "Reise / Übernachtung"
+popup/item_1/id = 1
+popup/item_2/text = "Kombi (Montage & Reise)"
+popup/item_2/id = 2
+
+[node name="HBoxUser" type="HBoxContainer" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo/HBoxUser"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
 text = "Erfassung für:"
 
-[node name="OptionEmployee" type="OptionButton" parent="ViewDetails/HeaderInfo/M/HBox/VBoxInfo/HBoxUser"]
+[node name="OptionEmployee" type="OptionButton" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo/HBoxUser"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 mouse_default_cursor_shape = 2
@@ -336,36 +359,36 @@ item_count = 1
 popup/item_0/text = "Mir selbst (Admin)"
 popup/item_0/id = 0
 
-[node name="BtnAddColleague" type="Button" parent="ViewDetails/HeaderInfo/M/HBox/VBoxInfo/HBoxUser"]
+[node name="BtnAddColleague" type="Button" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo/HBoxUser"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
 text = "+ Kollege"
 
-[node name="DateSelector" type="HBoxContainer" parent="ViewDetails/HeaderInfo/M/HBox"]
+[node name="DateSelector" type="HBoxContainer" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo"]
 layout_mode = 2
 alignment = 2
 
-[node name="BtnPrevDay" type="Button" parent="ViewDetails/HeaderInfo/M/HBox/DateSelector"]
+[node name="BtnPrevDay" type="Button" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/DateSelector"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
 text = "<"
 
-[node name="LabelDate" type="Label" parent="ViewDetails/HeaderInfo/M/HBox/DateSelector"]
+[node name="LabelDate" type="Label" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/DateSelector"]
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
 text = "09.12.2025"
 horizontal_alignment = 1
 
-[node name="BtnNextDay" type="Button" parent="ViewDetails/HeaderInfo/M/HBox/DateSelector"]
+[node name="BtnNextDay" type="Button" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/DateSelector"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
 text = ">"
 
-[node name="BtnToday" type="Button" parent="ViewDetails/HeaderInfo/M/HBox/DateSelector"]
+[node name="BtnToday" type="Button" parent="ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/DateSelector"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_action")
@@ -382,63 +405,63 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
 
-[node name="Margin" type="MarginContainer" parent="ViewDetails/ScrollContainer/TaskList"]
+[node name="MarginTask" type="MarginContainer" parent="ViewDetails/ScrollContainer/TaskList"]
 layout_mode = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxTasks" type="VBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin"]
+[node name="VBoxTasks" type="VBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/MarginTask"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="TaskTemplate" type="PanelContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks"]
+[node name="TaskTemplate" type="PanelContainer" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks"]
 custom_minimum_size = Vector2(0, 160)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_task_card")
 
-[node name="M" type="MarginContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate"]
+[node name="MarginTpl" type="MarginContainer" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="HBoxMain" type="HBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M"]
+[node name="HBoxMain" type="HBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl"]
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="VBoxLeft" type="VBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain"]
+[node name="VBoxLeft" type="VBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 10
 
-[node name="HBoxTitle" type="HBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft"]
+[node name="HBoxTitle" type="HBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxLeft"]
 layout_mode = 2
 
-[node name="PosNum" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxTitle"]
+[node name="PosNum" type="Label" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxLeft/HBoxTitle"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
 theme_override_font_sizes/font_size = 18
 text = "#01"
 
-[node name="PosTitle" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxTitle"]
+[node name="PosTitle" type="Label" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxLeft/HBoxTitle"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "Filterwechsel Typ A"
 
-[node name="Spacer" type="Control" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxTitle"]
+[node name="Spacer" type="Control" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxLeft/HBoxTitle"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="StatusLabel" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxTitle"]
+[node name="StatusLabel" type="Label" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxLeft/HBoxTitle"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.8, 1, 1)
 theme_override_font_sizes/font_size = 12
 text = "IN ARBEIT"
 
-[node name="ProgressBar" type="ProgressBar" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft"]
+[node name="ProgressBar" type="ProgressBar" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxLeft"]
 custom_minimum_size = Vector2(0, 12)
 layout_mode = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_progress_bg")
@@ -446,53 +469,53 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_progress_fill")
 value = 50.0
 show_percentage = false
 
-[node name="HBoxDetails" type="HBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft"]
+[node name="HBoxDetails" type="HBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxLeft"]
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="LabelTotal" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxDetails"]
+[node name="LabelTotal" type="Label" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxLeft/HBoxDetails"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
 text = "Gesamt: 10 Stk"
 
-[node name="LabelDonePrev" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxDetails"]
+[node name="LabelDonePrev" type="Label" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxLeft/HBoxDetails"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
 text = "Team Gesamt: 2"
 
-[node name="LabelRest" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxLeft/HBoxDetails"]
+[node name="LabelRest" type="Label" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxLeft/HBoxDetails"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
 text = "Offen: 8"
 
-[node name="VSeparator" type="VSeparator" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain"]
+[node name="VSeparator" type="VSeparator" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain"]
 layout_mode = 2
 
-[node name="VBoxInput" type="VBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain"]
+[node name="VBoxInput" type="VBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain"]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="LabelInput" type="Label" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxInput"]
+[node name="LabelInput" type="Label" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxInput"]
 layout_mode = 2
 text = "Heute erledigt (Du):"
 horizontal_alignment = 1
 
-[node name="HBoxSpin" type="HBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxInput"]
+[node name="HBoxSpin" type="HBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxInput"]
 layout_mode = 2
 alignment = 1
 
-[node name="SpinBoxAmount" type="SpinBox" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxInput/HBoxSpin"]
+[node name="SpinBoxAmount" type="SpinBox" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxInput/HBoxSpin"]
 custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
 alignment = 1
 
-[node name="VBoxActions" type="VBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain"]
+[node name="VBoxActions" type="VBoxContainer" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain"]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="BtnComment" type="Button" parent="ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate/M/HBoxMain/VBoxActions"]
+[node name="BtnComment" type="Button" parent="ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate/MarginTpl/HBoxMain/VBoxActions"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 tooltip_text = "Kommentar hinzufügen"
@@ -505,18 +528,18 @@ text = "📝"
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_header_panel")
 
-[node name="M" type="MarginContainer" parent="ViewDetails/FooterBar"]
+[node name="MarginFooter" type="MarginContainer" parent="ViewDetails/FooterBar"]
 layout_mode = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 20
 
-[node name="HBox" type="HBoxContainer" parent="ViewDetails/FooterBar/M"]
+[node name="HBoxFooter" type="HBoxContainer" parent="ViewDetails/FooterBar/MarginFooter"]
 layout_mode = 2
 alignment = 2
 
-[node name="BtnFinish" type="Button" parent="ViewDetails/FooterBar/M/HBox"]
+[node name="BtnFinish" type="Button" parent="ViewDetails/FooterBar/MarginFooter/HBoxFooter"]
 custom_minimum_size = Vector2(250, 50)
 layout_mode = 2
 mouse_default_cursor_shape = 2

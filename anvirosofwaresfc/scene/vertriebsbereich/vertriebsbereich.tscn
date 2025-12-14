@@ -1,8 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://b8y4x6q2w8j9k"]
+[gd_scene load_steps=13 format=3 uid="uid://b8y4x6q2w8kak"]
 
-[ext_resource type="Script" path="res://scene/vertriebsbereich/vertriebsbereich.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://b1v5dp5spbltr" path="res://assets/icons/user/bleistift.png" id="2_edit"]
-[ext_resource type="Texture2D" uid="uid://cyj23066lh80j" path="res://assets/icons/user/mull.png" id="3_delete"]
+[ext_resource type="Script" uid="uid://3ho80dv83x8p" path="res://scene/vertriebsbereich/vertriebsbereich.gd" id="1_script"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_glass"]
 bg_color = Color(0.08, 0.08, 0.12, 0.6)
@@ -21,7 +19,6 @@ shadow_size = 5
 [sub_resource type="LabelSettings" id="LabelSettings_section_title"]
 font_size = 20
 font_color = Color(0.8, 0.9, 1, 1)
-font_style = "BOLD"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_input"]
 content_margin_left = 10.0
@@ -59,12 +56,19 @@ shadow_color = Color(0.2, 0.4, 0.9, 0.3)
 shadow_size = 8
 shadow_offset = Vector2(0, 2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_icon_hover"]
-bg_color = Color(0.0, 0.6, 0.8, 0.2)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_table_header"]
+bg_color = Color(0.2, 0.3, 0.5, 0.2)
+border_width_bottom = 1
+border_color = Color(0.2, 0.3, 0.5, 0.5)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header_label"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="Shader" id="Shader_blur"]
 code = "shader_type canvas_item;
@@ -86,7 +90,7 @@ border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.0, 0.6, 0.8, 0.5)
+border_color = Color(0, 0.6, 0.8, 0.5)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
@@ -94,19 +98,12 @@ corner_radius_bottom_left = 16
 shadow_color = Color(0, 0, 0, 0.4)
 shadow_size = 20
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_table_header"]
-bg_color = Color(0.2, 0.3, 0.5, 0.2)
-border_width_bottom = 1
-border_color = Color(0.2, 0.3, 0.5, 0.5)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header_label"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-content_margin_left = 10.0
-content_margin_right = 10.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_icon_hover"]
+bg_color = Color(0, 0.6, 0.8, 0.2)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="Vertriebsbereich" type="Control"]
 layout_mode = 3
@@ -160,15 +157,15 @@ label_settings = SubResource("LabelSettings_section_title")
 
 [node name="Firma" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Firma"
 caret_blink = true
 
 [node name="Kundennr" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Kundennummer"
 caret_blink = true
 
@@ -179,8 +176,8 @@ theme_override_constants/separation = 10
 [node name="PLZ" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/Row"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "PLZ"
 caret_blink = true
 
@@ -188,15 +185,15 @@ caret_blink = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Stadt"
 caret_blink = true
 
 [node name="Strasse" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Straße & Hausnummer"
 caret_blink = true
 
@@ -216,14 +213,14 @@ theme_override_constants/separation = 10
 
 [node name="LabelLoc" type="Label" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/ContainerWorkLoc"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0, 0.96, 0.83, 1)
+theme_override_colors/font_color = Color(0, 0.96, 0.83, 1)
 theme_override_font_sizes/font_size = 14
 text = "Adresse des Leistungsorts / Prüforts:"
 
 [node name="Strasse" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/ContainerWorkLoc"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Straße & Hausnummer"
 caret_blink = true
 
@@ -234,8 +231,8 @@ theme_override_constants/separation = 10
 [node name="PLZ" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/ContainerWorkLoc/RowLoc"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "PLZ"
 caret_blink = true
 
@@ -243,8 +240,8 @@ caret_blink = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Stadt"
 caret_blink = true
 
@@ -264,30 +261,30 @@ theme_override_constants/separation = 10
 [node name="Vorname" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/RowAP"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Vorname"
 caret_blink = true
 
 [node name="Nachname" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/RowAP"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Nachname"
 caret_blink = true
 
 [node name="Email" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "E-Mail"
 caret_blink = true
 
 [node name="Telefon" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Telefon / Mobil"
 caret_blink = true
 
@@ -303,7 +300,7 @@ theme_override_constants/separation = 10
 
 [node name="LabelAP2" type="Label" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/ContainerAP2"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0, 0.96, 0.83, 1)
+theme_override_colors/font_color = Color(0, 0.96, 0.83, 1)
 theme_override_font_sizes/font_size = 14
 text = "2. Ansprechpartner:"
 
@@ -314,30 +311,30 @@ theme_override_constants/separation = 10
 [node name="Vorname" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/ContainerAP2/RowAP2"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Vorname"
 caret_blink = true
 
 [node name="Nachname" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/ContainerAP2/RowAP2"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Nachname"
 caret_blink = true
 
 [node name="EmailAP2" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/ContainerAP2"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "E-Mail (2)"
 caret_blink = true
 
 [node name="Telefon" type="LineEdit" parent="HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/ContainerAP2"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Telefon / Mobil (2)"
 caret_blink = true
 
@@ -428,14 +425,17 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_default_cursor_shape = 2
-item_count = 3
 selected = 0
+item_count = 4
 popup/item_0/text = "Bitte wählen..."
 popup/item_0/id = 0
-popup/item_1/text = "Paket: Website Standard"
+popup/item_0/separator = true
+popup/item_1/text = "Ortsveränderliche Arbeitsmittel"
 popup/item_1/id = 1
-popup/item_2/text = "Paket: SEO Optimierung"
+popup/item_2/text = "Ortsfeste Anlagen"
 popup/item_2/id = 2
+popup/item_3/text = "Ortsfeste Maschinen"
+popup/item_3/id = 3
 
 [node name="LoadTemplateBtn" type="Button" parent="HBox/RightCol/TemplatePanel/M/HBox"]
 custom_minimum_size = Vector2(100, 0)
@@ -533,39 +533,39 @@ theme_override_constants/separation = 0
 [node name="Pos" type="LineEdit" parent="HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
 custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "1"
 alignment = 1
 
 [node name="Bez" type="LineEdit" parent="HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Artikelbeschreibung"
 
 [node name="Menge" type="LineEdit" parent="HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
 custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "1"
 alignment = 2
 
 [node name="Preis" type="LineEdit" parent="HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "0.00"
 alignment = 2
 
 [node name="Gesamt" type="LineEdit" parent="HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer/PositionsList/PositionTemplate"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "0.00"
 alignment = 2
 editable = false
@@ -631,8 +631,8 @@ horizontal_alignment = 1
 [node name="CustomerOption" type="OptionButton" parent="SelectCustomerModal/Panel/M/VBox"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-item_count = 3
 selected = 0
+item_count = 3
 popup/item_0/text = "Bitte wählen..."
 popup/item_0/id = 0
 popup/item_1/text = "Musterfirma GmbH"
@@ -693,6 +693,27 @@ theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
 text = "für Musterfirma GmbH"
 horizontal_alignment = 1
 
+[node name="ReportTypeHBox" type="HBoxContainer" parent="CreateOfferModal/Panel/M/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="Label" type="Label" parent="CreateOfferModal/Panel/M/VBox/ReportTypeHBox"]
+layout_mode = 2
+text = "Berichtstyp:"
+
+[node name="ReportTypeOption" type="OptionButton" parent="CreateOfferModal/Panel/M/VBox/ReportTypeHBox"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Montagebericht (Typen)"
+popup/item_0/id = 0
+popup/item_1/text = "Reise / Übernachtung"
+popup/item_1/id = 1
+popup/item_2/text = "Kombi (Montage & Reise)"
+popup/item_2/id = 2
+
 [node name="TemplateHBox" type="HBoxContainer" parent="CreateOfferModal/Panel/M/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 15
@@ -705,8 +726,8 @@ text = "Vorlage wählen:"
 [node name="TemplateOption" type="OptionButton" parent="CreateOfferModal/Panel/M/VBox/TemplateHBox"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
-item_count = 3
 selected = 0
+item_count = 3
 popup/item_0/text = "Bitte wählen..."
 popup/item_0/id = 0
 popup/item_1/text = "Paket: Website Standard"

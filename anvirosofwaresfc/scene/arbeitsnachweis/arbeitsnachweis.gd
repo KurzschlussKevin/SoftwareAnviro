@@ -6,36 +6,38 @@ extends Control
 @onready var view_calendar = $ViewCalendar
 @onready var view_details = $ViewDetails
 
-# --- SELECT ---
-@onready var option_customer_select = $ViewSelect/Panel/M/VBox/OptionCustomerSelect
-@onready var btn_start = $ViewSelect/Panel/M/VBox/BtnStart
+# --- VIEW 1: KUNDEN SELECT ---
+@onready var option_customer_select = $ViewSelect/Panel/MarginSelect/VBoxSelect/OptionCustomerSelect
+@onready var btn_start = $ViewSelect/Panel/MarginSelect/VBoxSelect/BtnStart
 
-# --- CALENDAR ---
-@onready var label_selected_cust = $ViewCalendar/Panel/M/VBox/HBoxHeader/LabelSelectedCustomer
-@onready var label_month_year = $ViewCalendar/Panel/M/VBox/HBoxNav/LabelMonthYear
-@onready var btn_prev_month = $ViewCalendar/Panel/M/VBox/HBoxNav/BtnPrevMonth
-@onready var btn_next_month = $ViewCalendar/Panel/M/VBox/HBoxNav/BtnNextMonth
-@onready var btn_back_select = $ViewCalendar/Panel/M/VBox/HBoxHeader/BtnBackToSelect
-@onready var grid_days = $ViewCalendar/Panel/M/VBox/GridDays
+# --- VIEW 2: CALENDAR ---
+@onready var label_selected_cust = $ViewCalendar/Panel/MarginCal/VBoxCal/HBoxHeader/LabelSelectedCustomer
+@onready var label_month_year = $ViewCalendar/Panel/MarginCal/VBoxCal/HBoxNav/LabelMonthYear
+@onready var btn_prev_month = $ViewCalendar/Panel/MarginCal/VBoxCal/HBoxNav/BtnPrevMonth
+@onready var btn_next_month = $ViewCalendar/Panel/MarginCal/VBoxCal/HBoxNav/BtnNextMonth
+@onready var btn_back_select = $ViewCalendar/Panel/MarginCal/VBoxCal/HBoxHeader/BtnBackToSelect
+@onready var grid_days = $ViewCalendar/Panel/MarginCal/VBoxCal/GridDays
 
-# --- DETAILS ---
-@onready var tasks_container = $ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks
-@onready var task_template = $ViewDetails/ScrollContainer/TaskList/Margin/VBoxTasks/TaskTemplate
-@onready var label_detail_customer = $ViewDetails/HeaderInfo/M/HBox/VBoxInfo/LabelDetailCustomer
-@onready var btn_back_cal = $ViewDetails/HeaderInfo/M/HBox/BtnBackToCal
-@onready var btn_finish = $ViewDetails/FooterBar/M/HBox/BtnFinish
+# --- VIEW 3: DETAILS ---
+@onready var tasks_container = $ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks
+@onready var task_template = $ViewDetails/ScrollContainer/TaskList/MarginTask/VBoxTasks/TaskTemplate
+@onready var label_detail_customer = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo/LabelDetailCustomer
+@onready var btn_back_cal = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/BtnBackToCal
+@onready var btn_finish = $ViewDetails/FooterBar/MarginFooter/HBoxFooter/BtnFinish
 
-@onready var option_employee = $ViewDetails/HeaderInfo/M/HBox/VBoxInfo/HBoxUser/OptionEmployee
-@onready var btn_add_colleague = $ViewDetails/HeaderInfo/M/HBox/VBoxInfo/HBoxUser/BtnAddColleague
+@onready var option_employee = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo/HBoxUser/OptionEmployee
+@onready var btn_add_colleague = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo/HBoxUser/BtnAddColleague
+@onready var option_report_type = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo/HBoxTypeSelect/OptionReportType
 
 # Datums-Steuerung (Detailansicht)
-@onready var label_date_detail = $ViewDetails/HeaderInfo/M/HBox/DateSelector/LabelDate
-@onready var btn_prev_day = $ViewDetails/HeaderInfo/M/HBox/DateSelector/BtnPrevDay
-@onready var btn_next_day = $ViewDetails/HeaderInfo/M/HBox/DateSelector/BtnNextDay
-@onready var btn_today = $ViewDetails/HeaderInfo/M/HBox/DateSelector/BtnToday
+@onready var label_date_detail = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/DateSelector/LabelDate
+@onready var btn_prev_day = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/DateSelector/BtnPrevDay
+@onready var btn_next_day = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/DateSelector/BtnNextDay
+@onready var btn_today = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/DateSelector/BtnToday
 
 # --- DATA ---
 var current_customer = ""
+var current_report_type_id = 0 # 0=Montage, 1=Reise, 2=Kombi
 var current_view_month = {} # {year, month}
 var current_detail_unix = 0 # Unix-Timestamp für den ausgewählten Tag in Details
 var session_data = {} 
@@ -52,15 +54,17 @@ func _ready():
 	current_view_month = { "year": time.year, "month": time.month }
 	current_detail_unix = Time.get_unix_time_from_system()
 	
-	# Signale verbinden
+	# --- SIGNALE VERBINDEN ---
+	
+	# Kunde wählen
 	btn_start.pressed.connect(_on_start_pressed)
 	btn_back_select.pressed.connect(func(): show_view(view_select))
-	btn_back_cal.pressed.connect(func(): show_view(view_calendar))
 	
+	# Kalender Navigation
 	btn_prev_month.pressed.connect(_on_prev_month)
 	btn_next_month.pressed.connect(_on_next_month)
 	
-	# Details Navigation
+	# Details Navigation & Aktionen
 	btn_prev_day.pressed.connect(_on_prev_day_details)
 	btn_next_day.pressed.connect(_on_next_day_details)
 	btn_today.pressed.connect(_on_today_details)
@@ -69,6 +73,7 @@ func _ready():
 	
 	option_employee.item_selected.connect(_on_employee_change)
 	btn_add_colleague.pressed.connect(_on_add_colleague)
+	option_report_type.item_selected.connect(_on_report_type_changed)
 
 func show_view(target_view):
 	view_select.visible = false
@@ -76,13 +81,11 @@ func show_view(target_view):
 	view_details.visible = false
 	target_view.visible = true
 	
-	# Blur Logik: Unscharf bei Auswahl & Kalender (Overlay-Feeling)
-	# Scharf bei Details (Arbeitsmodus)
 	if target_view == view_select or target_view == view_calendar:
 		blur_layer.visible = true
 	else:
-		blur_layer.visible = true # Ich lasse es an, sieht meist besser aus. Setze auf false wenn nicht gewünscht.
-	
+		blur_layer.visible = true
+		
 	if target_view == view_calendar:
 		build_calendar()
 
@@ -133,7 +136,9 @@ func build_calendar():
 
 func has_data_for_date(date_str):
 	if session_data.has(date_str) and session_data[date_str].has(current_customer):
-		return true
+		var types_data = session_data[date_str][current_customer]
+		if not types_data.is_empty():
+			return true
 	return false
 
 func _on_prev_month():
@@ -152,19 +157,21 @@ func _on_next_month():
 
 # --- DETAILS LOGIK ---
 func open_day_details(day: int):
-	# Erstelle Zeitstempel für den gewählten Tag
+	current_report_type_id = option_report_type.selected
 	var date_str = "%d-%02d-%02dT12:00:00" % [current_view_month.year, current_view_month.month, day]
 	current_detail_unix = Time.get_unix_time_from_datetime_string(date_str)
-	
 	update_detail_view()
 	show_view(view_details)
 
 func update_detail_view():
 	var dt = Time.get_date_dict_from_unix_time(current_detail_unix)
 	var date_str = "%02d.%02d.%d" % [dt.day, dt.month, dt.year]
-	
 	label_date_detail.text = date_str
 	label_detail_customer.text = current_customer
+	refresh_task_list()
+
+func _on_report_type_changed(idx):
+	current_report_type_id = idx
 	refresh_task_list()
 
 func _on_prev_day_details():
@@ -182,25 +189,37 @@ func _on_today_details():
 func refresh_task_list():
 	for c in tasks_container.get_children():
 		if c != task_template: c.queue_free()
-	create_task("01", "Filterwechsel", 10, 2)
-	create_task("02", "Reinigung", 5, 0)
+	
+	if current_report_type_id == 0: # Montage
+		create_task("01", "Filterwechsel Typ A", 10, 2)
+		create_task("02", "Reinigung Anlage", 5, 0)
+	elif current_report_type_id == 1: # Reise
+		create_task("R1", "Anfahrt (km)", 500, 0)
+		create_task("R2", "Übernachtung", 1, 0)
+	elif current_report_type_id == 2: # Kombi
+		create_task("01", "Filterwechsel Typ A", 10, 2)
+		create_task("R1", "Anfahrt (km)", 500, 0)
 
 func create_task(pos_nr, title, total, done_prev):
 	var date_key = label_date_detail.text
 	if not session_data.has(date_key): session_data[date_key] = {}
 	if not session_data[date_key].has(current_customer): session_data[date_key][current_customer] = {}
-	var task_data_root = session_data[date_key][current_customer]
+	
+	var customer_data = session_data[date_key][current_customer]
+	if not customer_data.has(current_report_type_id): customer_data[current_report_type_id] = {}
+	
+	var task_data_root = customer_data[current_report_type_id]
 	if not task_data_root.has(pos_nr): task_data_root[pos_nr] = {}
+	
 	var user_values = task_data_root[pos_nr]
 	
 	var t = task_template.duplicate()
 	t.visible = true
+	t.get_node("MarginTpl/HBoxMain/VBoxLeft/HBoxTitle/PosNum").text = "#" + pos_nr
+	t.get_node("MarginTpl/HBoxMain/VBoxLeft/HBoxTitle/PosTitle").text = title
+	t.get_node("MarginTpl/HBoxMain/VBoxLeft/HBoxDetails/LabelTotal").text = "Gesamt: %d" % total
 	
-	t.get_node("M/HBoxMain/VBoxLeft/HBoxTitle/PosNum").text = "#" + pos_nr
-	t.get_node("M/HBoxMain/VBoxLeft/HBoxTitle/PosTitle").text = title
-	t.get_node("M/HBoxMain/VBoxLeft/HBoxDetails/LabelTotal").text = "Gesamt: %d" % total
-	
-	var spin = t.get_node("M/HBoxMain/VBoxInput/HBoxSpin/SpinBoxAmount")
+	var spin = t.get_node("MarginTpl/HBoxMain/VBoxInput/HBoxSpin/SpinBoxAmount")
 	spin.max_value = 9999
 	spin.value = user_values.get(current_employee_id, 0)
 	
@@ -209,13 +228,13 @@ func create_task(pos_nr, title, total, done_prev):
 		var sum = done_prev
 		for uid in user_values: sum += user_values[uid]
 		
-		t.get_node("M/HBoxMain/VBoxLeft/HBoxDetails/LabelDonePrev").text = "Stand: %d" % sum
-		t.get_node("M/HBoxMain/VBoxLeft/ProgressBar").value = sum
-		t.get_node("M/HBoxMain/VBoxLeft/ProgressBar").max_value = total
+		t.get_node("MarginTpl/HBoxMain/VBoxLeft/HBoxDetails/LabelDonePrev").text = "Stand: %d" % sum
+		t.get_node("MarginTpl/HBoxMain/VBoxLeft/ProgressBar").value = sum
+		t.get_node("MarginTpl/HBoxMain/VBoxLeft/ProgressBar").max_value = total
 		
 		var rest = total - sum
-		var lbl_rest = t.get_node("M/HBoxMain/VBoxLeft/HBoxDetails/LabelRest")
-		var lbl_status = t.get_node("M/HBoxMain/VBoxLeft/HBoxTitle/StatusLabel")
+		var lbl_rest = t.get_node("MarginTpl/HBoxMain/VBoxLeft/HBoxDetails/LabelRest")
+		var lbl_status = t.get_node("MarginTpl/HBoxMain/VBoxLeft/HBoxTitle/StatusLabel")
 		
 		if rest == 0:
 			lbl_rest.text = "Erledigt"
