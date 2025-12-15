@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b8x4q2j6l7n5"]
 
-[ext_resource type="Script" path="res://scene/einstellungen/einstellungen.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://bgi8b0v8pehs8" path="res://scene/einstellungen/einstellungen.gd" id="1_script"]
 
 [node name="Einstellungen" type="Control"]
 layout_mode = 3
@@ -46,6 +46,7 @@ text = "Einstellungen & Konfiguration"
 [node name="TabContainer" type="TabContainer" parent="MainPanel/Margin/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
+current_tab = 0
 
 [node name="Firma" type="MarginContainer" parent="MainPanel/Margin/VBox/TabContainer"]
 layout_mode = 2
@@ -53,6 +54,7 @@ theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
+metadata/_tab_index = 0
 
 [node name="HBoxContent" type="HBoxContainer" parent="MainPanel/Margin/VBox/TabContainer/Firma"]
 layout_mode = 2
@@ -245,6 +247,7 @@ theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
+metadata/_tab_index = 1
 
 [node name="VBoxStyle" type="VBoxContainer" parent="MainPanel/Margin/VBox/TabContainer/Darstellung"]
 layout_mode = 2
@@ -252,8 +255,8 @@ theme_override_constants/separation = 20
 
 [node name="LabelStyleHead" type="Label" parent="MainPanel/Margin/VBox/TabContainer/Darstellung/VBoxStyle"]
 layout_mode = 2
-text = "Design & Anpassung"
 theme_override_font_sizes/font_size = 18
+text = "Design & Anpassung"
 
 [node name="GridStyle" type="GridContainer" parent="MainPanel/Margin/VBox/TabContainer/Darstellung/VBoxStyle"]
 layout_mode = 2
@@ -308,6 +311,7 @@ theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
+metadata/_tab_index = 2
 
 [node name="VBoxUser" type="VBoxContainer" parent="MainPanel/Margin/VBox/TabContainer/Benutzer"]
 layout_mode = 2
@@ -349,6 +353,7 @@ theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
+metadata/_tab_index = 3
 
 [node name="VBoxSys" type="VBoxContainer" parent="MainPanel/Margin/VBox/TabContainer/System"]
 layout_mode = 2

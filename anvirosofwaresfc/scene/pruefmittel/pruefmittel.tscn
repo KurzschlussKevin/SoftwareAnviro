@@ -1,0 +1,215 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2k8x9j4l3m2"]
+
+[ext_resource type="Script" path="res://scene/pruefmittel/pruefmittel.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.141176, 0.141176, 0.141176, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+bg_color = Color(0, 0, 0, 0.3)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 10.0
+expand_margin_top = 5.0
+expand_margin_right = 10.0
+expand_margin_bottom = 5.0
+
+[node name="Pruefmittel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="MainPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="MainPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBox" type="HBoxContainer" parent="MainPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LeftCol" type="VBoxContainer" parent="MainPanel/Margin/HBox"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="MainPanel/Margin/HBox/LeftCol"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Gerätebestand"
+
+[node name="DeviceList" type="ItemList" parent="MainPanel/Margin/HBox/LeftCol"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+item_count = 2
+item_0/text = "Gossen Metrawatt - SECUTEST"
+item_1/text = "Fluke 6500-2"
+
+[node name="BtnNew" type="Button" parent="MainPanel/Margin/HBox/LeftCol"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+text = "+ Neues Prüfgerät erfassen"
+
+[node name="RightCol" type="Panel" parent="MainPanel/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="M" type="MarginContainer" parent="MainPanel/Margin/HBox/RightCol"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBox" type="VBoxContainer" parent="MainPanel/Margin/HBox/RightCol/M"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Header" type="HBoxContainer" parent="MainPanel/Margin/HBox/RightCol/M/VBox"]
+layout_mode = 2
+alignment = 2
+
+[node name="StatusBadge" type="Label" parent="MainPanel/Margin/HBox/RightCol/M/VBox/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge")
+text = " STATUS "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelID" type="Label" parent="MainPanel/Margin/HBox/RightCol/M/VBox/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+text = "Intern-ID: #0000"
+
+[node name="Grid" type="GridContainer" parent="MainPanel/Margin/HBox/RightCol/M/VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="L1" type="Label" parent="MainPanel/Margin/HBox/RightCol/M/VBox/Grid"]
+layout_mode = 2
+text = "Gerätebezeichnung / Typ"
+
+[node name="InputName" type="LineEdit" parent="MainPanel/Margin/HBox/RightCol/M/VBox/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "z.B. SECUTEST PRO"
+
+[node name="L2" type="Label" parent="MainPanel/Margin/HBox/RightCol/M/VBox/Grid"]
+layout_mode = 2
+text = "Hersteller"
+
+[node name="InputManuf" type="LineEdit" parent="MainPanel/Margin/HBox/RightCol/M/VBox/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "z.B. Gossen Metrawatt"
+
+[node name="L3" type="Label" parent="MainPanel/Margin/HBox/RightCol/M/VBox/Grid"]
+layout_mode = 2
+text = "Seriennummer"
+
+[node name="InputSerial" type="LineEdit" parent="MainPanel/Margin/HBox/RightCol/M/VBox/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Vom Typenschild"
+
+[node name="L4" type="Label" parent="MainPanel/Margin/HBox/RightCol/M/VBox/Grid"]
+layout_mode = 2
+text = "Verwendete Norm (Standard)"
+
+[node name="InputNorm" type="LineEdit" parent="MainPanel/Margin/HBox/RightCol/M/VBox/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "z.B. DIN VDE 0701-0702"
+
+[node name="HSeparator" type="HSeparator" parent="MainPanel/Margin/HBox/RightCol/M/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="LabelCal" type="Label" parent="MainPanel/Margin/HBox/RightCol/M/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Kalibrierungsdaten"
+
+[node name="GridCal" type="GridContainer" parent="MainPanel/Margin/HBox/RightCol/M/VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="LC" type="Label" parent="MainPanel/Margin/HBox/RightCol/M/VBox/GridCal"]
+layout_mode = 2
+text = "Letzte Kalibrierung am"
+
+[node name="InputLastCal" type="LineEdit" parent="MainPanel/Margin/HBox/RightCol/M/VBox/GridCal"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "YYYY-MM-DD"
+
+[node name="NC" type="Label" parent="MainPanel/Margin/HBox/RightCol/M/VBox/GridCal"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.6, 0.4, 1)
+text = "Nächste Kalibrierung fällig"
+
+[node name="InputNextCal" type="LineEdit" parent="MainPanel/Margin/HBox/RightCol/M/VBox/GridCal"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "YYYY-MM-DD"
+
+[node name="Spacer" type="Control" parent="MainPanel/Margin/HBox/RightCol/M/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Footer" type="HBoxContainer" parent="MainPanel/Margin/HBox/RightCol/M/VBox"]
+layout_mode = 2
+alignment = 2
+
+[node name="BtnSave" type="Button" parent="MainPanel/Margin/HBox/RightCol/M/VBox/Footer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 1, 0.6, 1)
+text = "Gerät speichern"

@@ -241,6 +241,21 @@ icon = ExtResource("11_export")
 alignment = 0
 expand_icon = true
 
+[node name="Btnpruefmittel" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
+theme_override_constants/h_separation = 15
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "Prüfmittelverwaltung"
+icon = ExtResource("8_logout")
+alignment = 0
+expand_icon = true
+
 [node name="BtnEinstellungen" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
 layout_mode = 2
 mouse_default_cursor_shape = 2

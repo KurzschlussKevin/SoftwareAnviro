@@ -11,7 +11,7 @@ var scene_arbeitsnachweis = preload("res://scene/arbeitsnachweis/arbeitsnachweis
 var scene_dokumentation = preload("res://scene/dokumentation/dokumentation.tscn")
 var scene_export = preload("res://scene/reportexport/report_export.tscn")
 var scene_einstellungen = preload("res://scene/einstellungen/einstellungen.tscn")
-
+var scene_pruefmittel = preload("res://scene/pruefmittel/pruefmittel.tscn")
 @onready var content_container = $HBoxContainer/ContentArea/MainContent/SceneContainer
 @onready var page_title = $HBoxContainer/ContentArea/TopBar/Margin/HBox/PageTitle
 
@@ -26,6 +26,7 @@ var scene_einstellungen = preload("res://scene/einstellungen/einstellungen.tscn"
 @onready var btn_export = $HBoxContainer/Sidebar/VBox/NavButtons/BtnExport
 @onready var btn_logout = $HBoxContainer/Sidebar/VBox/LogoutArea/BtnLogout
 @onready var btn_einstellungen: Button = $HBoxContainer/Sidebar/VBox/NavButtons/BtnEinstellungen
+@onready var btn_pruefmittel: Button = $HBoxContainer/Sidebar/VBox/NavButtons/Btnpruefmittel
 
 
 func _ready():
@@ -39,7 +40,7 @@ func _ready():
 	btn_dokumentation.pressed.connect(func(): load_scene(scene_dokumentation, "Dokumentation"))
 	btn_export.pressed.connect(func(): load_scene(scene_export, "Export & Berichte"))
 	btn_einstellungen.pressed.connect(func(): load_scene(scene_einstellungen, "Einstellungen"))
-	
+	btn_pruefmittel.pressed.connect(func(): load_scene(scene_pruefmittel, "Prüfmittelverwaltung"))
 	btn_logout.pressed.connect(func(): print("Logout"))
 	
 	load_scene(scene_dashboard, "Dashboard")
