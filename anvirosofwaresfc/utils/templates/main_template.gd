@@ -10,6 +10,7 @@ var scene_mitarbeiter = preload("res://scene/mitarbeiterverwaltung/mitarbeiterve
 var scene_arbeitsnachweis = preload("res://scene/arbeitsnachweis/arbeitsnachweis.tscn")
 var scene_dokumentation = preload("res://scene/dokumentation/dokumentation.tscn")
 var scene_export = preload("res://scene/reportexport/report_export.tscn")
+var scene_einstellungen = preload("res://scene/einstellungen/einstellungen.tscn")
 
 @onready var content_container = $HBoxContainer/ContentArea/MainContent/SceneContainer
 @onready var page_title = $HBoxContainer/ContentArea/TopBar/Margin/HBox/PageTitle
@@ -24,6 +25,8 @@ var scene_export = preload("res://scene/reportexport/report_export.tscn")
 @onready var btn_dokumentation = $HBoxContainer/Sidebar/VBox/NavButtons/BtnDokumentation
 @onready var btn_export = $HBoxContainer/Sidebar/VBox/NavButtons/BtnExport
 @onready var btn_logout = $HBoxContainer/Sidebar/VBox/LogoutArea/BtnLogout
+@onready var btn_einstellungen: Button = $HBoxContainer/Sidebar/VBox/NavButtons/BtnEinstellungen
+
 
 func _ready():
 	# Navigation verbinden
@@ -35,6 +38,7 @@ func _ready():
 	btn_arbeitsnachweis.pressed.connect(func(): load_scene(scene_arbeitsnachweis, "Arbeitsnachweis"))
 	btn_dokumentation.pressed.connect(func(): load_scene(scene_dokumentation, "Dokumentation"))
 	btn_export.pressed.connect(func(): load_scene(scene_export, "Export & Berichte"))
+	btn_einstellungen.pressed.connect(func(): load_scene(scene_einstellungen, "Einstellungen"))
 	
 	btn_logout.pressed.connect(func(): print("Logout"))
 	

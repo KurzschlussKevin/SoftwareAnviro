@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c53ca6sarap42"]
+[gd_scene load_steps=20 format=3 uid="uid://c53ca6sarap42"]
 
 [ext_resource type="Script" uid="uid://cpfd2hsjr3ok2" path="res://utils/templates/main_template.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://cg37ous7ht23c" path="res://utils/vibe/vibe_scene.tscn" id="2_vibe"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cy4li6s6o3bkb" path="res://assets/icons/user/prufen.png" id="9_check"]
 [ext_resource type="Texture2D" uid="uid://bmel4bifldxoq" path="res://assets/icons/rechnung-einreichen.png" id="10_docs"]
 [ext_resource type="Texture2D" uid="uid://boxha6sllors6" path="res://assets/icons/umschlag.png" id="11_export"]
+[ext_resource type="Texture2D" uid="uid://dy0nodsdhb41j" path="res://assets/icons/einstellungen.png" id="12_1fsve"]
 [ext_resource type="Texture2D" uid="uid://hy622hmnfkss" path="res://assets/icons/marker.png" id="12_marker"]
 
 [sub_resource type="Environment" id="Environment_main"]
@@ -237,6 +238,21 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Export & Berichte"
 icon = ExtResource("11_export")
+alignment = 0
+expand_icon = true
+
+[node name="BtnEinstellungen" type="Button" parent="HBoxContainer/Sidebar/VBox/NavButtons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0, 0.960784, 0.831373, 1)
+theme_override_constants/h_separation = 15
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "Einstellungen"
+icon = ExtResource("12_1fsve")
 alignment = 0
 expand_icon = true
 
