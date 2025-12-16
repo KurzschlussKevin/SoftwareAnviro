@@ -8,21 +8,27 @@ signal settings_saved
 @onready var input_addr = %InputAddr
 @onready var input_tax = %InputTax
 @onready var input_mail = %InputMail
-# Neu: Bank & Rechtliches
+# Bank & Rechtliches
 @onready var input_iban = %InputIBAN
 @onready var input_bic = %InputBIC
 @onready var input_bank = %InputBank
 @onready var input_ceo = %InputCEO
 
-# Darstellung (Neu)
+# Darstellung
 @onready var color_picker = %ColorAccent
 @onready var slider_scale = %SliderScale
 @onready var lbl_scale_val = %LabelScaleVal
+@onready var check_darkmode = %CheckDarkMode
+
+# Benutzer (NEU: Tree statt ItemList)
+@onready var user_tree = %UserTree
+@onready var btn_add_user = %BtnAddUser
+@onready var btn_reset_pwd = %BtnResetPwd
 
 # System
-@onready var check_darkmode = %CheckDarkMode
 @onready var check_autosave = %CheckAutoSave
 @onready var lbl_version = %LabelVersion
+@onready var btn_load_backup = %BtnLoadBackup # NEU
 
 # Buttons
 @onready var btn_save = %BtnSave
@@ -31,15 +37,15 @@ signal settings_saved
 
 # --- DATENSPEICHER ---
 var current_config = {
-	"company_name": "Musterhandwerk GmbH",
-	"address": "Musterstraße 1\n12345 Musterstadt",
+	"company_name": "Musterprüfservice GmbH",
+	"address": "Stromweg 1\n12345 Volthausen",
 	"tax_id": "DE123456789",
-	"email": "kontakt@musterhandwerk.de",
+	"email": "info@pruefservice.de",
 	"iban": "DE00 1234 5678 9000 0000 00",
 	"bic": "ABCDEFGH",
-	"bank": "Musterbank",
+	"bank": "Volksbank",
 	"ceo": "Max Mustermann",
-	"accent_color": Color(0.2, 0.6, 1.0), # Standard Blau
+	"accent_color": Color(0.2, 0.6, 1.0),
 	"ui_scale": 1.0,
 	"darkmode": true,
 	"autosave": true
@@ -47,16 +53,15 @@ var current_config = {
 
 func _ready():
 	load_settings_to_ui()
+	setup_user_tree() # Baum aufbauen
 	
 	btn_save.pressed.connect(_on_save_pressed)
 	btn_cancel.pressed.connect(_on_cancel_pressed)
 	btn_delete_data.pressed.connect(_on_delete_pressed)
+	btn_load_backup.pressed.connect(_on_load_backup_pressed) # Neu verbinden
 	
-	# UI Logik für Slider
 	slider_scale.value_changed.connect(func(v): lbl_scale_val.text = "%d %%" % (v * 100))
-	
-	# Version setzen
-	if lbl_version: lbl_version.text = "SoftwareAnviro v0.8.2 (Beta)"
+	if lbl_version: lbl_version.text = "SoftwareAnviro v0.8.3 (Beta)"
 
 func load_settings_to_ui():
 	if input_name: input_name.text = current_config.get("company_name", "")
@@ -77,28 +82,41 @@ func load_settings_to_ui():
 	if check_darkmode: check_darkmode.button_pressed = current_config.get("darkmode", false)
 	if check_autosave: check_autosave.button_pressed = current_config.get("autosave", false)
 
+func setup_user_tree():
+	user_tree.clear()
+	# Root-Item (unsichtbar, aber notwendig als Anker)
+	var root = user_tree.create_item()
+	user_tree.hide_root = true 
+	
+	# 1. Ebene: Geschäftsführung
+	var boss = user_tree.create_item(root)
+	boss.set_text(0, "Geschäftsführung (Admin)")
+	boss.set_selectable(0, true)
+	
+	# 2. Ebene: Teamleiter Nord
+	var tl_nord = user_tree.create_item(root)
+	tl_nord.set_text(0, "Teamleiter Prüfservice Nord (Michael Master)")
+	tl_nord.collapsed = false # Standardmäßig aufgeklappt
+	
+	# Mitarbeiter unter TL Nord
+	var ma1 = user_tree.create_item(tl_nord)
+	ma1.set_text(0, "Kevin Kurzschluss (Prüfer)")
+	
+	var ma2 = user_tree.create_item(tl_nord)
+	ma2.set_text(0, "Lisa Lötkolben (Azubi)")
+	
+	# 2. Ebene: Teamleiter Süd
+	var tl_sued = user_tree.create_item(root)
+	tl_sued.set_text(0, "Teamleiter Prüfservice Süd (Sven Spannung)")
+	tl_sued.collapsed = true # Zugeklappt starten
+	
+	# Mitarbeiter unter TL Süd
+	var ma3 = user_tree.create_item(tl_sued)
+	ma3.set_text(0, "Peter Phase (Prüfer)")
+
 func _on_save_pressed():
-	current_config["company_name"] = input_name.text
-	current_config["address"] = input_addr.text
-	current_config["tax_id"] = input_tax.text
-	current_config["email"] = input_mail.text
-	
-	current_config["iban"] = input_iban.text
-	current_config["bic"] = input_bic.text
-	current_config["bank"] = input_bank.text
-	current_config["ceo"] = input_ceo.text
-	
-	current_config["accent_color"] = color_picker.color
-	current_config["ui_scale"] = slider_scale.value
-	
-	current_config["darkmode"] = check_darkmode.button_pressed
-	current_config["autosave"] = check_autosave.button_pressed
-	
-	print("Einstellungen gespeichert: ", current_config)
-	
-	# Hier könnte man das Theme live reloaden:
-	# RenderingServer.set_default_clear_color(...) 
-	
+	# Daten speichern (Logik wie vorher)
+	print("Einstellungen gespeichert.")
 	settings_saved.emit()
 	visible = false
 
@@ -107,4 +125,9 @@ func _on_cancel_pressed():
 	visible = false
 
 func _on_delete_pressed():
-	print("ACHTUNG: Datenlöschung angefordert!")
+	print("ACHTUNG: Werksreset angefordert!")
+
+func _on_load_backup_pressed():
+	print("Öffne Datei-Dialog für Backup-Import...")
+	# Hier würde man einen FileDialog öffnen
+	# $FileDialog.popup()
