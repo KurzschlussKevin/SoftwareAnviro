@@ -1,44 +1,120 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4y8x2k1l9m5"]
+[gd_scene load_steps=14 format=3 uid="uid://b4y8x2k1l9m5"]
 
 [ext_resource type="Script" path="res://scene/kundenverwaltung/kundenverwaltung.gd" id="1_script"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Bg"]
+bg_color = Color(0.05, 0.05, 0.06, 0.5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_MainContainer"]
+bg_color = Color(0.1, 0.1, 0.12, 0.85)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 40
+shadow_offset = Vector2(0, 15)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Sidebar"]
-bg_color = Color(0.11, 0.11, 0.12, 1)
+bg_color = Color(0, 0, 0, 0.2)
 border_width_right = 1
-border_color = Color(0.2, 0.2, 0.2, 1)
+border_color = Color(1, 1, 1, 0.05)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_SidebarItem"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.03)
+border_width_left = 3
+border_color = Color(1, 1, 1, 0.1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Header"]
+bg_color = Color(0, 0, 0, 0.2)
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.05)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_TabPanel"]
+bg_color = Color(0, 0, 0, 0.0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_TabSelected"]
+content_margin_left = 30.0
+content_margin_right = 30.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 1, 1, 0.05)
+border_width_top = 2
+border_color = Color(0.4, 0.7, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_TabUnselected"]
+content_margin_left = 30.0
+content_margin_right = 30.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 0.2)
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.05)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Card"]
-bg_color = Color(0.145, 0.145, 0.165, 1)
+bg_color = Color(1, 1, 1, 0.04)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
-shadow_color = Color(0, 0, 0, 0.2)
-shadow_size = 4
-shadow_offset = Vector2(0, 2)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.05)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_CardHeader"]
+bg_color = Color(1, 1, 1, 0.03)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Input"]
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 0.3)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 0.1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ButtonMain"]
+bg_color = Color(0.2, 0.5, 0.9, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.2, 0.5, 0.9, 0.2)
+shadow_size = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Card_Highlight"]
-bg_color = Color(0.145098, 0.145098, 0.164706, 1)
+bg_color = Color(1, 1, 1, 0.04)
 border_width_left = 4
-border_color = Color(1, 0.6, 0.2, 1)
-corner_radius_top_left = 8
+border_color = Color(1, 0.6, 0.2, 0.8)
+corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
-corner_radius_bottom_left = 8
-shadow_color = Color(0, 0, 0, 0.2)
-shadow_size = 4
-shadow_offset = Vector2(0, 2)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Badge"]
-bg_color = Color(0, 0, 0, 0.4)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-expand_margin_left = 12.0
-expand_margin_top = 6.0
-expand_margin_right = 12.0
-expand_margin_bottom = 6.0
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.1)
+shadow_size = 10
+shadow_offset = Vector2(0, 4)
 
 [node name="Kundenverwaltung" type="Control"]
 layout_mode = 3
@@ -49,387 +125,705 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.08, 0.08, 0.09, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_Bg")
 
-[node name="MainLayout" type="HBoxContainer" parent="."]
+[node name="WindowMargin" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 0
-
-[node name="Sidebar" type="PanelContainer" parent="MainLayout"]
-custom_minimum_size = Vector2(380, 0)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_Sidebar")
-
-[node name="Margin" type="MarginContainer" parent="MainLayout/Sidebar"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="VBoxLeft" type="VBoxContainer" parent="MainLayout/Sidebar/Margin"]
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="LabelHead" type="Label" parent="MainLayout/Sidebar/Margin/VBoxLeft"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
-text = "Kundenstamm"
-
-[node name="SearchBar" type="LineEdit" parent="MainLayout/Sidebar/Margin/VBoxLeft"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 45)
-layout_mode = 2
-placeholder_text = "🔍 Suche..."
-
-[node name="CustomerList" type="ItemList" parent="MainLayout/Sidebar/Margin/VBoxLeft"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
-theme_override_colors/guide_color = Color(0, 0, 0, 0)
-theme_override_constants/v_separation = 8
-
-[node name="BtnNew" type="Button" parent="MainLayout/Sidebar/Margin/VBoxLeft"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 55)
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "+  Neuen Kunden anlegen"
-
-[node name="ScrollContent" type="ScrollContainer" parent="MainLayout"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Margin" type="MarginContainer" parent="MainLayout/ScrollContent"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 theme_override_constants/margin_left = 40
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
-[node name="VBoxRight" type="VBoxContainer" parent="MainLayout/ScrollContent/Margin"]
+[node name="MainContainer" type="PanelContainer" parent="WindowMargin"]
+clip_children = 1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_MainContainer")
+
+[node name="Split" type="HBoxContainer" parent="WindowMargin/MainContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Sidebar" type="PanelContainer" parent="WindowMargin/MainContainer/Split"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_Sidebar")
+
+[node name="VBox" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/Sidebar"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="M_Top" type="MarginContainer" parent="WindowMargin/MainContainer/Split/Sidebar/VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+
+[node name="VBoxHead" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/Sidebar/VBox/M_Top"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="WindowMargin/MainContainer/Split/Sidebar/VBox/M_Top/VBoxHead"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.4)
+theme_override_font_sizes/font_size = 11
+text = "DATENBANK"
+
+[node name="SearchBar" type="LineEdit" parent="WindowMargin/MainContainer/Split/Sidebar/VBox/M_Top/VBoxHead"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.3)
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "Suchen..."
+
+[node name="CustomerList" type="ItemList" parent="WindowMargin/MainContainer/Split/Sidebar/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 0.7)
+theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
+theme_override_colors/guide_color = Color(0, 0, 0, 0)
+theme_override_styles/panel = SubResource("StyleBoxFlat_SidebarItem")
+
+[node name="M_Bot" type="MarginContainer" parent="WindowMargin/MainContainer/Split/Sidebar/VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="BtnNew" type="Button" parent="WindowMargin/MainContainer/Split/Sidebar/VBox/M_Bot"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ButtonMain")
+text = "+ Neuer Kunde"
+
+[node name="MainContent" type="VBoxContainer" parent="WindowMargin/MainContainer/Split"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 30
+theme_override_constants/separation = 0
 
-[node name="HeaderCard" type="PanelContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight"]
+[node name="Header" type="PanelContainer" parent="WindowMargin/MainContainer/Split/MainContent"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_Card")
+theme_override_styles/panel = SubResource("StyleBoxFlat_Header")
 
-[node name="M" type="MarginContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/HeaderCard"]
+[node name="M" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Header"]
 layout_mode = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 25
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 20
 
-[node name="HBoxHead" type="HBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/HeaderCard/M"]
+[node name="HBox" type="HBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Header/M"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="VBoxTitles" type="VBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/HeaderCard/M/HBoxHead"]
+[node name="VBoxTitle" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Header/M/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="LabelSub" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/HeaderCard/M/HBoxHead/VBoxTitles"]
+[node name="Label" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Header/M/HBox/VBoxTitle"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
-text = "KUNDEN-PROFIL"
+theme_override_colors/font_color = Color(1, 1, 1, 0.4)
+theme_override_font_sizes/font_size = 12
+text = "KUNDENPROFIL"
 
-[node name="InputName" type="LineEdit" parent="MainLayout/ScrollContent/Margin/VBoxRight/HeaderCard/M/HBoxHead/VBoxTitles"]
+[node name="InputName" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Header/M/HBox/VBoxTitle"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 28
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.2)
+theme_override_font_sizes/font_size = 26
 text = "Musterfirma GmbH"
-placeholder_text = "Firmenname eingeben..."
+placeholder_text = "Firmennamen eingeben..."
 flat = true
 
-[node name="StatusContainer" type="VBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/HeaderCard/M/HBoxHead"]
+[node name="StatusContainer" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Header/M/HBox"]
 layout_mode = 2
 alignment = 1
 
-[node name="StatusBadge" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/HeaderCard/M/HBoxHead/StatusContainer"]
+[node name="StatusBadge" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Header/M/HBox/StatusContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_Badge")
-text = " STATUS "
-horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.2, 0.8, 0.4, 1)
+theme_override_font_sizes/font_size = 14
+text = "● AKTIV / GÜLTIG"
+horizontal_alignment = 2
 
-[node name="GridCards" type="HBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight"]
+[node name="Actions" type="HBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Header/M/HBox"]
 layout_mode = 2
+alignment = 2
+
+[node name="BtnDelete" type="Button" parent="WindowMargin/MainContainer/Split/MainContent/Header/M/HBox/Actions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+text = "Löschen"
+flat = true
+
+[node name="BtnSave" type="Button" parent="WindowMargin/MainContainer/Split/MainContent/Header/M/HBox/Actions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ButtonMain")
+text = "Speichern"
+
+[node name="Tabs" type="TabContainer" parent="WindowMargin/MainContainer/Split/MainContent"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/side_margin = 40
+theme_override_font_sizes/font_size = 14
+theme_override_styles/panel = SubResource("StyleBoxFlat_TabPanel")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_TabSelected")
+theme_override_styles/tab_hovered = SubResource("StyleBoxFlat_TabUnselected")
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_TabUnselected")
+
+[node name="Stammdaten" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs"]
+layout_mode = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="Scroll" type="ScrollContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBox" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+
+[node name="CardInvoice" type="PanelContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_Card")
+
+[node name="VBox" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/CardInvoice"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Header" type="PanelContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/CardInvoice/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_CardHeader")
+
+[node name="M" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/CardInvoice/VBox/Header"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 10
+
+[node name="HBox" type="HBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/CardInvoice/VBox/Header/M"]
+layout_mode = 2
+
+[node name="L" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/CardInvoice/VBox/Header/M/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "🏢 Rechnungsanschrift"
+
+[node name="M_Body" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/CardInvoice/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBox" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/CardInvoice/VBox/M_Body"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="HBox" type="HBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/CardInvoice/VBox/M_Body/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="InputStreet" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/CardInvoice/VBox/M_Body/VBox/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "Straße & Hausnummer"
+
+[node name="InputCity" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/CardInvoice/VBox/M_Body/VBox/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "PLZ & Ort"
+
+[node name="CheckSiteAddr" type="CheckButton" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Abweichenden Prüfort / Standort angeben"
+
+[node name="ContainerSiteAddr" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="CardSite" type="PanelContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/ContainerSiteAddr"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_Card")
+
+[node name="VBox" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/ContainerSiteAddr/CardSite"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Header" type="PanelContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/ContainerSiteAddr/CardSite/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_CardHeader")
+
+[node name="M" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/ContainerSiteAddr/CardSite/VBox/Header"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 10
+
+[node name="HBox" type="HBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/ContainerSiteAddr/CardSite/VBox/Header/M"]
+layout_mode = 2
+
+[node name="L" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/ContainerSiteAddr/CardSite/VBox/Header/M/HBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "📍 Prüfort / Standort"
+
+[node name="M_Body" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/ContainerSiteAddr/CardSite/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="HBox" type="HBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/ContainerSiteAddr/CardSite/VBox/M_Body"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="InputSiteStreet" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/ContainerSiteAddr/CardSite/VBox/M_Body/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "Straße & Hausnummer"
+
+[node name="InputSiteCity" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Stammdaten/Scroll/VBox/ContainerSiteAddr/CardSite/VBox/M_Body/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "PLZ & Ort"
+
+[node name="Kontakte" type="ScrollContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="M" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 30
+
+[node name="VBox" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 25
 
-[node name="CardAddress" type="PanelContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards"]
+[node name="CardMain" type="PanelContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox"]
 layout_mode = 2
-size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_Card")
 
-[node name="M" type="MarginContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardAddress"]
+[node name="VBox" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardMain"]
 layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/separation = 0
 
-[node name="VBox" type="VBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardAddress/M"]
+[node name="Header" type="PanelContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardMain/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_styles/panel = SubResource("StyleBoxFlat_CardHeader")
 
-[node name="HBoxTitle" type="HBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardAddress/M/VBox"]
+[node name="M" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardMain/VBox/Header"]
 layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 8
 
-[node name="Icon" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardAddress/M/VBox/HBoxTitle"]
+[node name="Label" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardMain/VBox/Header/M"]
 layout_mode = 2
-text = "🏢"
+text = "1. Hauptansprechpartner (Büro / Admin)"
 
-[node name="Label" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardAddress/M/VBox/HBoxTitle"]
+[node name="M_Body" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardMain/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "Adressen & Standorte"
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
 
-[node name="HSeparator" type="HSeparator" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardAddress/M/VBox"]
-layout_mode = 2
-
-[node name="L1" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardAddress/M/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
-text = "Rechnungsanschrift"
-
-[node name="InputAddrInvoice" type="TextEdit" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardAddress/M/VBox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 70)
-layout_mode = 2
-placeholder_text = "Straße, PLZ, Ort..."
-
-[node name="L2" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardAddress/M/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
-text = "Prüfort (Abweichend)"
-
-[node name="InputAddrSite" type="TextEdit" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardAddress/M/VBox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 70)
-layout_mode = 2
-placeholder_text = "Straße, PLZ, Ort..."
-
-[node name="CardContact" type="PanelContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_Card")
-
-[node name="M" type="MarginContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="VBox" type="VBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M"]
-layout_mode = 2
-theme_override_constants/separation = 15
-
-[node name="HBoxTitle" type="HBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox"]
-layout_mode = 2
-
-[node name="Icon" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox/HBoxTitle"]
-layout_mode = 2
-text = "👤"
-
-[node name="Label" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox/HBoxTitle"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "Ansprechpartner & Kontakt"
-
-[node name="HSeparator" type="HSeparator" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox"]
-layout_mode = 2
-
-[node name="Grid" type="GridContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox"]
+[node name="Grid" type="GridContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardMain/VBox/M_Body"]
 layout_mode = 2
 theme_override_constants/h_separation = 15
 theme_override_constants/v_separation = 15
 columns = 2
 
-[node name="L1" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox/Grid"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
-text = "Büro / Admin"
-
-[node name="InputContactMain" type="LineEdit" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox/Grid"]
+[node name="InputMainName" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardMain/VBox/M_Body/Grid"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Name..."
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "Name"
 
-[node name="L2" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox/Grid"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
-text = "Technik / Vor Ort"
-
-[node name="InputContactSite" type="LineEdit" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox/Grid"]
+[node name="InputMainMail" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardMain/VBox/M_Body/Grid"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Name..."
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "E-Mail"
 
-[node name="L3" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox/Grid"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
-text = "E-Mail"
-
-[node name="InputMail" type="LineEdit" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox/Grid"]
+[node name="InputMainTel" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardMain/VBox/M_Body/Grid"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "@..."
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "Telefon (Festnetz)"
 
-[node name="L4" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox/Grid"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
-text = "Telefon"
-
-[node name="InputPhone" type="LineEdit" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox/Grid"]
+[node name="InputMainMob" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardMain/VBox/M_Body/Grid"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Tel..."
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "Mobil"
 
-[node name="HSeparator2" type="HSeparator" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox"]
+[node name="HBoxCheck" type="HBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox"]
 layout_mode = 2
 
-[node name="LabelMore" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
-text = "Weitere Ansprechpartner"
-
-[node name="ContactListContainer" type="VBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox"]
+[node name="CheckSecContact" type="CheckButton" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/HBoxCheck"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_constants/separation = 10
+text = "Zweiten Ansprechpartner hinzufügen"
 
-[node name="BtnAddContact" type="Button" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox"]
+[node name="CardSite" type="PanelContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox"]
 unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_Card")
+
+[node name="VBox" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardSite"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Header" type="PanelContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardSite/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_CardHeader")
+
+[node name="M" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardSite/VBox/Header"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardSite/VBox/Header/M"]
+layout_mode = 2
+text = "2. Technischer Ansprechpartner (Vor Ort)"
+
+[node name="M_Body" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardSite/VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="Grid" type="GridContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardSite/VBox/M_Body"]
+layout_mode = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+columns = 2
+
+[node name="InputSiteName" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardSite/VBox/M_Body/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "Name"
+
+[node name="InputSiteMail" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardSite/VBox/M_Body/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "E-Mail"
+
+[node name="InputSiteTel" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardSite/VBox/M_Body/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "Telefon (Festnetz)"
+
+[node name="InputSiteMob" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox/CardSite/VBox/M_Body/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "Mobil"
+
+[node name="LabelMore" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox"]
+layout_mode = 2
+text = "Weitere Zusatzkontakte"
+
+[node name="ContactListContainer" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BtnAddContact" type="Button" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Kontakte/M/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "+ Weiteren Kontakt hinzufügen"
 
-[node name="CardCheck" type="PanelContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight"]
+[node name="Fristen & Termine" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBox" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="CardGer" type="PanelContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_Card_Highlight")
 
-[node name="M" type="MarginContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/CardCheck"]
+[node name="M" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardGer"]
 layout_mode = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 25
 theme_override_constants/margin_bottom = 20
 
-[node name="HBox" type="HBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/CardCheck/M"]
+[node name="VBox" type="VBoxContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardGer/M"]
 layout_mode = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation = 15
 
-[node name="VBoxInfo" type="VBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/CardCheck/M/HBox"]
+[node name="Grid" type="GridContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardGer/M/VBox"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 10
+theme_override_constants/h_separation = 30
+columns = 4
 
-[node name="Title" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/CardCheck/M/HBox/VBoxInfo"]
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.8, 0.4, 1)
-theme_override_font_sizes/font_size = 18
-text = "⚡ Prüfmanagement (Recall)"
-
-[node name="Desc" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/CardCheck/M/HBox/VBoxInfo"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
-text = "Legt fest, wann der Kunde wieder geprüft werden muss."
-autowrap_mode = 2
-
-[node name="Grid" type="GridContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/CardCheck/M/HBox"]
+[node name="Title" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardGer/M/VBox/Grid"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/h_separation = 20
-theme_override_constants/v_separation = 15
-columns = 2
+theme_override_colors/font_color = Color(0.4, 0.7, 1, 1)
+text = "GERÄTE (Büro / Allgemein)"
 
-[node name="L1" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/CardCheck/M/HBox/Grid"]
-layout_mode = 2
-text = "Letzte Prüfung"
-
-[node name="InputLastDate" type="LineEdit" parent="MainLayout/ScrollContent/Margin/VBoxRight/CardCheck/M/HBox/Grid"]
+[node name="InputDateDevices" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardGer/M/VBox/Grid"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "YYYY-MM-DD"
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "Letzte: YYYY-MM-DD"
 alignment = 1
 
-[node name="L2" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/CardCheck/M/HBox/Grid"]
-layout_mode = 2
-text = "Intervall"
-
-[node name="InputInterval" type="OptionButton" parent="MainLayout/ScrollContent/Margin/VBoxRight/CardCheck/M/HBox/Grid"]
+[node name="InputIntDevices" type="OptionButton" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardGer/M/VBox/Grid"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 alignment = 1
-item_count = 3
+item_count = 4
 selected = 1
-popup/item_0/text = "6 Monate"
+popup/item_0/text = "6 Mon"
 popup/item_0/id = 0
-popup/item_1/text = "12 Monate"
+popup/item_1/text = "12 Mon"
 popup/item_1/id = 1
-popup/item_2/text = "24 Monate"
+popup/item_2/text = "24 Mon"
 popup/item_2/id = 2
+popup/item_3/text = "48 Mon"
+popup/item_3/id = 3
 
-[node name="VBoxResult" type="VBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/CardCheck/M/HBox"]
+[node name="LabelResDevices" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardGer/M/VBox/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "---"
+horizontal_alignment = 2
+
+[node name="CheckDevices2" type="CheckButton" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardGer/M/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Unterschiedliche Intervalle (z.B. Produktion) verwenden"
+
+[node name="ContainerDevices2" type="GridContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardGer/M/VBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/h_separation = 30
+columns = 4
+
+[node name="Title" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardGer/M/VBox/ContainerDevices2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.4, 0.7, 1, 1)
+text = "GERÄTE (Produktion / Werkstatt)"
+
+[node name="InputDateDevices2" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardGer/M/VBox/ContainerDevices2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "Letzte: YYYY-MM-DD"
+alignment = 1
+
+[node name="InputIntDevices2" type="OptionButton" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardGer/M/VBox/ContainerDevices2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
+item_count = 4
+selected = 1
+popup/item_0/text = "6 Mon"
+popup/item_0/id = 0
+popup/item_1/text = "12 Mon"
+popup/item_1/id = 1
+popup/item_2/text = "24 Mon"
+popup/item_2/id = 2
+popup/item_3/text = "48 Mon"
+popup/item_3/id = 3
 
-[node name="L3" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/CardCheck/M/HBox/VBoxResult"]
-layout_mode = 2
-text = "Nächster Stichtag:"
-horizontal_alignment = 1
-
-[node name="LabelNextDate" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/CardCheck/M/HBox/VBoxResult"]
+[node name="LabelResDevices2" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardGer/M/VBox/ContainerDevices2"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "2024-01-01"
-horizontal_alignment = 1
+size_flags_horizontal = 3
+text = "---"
+horizontal_alignment = 2
 
-[node name="Footer" type="HBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight"]
+[node name="CardMach" type="PanelContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox"]
 layout_mode = 2
-alignment = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_Card_Highlight")
 
-[node name="BtnDelete" type="Button" parent="MainLayout/ScrollContent/Margin/VBoxRight/Footer"]
+[node name="M" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardMach"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 20
+
+[node name="Grid" type="GridContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardMach/M"]
+layout_mode = 2
+theme_override_constants/h_separation = 30
+columns = 4
+
+[node name="Title" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardMach/M/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.7, 0.4, 1)
+text = "MASCHINEN (Stationär)"
+
+[node name="InputDateMachines" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardMach/M/Grid"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
-size_flags_horizontal = 2
-theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
-text = "Löschen"
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "Letzte: YYYY-MM-DD"
+alignment = 1
 
-[node name="BtnSave" type="Button" parent="MainLayout/ScrollContent/Margin/VBoxRight/Footer"]
+[node name="InputIntMachines" type="OptionButton" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardMach/M/Grid"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.2, 0.2, 0.2, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_Card_Highlight")
-text = "Speichern"
+size_flags_horizontal = 3
+alignment = 1
+item_count = 4
+selected = 1
+popup/item_0/text = "6 Mon"
+popup/item_0/id = 0
+popup/item_1/text = "12 Mon"
+popup/item_1/id = 1
+popup/item_2/text = "24 Mon"
+popup/item_2/id = 2
+popup/item_3/text = "48 Mon"
+popup/item_3/id = 3
+
+[node name="LabelResMachines" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardMach/M/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "---"
+horizontal_alignment = 2
+
+[node name="CardSys" type="PanelContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_Card_Highlight")
+
+[node name="M" type="MarginContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardSys"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 20
+
+[node name="Grid" type="GridContainer" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardSys/M"]
+layout_mode = 2
+theme_override_constants/h_separation = 30
+columns = 4
+
+[node name="Title" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardSys/M/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.5, 1, 1)
+text = "ANLAGEN (Installation)"
+
+[node name="InputDateSystems" type="LineEdit" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardSys/M/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_Input")
+placeholder_text = "Letzte: YYYY-MM-DD"
+alignment = 1
+
+[node name="InputIntSystems" type="OptionButton" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardSys/M/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+item_count = 4
+selected = 3
+popup/item_0/text = "6 Mon"
+popup/item_0/id = 0
+popup/item_1/text = "12 Mon"
+popup/item_1/id = 1
+popup/item_2/text = "24 Mon"
+popup/item_2/id = 2
+popup/item_3/text = "48 Mon"
+popup/item_3/id = 3
+
+[node name="LabelResSystems" type="Label" parent="WindowMargin/MainContainer/Split/MainContent/Tabs/Fristen & Termine/VBox/CardSys/M/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "---"
+horizontal_alignment = 2
