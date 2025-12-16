@@ -1,167 +1,260 @@
 extends Control
 
-@onready var blur_layer = $BlurLayer
-@onready var edit_modal = $EditModal
-@onready var create_modal = $CreateModal
+# --- DUMMY DATENBANK ---
+var customer_db = [
+	{
+		"id": 0, 
+		"name": "Bäckerei Müller GmbH", 
+		"address_invoice": "Hauptstr. 1, 12345 Teighausen",
+		"address_site": "Filiale West, Brotgasse 5",
+		"contact_main": "Frau Müller (Buchhaltung)",
+		"contact_site": "Herr Teig (Filialleiter)",
+		"email": "rechnung@baeckerei-mueller.de",
+		"phone": "0123 456789",
+		"last_check": "2023-01-15",
+		"interval": 12,
+		"more_contacts": [
+			{"name": "Kevin Kurzschluss", "role": "IT-Support", "contact": "0170-123456"}
+		]
+	},
+	{
+		"id": 1, 
+		"name": "Kfz-Werkstatt Schrauber", 
+		"address_invoice": "Ölweg 9, 54321 Motorstadt",
+		"address_site": "Ölweg 9, 54321 Motorstadt",
+		"contact_main": "Meister Eder",
+		"contact_site": "Meister Eder",
+		"email": "werkstatt@schrauber.de",
+		"phone": "0987 654321",
+		"last_check": "2023-11-20",
+		"interval": 12,
+		"more_contacts": []
+	}
+]
 
-# Referenzen UI (Edit Buttons)
-@onready var btn_save = $EditModal/Panel/M/VBox/HBoxButtons/SaveBtn
-@onready var btn_cancel = $EditModal/Panel/M/VBox/HBoxButtons/CancelBtn
-@onready var demo_edit_btn = $VBox/ScrollContainer/GridContainer/KundenTemplate/M/VBox/Actions/Settings
+# --- UI REFERENZEN ---
+@onready var customer_list = %CustomerList
+@onready var search_bar = %SearchBar
 
-# Referenzen UI (Create Buttons)
-@onready var btn_save_create = $CreateModal/Panel/M/VBox/HBoxButtons/SaveBtn
-@onready var btn_cancel_create = $CreateModal/Panel/M/VBox/HBoxButtons/CancelBtn
+# Stammdaten
+@onready var input_name = %InputName
+@onready var input_addr_invoice = %InputAddrInvoice
+@onready var input_addr_site = %InputAddrSite
+@onready var input_contact_main = %InputContactMain
+@onready var input_contact_site = %InputContactSite
+@onready var input_mail = %InputMail
+@onready var input_phone = %InputPhone
 
-# Logik Stammdaten (Edit)
-@onready var tab_container = $EditModal/Panel/M/VBox/TabContainer
-@onready var check_work_loc = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/CheckWorkLoc
-@onready var container_work_loc = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerWorkLoc
-@onready var check_ap2 = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/CheckAP2
-@onready var container_ap2 = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerAP2
+# Dynamische Kontaktliste
+@onready var contact_list_container = %ContactListContainer
+@onready var btn_add_contact = %BtnAddContact
 
-# Logik Stammdaten (Create)
-@onready var input_firma_create = $CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/InputFirma
-@onready var check_work_loc_create = $CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/CheckWorkLoc
-@onready var container_work_loc_create = $CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerWorkLoc
-@onready var check_ap2_create = $CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/CheckAP2
-@onready var container_ap2_create = $CreateModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/ContainerAP2
+# Prüfdaten
+@onready var input_last_date = %InputLastDate
+@onready var input_interval = %InputInterval
+@onready var lbl_next_date = %LabelNextDate
+@onready var status_badge = %StatusBadge
 
-# Eingabefelder Stammdaten (Beispiele zum Leeren im Edit)
-@onready var input_firma = $EditModal/Panel/M/VBox/TabContainer/Stammdaten/ScrollContainer/VBoxData/InputFirma
+# Buttons
+@onready var btn_save = %BtnSave
+@onready var btn_new = %BtnNew
+@onready var btn_delete = %BtnDelete
 
-# Logik Arbeitsauftrag (Mitarbeiter - nur Edit)
-@onready var emp_list = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList
-@onready var emp_template = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainerEmployees/EmployeeList/EmployeeTemplate
-@onready var btn_add_emp = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/AddEmployeeBtn
-
-# Logik Arbeitsauftrag (Positionen - nur Edit)
-@onready var btn_add_pos = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/AddPosBtn
-@onready var positions_list = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList
-@onready var pos_template = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer/PositionsList/PositionTemplate
-@onready var scroll_container_table = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/ScrollContainer
-@onready var header_spacer = $EditModal/Panel/M/VBox/TabContainer/Arbeitsauftrag/VBoxTask/HeaderRow/HBox/ScrollbarSpacer
-
-# Referenz zur Hauptliste
-@onready var main_list_container = $VBox/ScrollContainer
+var current_customer_id = -1
 
 func _ready():
-	# Initialzustand
-	blur_layer.visible = false
-	edit_modal.visible = false
-	create_modal.visible = false
+	refresh_list()
+	clear_form()
 	
-	container_work_loc.visible = false
-	container_ap2.visible = false
-	container_work_loc_create.visible = false
-	container_ap2_create.visible = false
+	customer_list.item_selected.connect(_on_item_selected)
+	search_bar.text_changed.connect(_on_search_text_changed)
 	
-	# Scrollbar fix (Tabelle Edit)
-	await get_tree().process_frame
-	if is_instance_valid(scroll_container_table):
-		var scroll_width = scroll_container_table.get_v_scroll_bar().size.x
-		if scroll_width > 0:
-			header_spacer.custom_minimum_size.x = scroll_width
-		else:
-			header_spacer.custom_minimum_size.x = 12.0
-	
-	# Signale EditModal
-	btn_cancel.pressed.connect(close_modal)
+	btn_new.pressed.connect(_on_new_pressed)
 	btn_save.pressed.connect(_on_save_pressed)
-	if demo_edit_btn:
-		demo_edit_btn.pressed.connect(open_edit_modal)
+	btn_delete.pressed.connect(_on_delete_pressed)
 	
-	check_work_loc.toggled.connect(func(toggled): container_work_loc.visible = toggled)
-	check_ap2.toggled.connect(func(toggled): container_ap2.visible = toggled)
+	# Neu: Button Verbindung
+	btn_add_contact.pressed.connect(func(): create_dynamic_contact_row("", "", ""))
 	
-	btn_add_emp.pressed.connect(_on_add_emp_pressed)
-	btn_add_pos.pressed.connect(_on_add_pos_pressed)
+	input_last_date.text_changed.connect(func(new_text): calculate_next_date())
+	input_interval.item_selected.connect(func(idx): calculate_next_date())
 
-	# Signale CreateModal
-	btn_cancel_create.pressed.connect(close_modal)
-	btn_save_create.pressed.connect(_on_create_save_pressed)
-	
-	check_work_loc_create.toggled.connect(func(toggled): container_work_loc_create.visible = toggled)
-	check_ap2_create.toggled.connect(func(toggled): container_ap2_create.visible = toggled)
+func refresh_list(filter_text = ""):
+	customer_list.clear()
+	for cust in customer_db:
+		if filter_text != "" and not filter_text.to_lower() in cust["name"].to_lower():
+			continue
+		
+		var status_info = check_due_status(cust.get("last_check", ""), cust.get("interval", 12))
+		var icon = "🟢"
+		var color = Color.WHITE
+		if status_info["status"] == "overdue":
+			icon = "🔴"
+			color = Color(1, 0.5, 0.5)
+		elif status_info["status"] == "due_soon":
+			icon = "🟡"
+			color = Color(1, 0.9, 0.6)
+			
+		var idx = customer_list.add_item("%s %s" % [icon, cust["name"]])
+		customer_list.set_item_metadata(idx, cust["id"])
+		customer_list.set_item_custom_fg_color(idx, color)
 
-func open_edit_modal():
-	blur_layer.visible = true
-	edit_modal.visible = true
-	create_modal.visible = false
+func check_due_status(last_date_str, interval_months):
+	if last_date_str == "": return {"status": "unknown", "days": 0, "next_str": "Unbekannt"}
+	var last_date = Time.get_datetime_dict_from_datetime_string(last_date_str, false)
+	if last_date.is_empty(): return {"status": "error", "days": 0, "next_str": "Fehler"}
 	
-	edit_modal.scale = Vector2(0.9, 0.9)
-	var tween = create_tween()
-	tween.tween_property(edit_modal, "scale", Vector2(1.0, 1.0), 0.1).set_trans(Tween.TRANS_CUBIC)
+	var last_unix = Time.get_unix_time_from_datetime_string(last_date_str)
+	var interval_seconds = interval_months * 30 * 24 * 60 * 60
+	var next_unix = last_unix + interval_seconds
+	var today_unix = Time.get_unix_time_from_system()
+	
+	var diff_days = (next_unix - today_unix) / (24 * 60 * 60)
+	var next_date_string = Time.get_datetime_string_from_unix_time(next_unix).left(10)
+	
+	if diff_days < 0: return {"status": "overdue", "days": diff_days, "next_str": next_date_string}
+	elif diff_days < 30: return {"status": "due_soon", "days": diff_days, "next_str": next_date_string}
+	else: return {"status": "ok", "days": diff_days, "next_str": next_date_string}
 
-func open_create_modal():
-	blur_layer.visible = true
-	create_modal.visible = true
-	edit_modal.visible = false
+# DIESE FUNKTION HAT GEFEHLT:
+func calculate_next_date():
+	var date_str = input_last_date.text
+	var interval_map = {0: 6, 1: 12, 2: 24}
+	var months = interval_map.get(input_interval.selected, 12)
 	
-	create_modal.scale = Vector2(0.9, 0.9)
-	var tween = create_tween()
-	tween.tween_property(create_modal, "scale", Vector2(1.0, 1.0), 0.1).set_trans(Tween.TRANS_CUBIC)
+	var result = check_due_status(date_str, months)
+	
+	lbl_next_date.text = result["next_str"]
+	
+	match result["status"]:
+		"ok":
+			status_badge.text = " ✅ GÜLTIG "
+			status_badge.modulate = Color.GREEN
+			lbl_next_date.modulate = Color.WHITE
+		"due_soon":
+			status_badge.text = " ⚠️ BALD FÄLLIG "
+			status_badge.modulate = Color.YELLOW
+			lbl_next_date.modulate = Color.YELLOW
+		"overdue":
+			status_badge.text = " ❌ ÜBERFÄLLIG! "
+			status_badge.modulate = Color.RED
+			lbl_next_date.modulate = Color.RED
+		_:
+			status_badge.text = " -- "
+			status_badge.modulate = Color.WHITE
 
-func close_modal():
-	blur_layer.visible = false
-	edit_modal.visible = false
-	create_modal.visible = false
+func _on_item_selected(index):
+	var id = customer_list.get_item_metadata(index)
+	current_customer_id = id
 	
-	# Liste wieder anzeigen
-	if main_list_container:
-		main_list_container.visible = true
+	var data = null
+	for c in customer_db:
+		if c["id"] == id:
+			data = c
+			break
+			
+	if data:
+		input_name.text = data["name"]
+		input_addr_invoice.text = data.get("address_invoice", "")
+		input_addr_site.text = data.get("address_site", "")
+		input_contact_main.text = data.get("contact_main", "")
+		input_contact_site.text = data.get("contact_site", "")
+		input_mail.text = data["email"]
+		input_phone.text = data["phone"]
+		
+		input_last_date.text = data.get("last_check", "")
+		var interval = data.get("interval", 12)
+		match interval:
+			6: input_interval.selected = 0
+			12: input_interval.selected = 1
+			24: input_interval.selected = 2
+			_: input_interval.selected = 1
+		
+		calculate_next_date()
+		
+		# --- Dynamische Kontakte laden ---
+		for child in contact_list_container.get_children():
+			child.queue_free()
+		
+		var more = data.get("more_contacts", [])
+		for c in more:
+			create_dynamic_contact_row(c.get("name", ""), c.get("role", ""), c.get("contact", ""))
+
+func create_dynamic_contact_row(name_val, role_val, contact_val):
+	var row = HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	
+	var i_name = LineEdit.new()
+	i_name.placeholder_text = "Name..."
+	i_name.text = name_val
+	i_name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	
+	var i_role = LineEdit.new()
+	i_role.placeholder_text = "Funktion/Rolle..."
+	i_role.text = role_val
+	i_role.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	
+	var i_contact = LineEdit.new()
+	i_contact.placeholder_text = "Tel / E-Mail..."
+	i_contact.text = contact_val
+	i_contact.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	
+	var btn_del = Button.new()
+	btn_del.text = " X "
+	btn_del.modulate = Color(1, 0.5, 0.5)
+	btn_del.pressed.connect(func(): row.queue_free())
+	
+	row.add_child(i_name)
+	row.add_child(i_role)
+	row.add_child(i_contact)
+	row.add_child(btn_del)
+	
+	contact_list_container.add_child(row)
+
+func _on_search_text_changed(new_text):
+	refresh_list(new_text)
+
+func _on_new_pressed():
+	current_customer_id = -1
+	customer_list.deselect_all()
+	clear_form()
+	input_name.grab_focus()
+
+func clear_form():
+	input_name.text = ""
+	input_addr_invoice.text = ""
+	input_addr_site.text = ""
+	input_contact_main.text = ""
+	input_contact_site.text = ""
+	input_mail.text = ""
+	input_phone.text = ""
+	input_last_date.text = Time.get_date_string_from_system()
+	input_interval.selected = 1
+	calculate_next_date()
+	
+	for child in contact_list_container.get_children():
+		child.queue_free()
 
 func _on_save_pressed():
-	print("Änderungen gespeichert!")
-	close_modal()
+	print("Speichere Kunden...")
+	if current_customer_id != -1:
+		for c in customer_db:
+			if c["id"] == current_customer_id:
+				c["name"] = input_name.text
+				# Hier würde man alle Felder speichern...
+				
+				var new_contacts = []
+				for row in contact_list_container.get_children():
+					var n = row.get_child(0).text
+					var r = row.get_child(1).text
+					var k = row.get_child(2).text
+					if n != "":
+						new_contacts.append({"name": n, "role": r, "contact": k})
+				c["more_contacts"] = new_contacts
+				break
+	
+	refresh_list()
+	print("Gespeichert inkl. Zusatzkontakte.")
 
-func _on_create_save_pressed():
-	print("Neuer Kunde angelegt!")
-	close_modal()
-
-func _on_add_emp_pressed():
-	var new_row = emp_template.duplicate()
-	new_row.visible = true
-	
-	var delete_btn = new_row.get_node_or_null("DeleteEmpBtn")
-	if delete_btn:
-		delete_btn.pressed.connect(func(): new_row.queue_free())
-	
-	emp_list.add_child(new_row)
-
-func _on_add_pos_pressed():
-	var new_row = pos_template.duplicate()
-	new_row.visible = true
-	
-	for child in new_row.get_children():
-		if child is LineEdit:
-			child.text = ""
-			if child.name == "Menge": child.text = "1"
-			if child.name == "Preis" or child.name == "Gesamt": child.text = "0.00"
-			if child.name == "Pos": child.text = str(positions_list.get_child_count() + 1)
-			
-	positions_list.add_child(new_row)
-
-# --- WIRD VOM DASHBOARD AUFGERUFEN ---
-func start_new_customer():
-	print("Kundenverwaltung: Öffne Create-Modal für neuen Kunden...")
-	
-	# 1. Liste im Hintergrund ausblenden
-	if main_list_container:
-		main_list_container.visible = false
-	
-	# 2. Create Modal öffnen
-	open_create_modal()
-	
-	# 3. Felder im Create-Modal leeren
-	if input_firma_create: input_firma_create.text = ""
-	
-	# 4. Checkboxen/Container resetten
-	check_work_loc_create.button_pressed = false
-	check_ap2_create.button_pressed = false
-	container_work_loc_create.visible = false
-	container_ap2_create.visible = false
-	
-	# 5. Fokus setzen
-	if input_firma_create:
-		input_firma_create.grab_focus()
+func _on_delete_pressed():
+	print("Lösche Kunde...")

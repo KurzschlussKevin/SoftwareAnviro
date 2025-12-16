@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4y8x2k1l9m5"]
+[gd_scene load_steps=6 format=3 uid="uid://b4y8x2k1mam5"]
 
-[ext_resource type="Script" path="res://scene/kundenverwaltung/kundenverwaltung.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://kjd3ie3qv8tq" path="res://scene/kundenverwaltung/kundenverwaltung.gd" id="1_script"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Sidebar"]
 bg_color = Color(0.11, 0.11, 0.12, 1)
@@ -17,6 +17,17 @@ shadow_color = Color(0, 0, 0, 0.2)
 shadow_size = 4
 shadow_offset = Vector2(0, 2)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Badge"]
+bg_color = Color(0, 0, 0, 0.4)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+expand_margin_left = 12.0
+expand_margin_top = 6.0
+expand_margin_right = 12.0
+expand_margin_bottom = 6.0
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Card_Highlight"]
 bg_color = Color(0.145098, 0.145098, 0.164706, 1)
 border_width_left = 4
@@ -28,17 +39,6 @@ corner_radius_bottom_left = 8
 shadow_color = Color(0, 0, 0, 0.2)
 shadow_size = 4
 shadow_offset = Vector2(0, 2)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Badge"]
-bg_color = Color(0, 0, 0, 0.4)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
-expand_margin_left = 12.0
-expand_margin_top = 6.0
-expand_margin_right = 12.0
-expand_margin_bottom = 6.0
 
 [node name="Kundenverwaltung" type="Control"]
 layout_mode = 3
@@ -85,8 +85,8 @@ theme_override_constants/separation = 15
 
 [node name="LabelHead" type="Label" parent="MainLayout/Sidebar/Margin/VBoxLeft"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
 theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_font_sizes/font_size = 20
 text = "Kundenstamm"
 
 [node name="SearchBar" type="LineEdit" parent="MainLayout/Sidebar/Margin/VBoxLeft"]
@@ -315,8 +315,8 @@ layout_mode = 2
 
 [node name="LabelMore" type="Label" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
 theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 14
 text = "Weitere Ansprechpartner"
 
 [node name="ContactListContainer" type="VBoxContainer" parent="MainLayout/ScrollContent/Margin/VBoxRight/GridCards/CardContact/M/VBox"]
@@ -387,8 +387,8 @@ text = "Intervall"
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
-item_count = 3
 selected = 1
+item_count = 3
 popup/item_0/text = "6 Monate"
 popup/item_0/id = 0
 popup/item_1/text = "12 Monate"
