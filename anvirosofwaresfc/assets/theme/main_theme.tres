@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://ba2oumgovb5cf"]
+[gd_resource type="Theme" load_steps=14 format=3 uid="uid://ba2oumgovb5cf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Button_Hover"]
 content_margin_left = 20.0
@@ -6,11 +6,6 @@ content_margin_top = 10.0
 content_margin_right = 20.0
 content_margin_bottom = 10.0
 bg_color = Color(0.25, 0.55, 0.95, 0.9)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(1, 1, 1, 0.3)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -43,6 +38,40 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ActionBtn_Hover"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.2, 0.2, 0.25, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.96, 0.83, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0.96, 0.83, 0.1)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ActionBtn_Normal"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.15, 0.15, 0.2, 0.7)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.3, 0.4, 0.5)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Input_Focus"]
 content_margin_left = 12.0
@@ -97,6 +126,22 @@ shadow_color = Color(0, 0, 0, 0.2)
 shadow_size = 10
 shadow_offset = Vector2(0, 4)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Progress_Bg"]
+bg_color = Color(0.2, 0.2, 0.25, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Progress_Fill"]
+bg_color = Color(0, 0.96, 0.83, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0.96, 0.83, 0.3)
+shadow_size = 6
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_TabPanel"]
 bg_color = Color(0.1, 0.1, 0.12, 0.4)
 border_width_left = 1
@@ -129,6 +174,10 @@ Button/colors/font_color = Color(1, 1, 1, 1)
 Button/styles/hover = SubResource("StyleBoxFlat_Button_Hover")
 Button/styles/normal = SubResource("StyleBoxFlat_Button_Normal")
 Button/styles/pressed = SubResource("StyleBoxFlat_Button_Pressed")
+DashboardActionBtn/base_type = &"Button"
+DashboardActionBtn/styles/hover = SubResource("StyleBoxFlat_ActionBtn_Hover")
+DashboardActionBtn/styles/normal = SubResource("StyleBoxFlat_ActionBtn_Normal")
+DashboardActionBtn/styles/pressed = SubResource("StyleBoxFlat_ActionBtn_Hover")
 Label/colors/font_color = Color(0.9, 0.9, 0.95, 1)
 LineEdit/colors/caret_color = Color(0, 0.96, 0.83, 1)
 LineEdit/colors/font_color = Color(1, 1, 1, 1)
@@ -136,6 +185,8 @@ LineEdit/colors/font_placeholder_color = Color(1, 1, 1, 0.3)
 LineEdit/styles/focus = SubResource("StyleBoxFlat_Input_Focus")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_Input_Normal")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_Panel_Card")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_Progress_Bg")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_Progress_Fill")
 TabContainer/styles/panel = SubResource("StyleBoxFlat_TabPanel")
 TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_Tab_Unselected")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_Tab_Selected")

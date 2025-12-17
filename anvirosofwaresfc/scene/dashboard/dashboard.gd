@@ -4,7 +4,9 @@ signal request_navigation(target_name: String, mode: String)
 
 @onready var label_welcome = %LabelWelcome
 @onready var label_date = %LabelDate
-@onready var progress_goal = %ProgressBar
+
+# Wir holen jetzt die ganze Karte statt nur die ProgressBar
+@onready var card_umsatz = %CardUmsatz
 
 # Zugriff auf die Buttons über Unique Names
 @onready var btn_nav_kunden = %BtnNavKunden
@@ -14,9 +16,11 @@ signal request_navigation(target_name: String, mode: String)
 func _ready():
 	update_greeting()
 	
-	if progress_goal:
+	# Animation der Progress-Bar in der Karte
+	if card_umsatz:
+		# Wir animieren die exportierte Variable "progress_value" im StatCard-Skript
 		var tween = create_tween()
-		tween.tween_property(progress_goal, "value", 65.0, 1.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tween.tween_property(card_umsatz, "progress_value", 65.0, 1.5).from(0.0).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 	# --- NAVIGATION LOGIK ---
 	
@@ -46,4 +50,14 @@ func update_greeting():
 
 func _on_nav_request(target: String, mode: String):
 	print("Dashboard Navigation -> ", target, " (Modus: ", mode, ")")
+	
+	# --- TEST FÜR TOASTS ---
+	# Wenn man auf "Mein Profil" klickt:
+	if target == "Profil":
+		ToastManager.show_info("Profil wird geladen...")
+	# Wenn man "Neuer Kunde" oder "Neues Angebot" klickt (mode ist "create"):
+	elif mode == "create":
+		ToastManager.show_success("Erstellungs-Modus gestartet!")
+	# -----------------------
+
 	request_navigation.emit(target, mode)

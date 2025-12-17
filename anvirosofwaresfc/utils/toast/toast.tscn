@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8x7k2y4q5z9"]
+
+[ext_resource type="Script" path="res://utils/toast/toast.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cy4li6s6o3bkb" path="res://assets/icons/user/prufen.png" id="2_icon"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toast"]
+bg_color = Color(0.1, 0.1, 0.12, 0.95)
+border_width_left = 4
+border_color = Color(0.2, 0.8, 0.4, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 10
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="Animation" id="Animation_show"]
+resource_name = "show"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_toast"]
+_data = {
+"show": SubResource("Animation_show")
+}
+
+[node name="Toast" type="PanelContainer"]
+custom_minimum_size = Vector2(300, 60)
+offset_right = 300.0
+offset_bottom = 60.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_toast")
+script = ExtResource("1_script")
+
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="M" type="MarginContainer" parent="HBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Icon" type="TextureRect" parent="HBox/M"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture = ExtResource("2_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelMsg" type="Label" parent="HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Dies ist eine Nachricht"
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_toast")
+}
+autoplay = "show"
