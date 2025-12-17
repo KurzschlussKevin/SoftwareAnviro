@@ -1,10 +1,8 @@
 extends PanelContainer
 
 func setup(type: String, message: String):
-	# Nachricht setzen
 	%LabelMsg.text = message
 	
-	# Style anpassen (Farben)
 	var style = get_theme_stylebox("panel").duplicate()
 	if type == "success":
 		style.border_color = Color(0.2, 0.8, 0.4, 1) # Grün
@@ -18,24 +16,23 @@ func setup(type: String, message: String):
 	add_theme_stylebox_override("panel", style)
 
 func _ready():
-	# WICHTIG: Den AnimationPlayer löschen! 
-	# Sonst setzt er den Toast sofort auf unsichtbar, egal was wir hier tun.
+	# WICHTIG: Den AnimationPlayer SOFORT löschen!
+	# Sonst macht er den Toast unsichtbar.
 	if has_node("AnimationPlayer"):
 		get_node("AnimationPlayer").queue_free()
 	
-	# Jetzt erzwingen wir die Sichtbarkeit
+	# Sichtbarkeit erzwingen
 	modulate.a = 1.0
-	show() 
+	show()
 	
-	print("Toast: AnimationPlayer gelöscht -> Ich bin jetzt sichtbar!")
+	print("Toast: AnimationPlayer entfernt. Sichtbarkeit erzwungen.")
 
-	# Wartezeit (4 Sekunden)
+	# 4 Sekunden warten
 	await get_tree().create_timer(4.0).timeout
 	
-	# Langsam ausblenden (per Tween)
+	# Ausblenden
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 0.0, 0.5)
 	await tween.finished
 	
-	# Endgültig löschen
 	queue_free()
