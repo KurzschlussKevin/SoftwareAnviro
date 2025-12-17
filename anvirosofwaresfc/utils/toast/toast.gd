@@ -28,7 +28,7 @@ func _ready():
 	print("Toast: AnimationPlayer entfernt. Sichtbarkeit erzwungen.")
 
 	# 4 Sekunden warten
-	await get_tree().create_timer(4.0).timeout
+	await get_tree().create_timer(0.8).timeout
 	
 	# Ausblenden
 	var tween = create_tween()
