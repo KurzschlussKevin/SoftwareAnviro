@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8x7k2y4q5z9"]
+[gd_scene load_steps=6 format=3 uid="uid://c8x7k2y4q51a"]
 
-[ext_resource type="Script" path="res://utils/toast/toast.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://ct2ihxgh57lcs" path="res://utils/toast/toast.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://cy4li6s6o3bkb" path="res://assets/icons/user/prufen.png" id="2_icon"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toast"]
@@ -27,11 +27,12 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.3, 3.5, 4),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]}
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_toast"]
 _data = {
-"show": SubResource("Animation_show")
+&"show": SubResource("Animation_show")
 }
 
 [node name="Toast" type="PanelContainer"]
@@ -69,6 +70,6 @@ vertical_alignment = 1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
-"": SubResource("AnimationLibrary_toast")
+&"": SubResource("AnimationLibrary_toast")
 }
 autoplay = "show"

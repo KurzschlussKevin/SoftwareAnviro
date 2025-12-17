@@ -7,7 +7,7 @@ var toast_container: VBoxContainer
 
 func _ready():
 	# Wir erstellen einen Container, der immer ganz oben liegt (Layer 100)
-	layer = 100
+	layer = 128
 	
 	toast_container = VBoxContainer.new()
 	toast_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
