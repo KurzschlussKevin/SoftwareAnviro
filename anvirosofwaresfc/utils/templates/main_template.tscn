@@ -1,7 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://c53ca6sarap42"]
+[gd_scene load_steps=23 format=3 uid="uid://c53ca6sarap42"]
 
 [ext_resource type="Script" uid="uid://cpfd2hsjr3ok2" path="res://utils/templates/main_template.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://cg37ous7ht23c" path="res://utils/vibe/vibe_scene.tscn" id="2_vibe"]
+[ext_resource type="Shader" uid="uid://cig74da33j5pn" path="res://assets/shaders/blur_background.gdshader" id="3_5xs67"]
 [ext_resource type="Texture2D" uid="uid://c20dfha2jb4q3" path="res://icon.svg" id="3_logo"]
 [ext_resource type="Texture2D" uid="uid://7i5fgkglwaij" path="res://assets/icons/heim.png" id="4_home"]
 [ext_resource type="Texture2D" uid="uid://brf7w3dun03m2" path="res://assets/icons/benutzer.png" id="5_user"]
@@ -21,6 +22,11 @@ glow_intensity = 1.1
 glow_strength = 0.85
 glow_bloom = 0.1
 glow_blend_mode = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ogexc"]
+shader = ExtResource("3_5xs67")
+shader_parameter/lod = 2.0
+shader_parameter/color_overlay = Color(0.05, 0.05, 0.08, 0.6)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sidebar_glass"]
 bg_color = Color(0.05, 0.05, 0.08, 0.75)
@@ -100,6 +106,7 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 
 [node name="Sidebar" type="PanelContainer" parent="HBoxContainer"]
+material = SubResource("ShaderMaterial_ogexc")
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_sidebar_glass")
