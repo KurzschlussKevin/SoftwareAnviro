@@ -6,7 +6,7 @@ const TOAST_SCENE = preload("res://utils/toast/toast.tscn")
 var toast_container: VBoxContainer
 
 func _ready():
-	# Wir erstellen einen Container, der immer ganz oben liegt (Layer 100)
+	# Wir erstellen einen Container, der immer ganz oben liegt (Layer 128)
 	layer = 128
 	
 	toast_container = VBoxContainer.new()

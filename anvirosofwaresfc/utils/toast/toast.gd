@@ -18,20 +18,24 @@ func setup(type: String, message: String):
 	add_theme_stylebox_override("panel", style)
 
 func _ready():
-	# 1. SOFORT SICHTBAR MACHEN (Wichtig!)
+	# WICHTIG: Den AnimationPlayer löschen! 
+	# Sonst setzt er den Toast sofort auf unsichtbar, egal was wir hier tun.
+	if has_node("AnimationPlayer"):
+		get_node("AnimationPlayer").queue_free()
+	
+	# Jetzt erzwingen wir die Sichtbarkeit
 	modulate.a = 1.0
+	show() 
 	
-	# 2. Debug-Ausgabe, damit wir wissen, dass er lebt
-	print("Toast wurde erstellt und sollte sichtbar sein!")
+	print("Toast: AnimationPlayer gelöscht -> Ich bin jetzt sichtbar!")
 
-	# 3. Wartezeit (4 Sekunden)
-	var timer = get_tree().create_timer(4.0)
-	await timer.timeout
+	# Wartezeit (4 Sekunden)
+	await get_tree().create_timer(4.0).timeout
 	
-	# 4. Langsam ausblenden (per Code, ohne AnimationPlayer)
+	# Langsam ausblenden (per Tween)
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 0.0, 0.5)
 	await tween.finished
 	
-	# 5. Löschen
+	# Endgültig löschen
 	queue_free()
