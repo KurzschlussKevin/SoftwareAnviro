@@ -49,7 +49,8 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="HBox" type="HBoxContainer" parent="MainPanel/Margin"]
+[node name="HBox" 
+type="HBoxContainer" parent="MainPanel/Margin"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
@@ -98,7 +99,8 @@ theme_override_constants/margin_bottom = 30
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Header" type="HBoxContainer" parent="MainPanel/Margin/HBox/RightCol/M/VBox"]
+[node name="Header" type="HBoxContainer" 
+parent="MainPanel/Margin/HBox/RightCol/M/VBox"]
 layout_mode = 2
 alignment = 2
 
@@ -131,7 +133,8 @@ text = "Gerätebezeichnung / Typ"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "z.B. SECUTEST PRO"
+placeholder_text = "z.B.
+SECUTEST PRO"
 
 [node name="L2" type="Label" parent="MainPanel/Margin/HBox/RightCol/M/VBox/Grid"]
 layout_mode = 2
@@ -141,7 +144,8 @@ text = "Hersteller"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "z.B. Gossen Metrawatt"
+placeholder_text = "z.B.
+Gossen Metrawatt"
 
 [node name="L3" type="Label" parent="MainPanel/Margin/HBox/RightCol/M/VBox/Grid"]
 layout_mode = 2
@@ -161,7 +165,8 @@ text = "Verwendete Norm (Standard)"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "z.B. DIN VDE 0701-0702"
+placeholder_text = "z.B.
+DIN VDE 0701-0702"
 
 [node name="HSeparator" type="HSeparator" parent="MainPanel/Margin/HBox/RightCol/M/VBox"]
 layout_mode = 2
@@ -186,7 +191,7 @@ text = "Letzte Kalibrierung am"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "YYYY-MM-DD"
+placeholder_text = "JJJJ-MM-TT"
 
 [node name="NC" type="Label" parent="MainPanel/Margin/HBox/RightCol/M/VBox/GridCal"]
 layout_mode = 2
@@ -197,7 +202,7 @@ text = "Nächste Kalibrierung fällig"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "YYYY-MM-DD"
+placeholder_text = "JJJJ-MM-TT"
 
 [node name="Spacer" type="Control" parent="MainPanel/Margin/HBox/RightCol/M/VBox"]
 layout_mode = 2

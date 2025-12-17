@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c53ca6sarap42"]
+[gd_scene load_steps=21 format=3 uid="uid://c53ca6sarap42"]
 
 [ext_resource type="Script" uid="uid://cpfd2hsjr3ok2" path="res://utils/templates/main_template.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://cg37ous7ht23c" path="res://utils/vibe/vibe_scene.tscn" id="2_vibe"]
@@ -58,6 +58,21 @@ border_width_bottom = 1
 border_color = Color(1, 1, 1, 0.1)
 shadow_color = Color(0, 0, 0, 0.1)
 shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_alert_badge"]
+bg_color = Color(1, 0.2, 0.2, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.4, 0.4, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(1, 0.2, 0.2, 0.4)
+shadow_size = 10
+shadow_offset = Vector2(0, 2)
 
 [node name="MainTemplate" type="Control"]
 layout_mode = 3
@@ -320,6 +335,47 @@ text = "Dashboard"
 [node name="Spacer" type="Control" parent="HBoxContainer/ContentArea/TopBar/Margin/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="AlertButtonContainer" type="Control" parent="HBoxContainer/ContentArea/TopBar/Margin/HBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="BtnAlerts" type="Button" parent="HBoxContainer/ContentArea/TopBar/Margin/HBox/AlertButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.2173913
+anchor_right = 1.0
+anchor_bottom = 0.8115942
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+icon = ExtResource("12_1fsve")
+icon_alignment = 1
+expand_icon = true
+metadata/_edit_use_anchors_ = true
+
+[node name="AlertBadge" type="PanelContainer" parent="HBoxContainer/ContentArea/TopBar/Margin/HBox/AlertButtonContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.68
+anchor_top = 0.057971016
+anchor_right = 1.18
+anchor_bottom = 0.42028984
+theme_override_styles/panel = SubResource("StyleBoxFlat_alert_badge")
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelCount" type="Label" parent="HBoxContainer/ContentArea/TopBar/Margin/HBox/AlertButtonContainer/AlertBadge"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="UserInfo" type="Label" parent="HBoxContainer/ContentArea/TopBar/Margin/HBox"]
 layout_mode = 2

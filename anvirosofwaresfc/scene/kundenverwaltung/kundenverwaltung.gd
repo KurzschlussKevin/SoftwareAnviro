@@ -54,6 +54,29 @@ var customer_db = [
 	}
 ]
 
+# NEU: Funktion zur Rückgabe der Anzahl überfälliger Kundenfristen (für Alert Center)
+func get_overdue_customer_recall_count() -> int:
+	var overdue_customers = 0
+	
+	for cust in customer_db:
+		var s1 = check_due_status(cust.get("date_devices", ""), get_months(cust.get("int_devices", 1)))
+		var s2 = check_due_status(cust.get("date_machines", ""), get_months(cust.get("int_machines", 1)))
+		var s3 = check_due_status(cust.get("date_systems", ""), get_months(cust.get("int_systems", 3)))
+		
+		var is_overdue = false
+		if "overdue" in [s1["status"], s2["status"], s3["status"]]:
+			is_overdue = true
+			
+		if cust.get("has_devices_2", false):
+			var s1b = check_due_status(cust.get("date_devices_2", ""), get_months(cust.get("int_devices_2", 1)))
+			if s1b["status"] == "overdue":
+				is_overdue = true
+				
+		if is_overdue:
+			overdue_customers += 1
+			
+	return overdue_customers
+
 # --- UI REFERENZEN ---
 @onready var customer_list = %CustomerList
 @onready var search_bar = %SearchBar
@@ -201,9 +224,12 @@ func check_due_status(last_date_str, interval_months):
 	var diff_days = (next_unix - today_unix) / (24 * 60 * 60)
 	var next_date_string = Time.get_datetime_string_from_unix_time(next_unix).left(10)
 	
-	if diff_days < 0: return {"status": "overdue", "next_str": next_date_string}
-	elif diff_days < 30: return {"status": "due_soon", "next_str": next_date_string}
-	else: return {"status": "ok", "next_str": next_date_string}
+	if diff_days < 0: 
+		return {"status": "overdue", "next_str": next_date_string}
+	elif diff_days < 30: 
+		return {"status": "due_soon", "next_str": next_date_string}
+	else: 
+		return {"status": "ok", "next_str": next_date_string}
 
 func calculate_all_dates():
 	# Geräte 1
@@ -334,7 +360,11 @@ func create_dynamic_contact_row(name, email, phone, mobile):
 	var i_tel = LineEdit.new(); i_tel.text=phone; i_tel.placeholder_text="Tel"; i_tel.size_flags_horizontal=3
 	var i_mob = LineEdit.new(); i_mob.text=mobile; i_mob.placeholder_text="Mobil"; i_mob.size_flags_horizontal=3
 	var btn = Button.new(); btn.text=" X "; btn.pressed.connect(func(): row.queue_free())
-	row.add_child(i_name); row.add_child(i_mail); row.add_child(i_tel); row.add_child(i_mob); row.add_child(btn)
+	row.add_child(i_name)
+	row.add_child(i_mail)
+	row.add_child(i_tel)
+	row.add_child(i_mob)
+	row.add_child(btn)
 	contact_list_container.add_child(row)
 
 func _on_search_text_changed(new_text): refresh_list(new_text)

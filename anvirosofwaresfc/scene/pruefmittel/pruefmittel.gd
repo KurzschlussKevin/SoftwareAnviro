@@ -31,6 +31,18 @@ var inventory = [
 	}
 ]
 
+# NEU: Funktion zur Rückgabe der Anzahl überfälliger Prüfmittel (für Alert Center)
+func get_overdue_pruefmittel_count() -> int:
+	var overdue_count = 0
+	var today = Time.get_date_dict_from_system()
+	var today_unix = Time.get_unix_time_from_datetime_string("%04d-%02d-%02d" % [today.year, today.month, today.day])
+	
+	for item in inventory:
+		var next_cal_unix = Time.get_unix_time_from_datetime_string(item["next_cal"])
+		if next_cal_unix < today_unix:
+			overdue_count += 1
+	return overdue_count
+
 # --- UI REFERENZEN ---
 @onready var device_list = %DeviceList
 @onready var input_name = %InputName

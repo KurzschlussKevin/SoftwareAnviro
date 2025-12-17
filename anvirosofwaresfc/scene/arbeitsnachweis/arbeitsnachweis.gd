@@ -25,6 +25,9 @@ extends Control
 @onready var btn_back_cal = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/BtnBackToCal
 @onready var btn_finish = $ViewDetails/FooterBar/MarginFooter/HBoxFooter/BtnFinish
 
+# Auto-Save Status Label
+@onready var lbl_autosave_status = $ViewDetails/FooterBar/MarginFooter/HBoxFooter/LabelAutoSaveStatus
+
 @onready var option_employee = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo/HBoxUser/OptionEmployee
 @onready var btn_add_colleague = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo/HBoxUser/BtnAddColleague
 @onready var option_report_type = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/VBoxInfo/HBoxTypeSelect/OptionReportType
@@ -34,6 +37,7 @@ extends Control
 @onready var btn_prev_day = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/DateSelector/BtnPrevDay
 @onready var btn_next_day = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/DateSelector/BtnNextDay
 @onready var btn_today = $ViewDetails/HeaderInfo/MarginHeader/HBoxHeaderInfo/DateSelector/BtnToday
+
 
 # --- DATA ---
 var current_customer = ""
@@ -69,11 +73,14 @@ func _ready():
 	btn_next_day.pressed.connect(_on_next_day_details)
 	btn_today.pressed.connect(_on_today_details)
 	btn_back_cal.pressed.connect(func(): show_view(view_calendar))
+	
+	# NEU: BtnFinish geht wieder direkt zum Kalender zurück (Speichern und Schließen)
 	btn_finish.pressed.connect(func(): show_view(view_calendar))
 	
 	option_employee.item_selected.connect(_on_employee_change)
 	btn_add_colleague.pressed.connect(_on_add_colleague)
 	option_report_type.item_selected.connect(_on_report_type_changed)
+
 
 func show_view(target_view):
 	view_select.visible = false
@@ -82,7 +89,8 @@ func show_view(target_view):
 	target_view.visible = true
 	
 	if target_view == view_select or target_view == view_calendar:
-		blur_layer.visible = true
+		# blur_layer.visible = false
+		pass
 	else:
 		blur_layer.visible = true
 		
@@ -248,10 +256,24 @@ func create_task(pos_nr, title, total, done_prev):
 			lbl_rest.text = "Offen: %d" % rest
 			lbl_status.text = "IN ARBEIT"
 			lbl_status.add_theme_color_override("font_color", Color(0.0, 0.8, 1.0))
+		
+		# NEU: Auto-Save Status anzeigen
+		_show_autosave_status("Gespeichert (Entwurf)")
 			
 	spin.value_changed.connect(update)
 	update.call(spin.value)
 	tasks_container.add_child(t)
+
+# NEU: Funktion zur Anzeige des Auto-Save-Status
+func _show_autosave_status(text_to_show: String):
+	if is_instance_valid(lbl_autosave_status):
+		lbl_autosave_status.text = text_to_show
+		lbl_autosave_status.modulate = Color(0.6, 1, 0.6, 1) # Grün, volle Deckkraft
+		lbl_autosave_status.visible = true
+		
+		# Timer, um die Meldung nach 2.0 Sekunden auszublenden (Fade-Out)
+		var tween = create_tween()
+		tween.tween_property(lbl_autosave_status, "modulate", Color(0.6, 1, 0.6, 0.0), 2.0)
 
 func _on_employee_change(idx):
 	current_employee_id = option_employee.get_item_id(idx)
