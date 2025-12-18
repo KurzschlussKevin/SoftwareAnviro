@@ -20,13 +20,15 @@ var assignments = {}
 
 var days = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
 
-# --- UI REFERENZEN ---
-# Diese Pfade passen exakt zu deinem "alten" Design (VBox/PlanContainer/...)
-@onready var emp_list = $VBox/PlanContainer/LeftColEmployees/ScrollEmp/EmpList
-@onready var header_days = $VBox/PlanContainer/RightColTimeline/HeaderDays
-@onready var grid = $VBox/PlanContainer/RightColTimeline/ScrollTime/Grid
-@onready var scroll_time = $VBox/PlanContainer/RightColTimeline/ScrollTime
-@onready var scroll_emp = $VBox/PlanContainer/LeftColEmployees/ScrollEmp
+# --- UI REFERENZEN (Korrigiert) ---
+@onready var emp_list = %EmpList
+@onready var header_days = %HeaderDays
+@onready var grid = %Grid
+@onready var scroll_time = %ScrollTime
+@onready var pool_container = %PoolContainer
+
+# HIER WAR DER FEHLER: Der Pfad muss exakt zur Szene passen!
+@onready var scroll_emp = $MainHBox/RightSide/PlanContainer/LeftColEmployees/ScrollEmp
 
 func _ready():
 	# Sync Scrolling: Wenn man rechts scrollt, scrollt links mit
@@ -37,10 +39,8 @@ func _ready():
 	_refresh_ui()
 
 func _build_header():
-	# Alte Header löschen
 	for c in header_days.get_children(): c.queue_free()
 	
-	# Neuen Header bauen
 	for d in days:
 		var p = Panel.new()
 		p.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -50,8 +50,10 @@ func _build_header():
 		style.bg_color = Color(0.1, 0.1, 0.15, 0.8)
 		style.border_width_bottom = 2
 		style.border_color = Color(0.2, 0.4, 0.8, 1)
-		style.border_width_right = 1 # Trennstrich
+		# Trennstrich rechts im Header
+		style.border_width_right = 1
 		style.border_color = Color(1, 1, 1, 0.1)
+		
 		p.add_theme_stylebox_override("panel", style)
 		
 		var l = Label.new()
@@ -64,25 +66,18 @@ func _build_header():
 		header_days.add_child(p)
 
 func _refresh_ui():
-	# 1. Linke Spalte: Pool & Mitarbeiter
-	for c in emp_list.get_children(): c.queue_free()
+	# 1. Mitarbeiter Liste & Pool (Links)
+	for c in pool_container.get_children(): c.queue_free()
 	
-	# -- POOL BEREICH --
-	var pool_header = Label.new()
-	pool_header.text = "--- POOL ---"
-	pool_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	pool_header.add_theme_color_override("font_color", Color(0.9, 0.6, 0.2))
-	emp_list.add_child(pool_header)
-	
+	# Offene Tickets in den Pool (ganz links)
 	for job in jobs_pool:
 		var ticket = DraggablePoolItem.new(job)
 		ticket.drag_successful.connect(_on_job_assigned)
-		emp_list.add_child(ticket)
-		
-	var sep = HSeparator.new()
-	emp_list.add_child(sep)
+		pool_container.add_child(ticket)
 	
-	# -- MITARBEITER BEREICH --
+	# Mitarbeiter Liste (Mitte/Links)
+	for c in emp_list.get_children(): c.queue_free()
+	
 	for tech in technicians:
 		var p = PanelContainer.new()
 		p.custom_minimum_size.y = 60
@@ -103,17 +98,9 @@ func _refresh_ui():
 		
 		emp_list.add_child(p)
 
-	# 2. Rechte Spalte: Timeline Grid
+	# 2. Timeline Grid (Rechts)
 	for c in grid.get_children(): c.queue_free()
 	
-	# Dummy-Zeilen für den Pool-Bereich (damit Tech 1 auf gleicher Höhe startet)
-	var pool_offset_count = jobs_pool.size() + 2
-	for i in range(pool_offset_count): 
-		var dummy = Control.new()
-		dummy.custom_minimum_size.y = 60
-		grid.add_child(dummy)
-	
-	# Grid Zeilen pro Techniker
 	for tech in technicians:
 		var row = HBoxContainer.new()
 		row.custom_minimum_size.y = 60
@@ -128,7 +115,7 @@ func _refresh_ui():
 			var job = assignments.get(key, null)
 			
 			if job:
-				# Prüfen ob dies der Start-Tag des Jobs ist
+				# Start-Tag suchen
 				var start_day = -1
 				for d in range(days.size()):
 					if assignments.get(str(tech.id) + "_" + str(d)) == job:
@@ -136,9 +123,9 @@ func _refresh_ui():
 						break
 				
 				if i == start_day:
-					slot.set_content(job, true) # Master (Start)
+					slot.set_content(job, true) # Master
 				else:
-					slot.set_content(job, false) # Slave (Verlängerung)
+					slot.set_content(job, false) # Slave
 			
 			row.add_child(slot)
 		
@@ -149,10 +136,9 @@ func _refresh_ui():
 func _on_job_assigned(job_data, tech_id, day_index):
 	# Aus Pool entfernen
 	if jobs_pool.has(job_data): jobs_pool.erase(job_data)
-	# Alte Position entfernen (falls verschoben)
 	_remove_assignment(job_data)
 	
-	# Neue Zuweisung schreiben
+	# Neu zuweisen
 	for i in range(job_data.dur):
 		var t = day_index + i
 		if t < days.size():
@@ -161,7 +147,6 @@ func _on_job_assigned(job_data, tech_id, day_index):
 	_refresh_ui()
 
 func _on_job_resized(job_data, tech_id, new_end_day):
-	# Start suchen
 	var start_day = -1
 	for d in range(days.size()):
 		if assignments.get(str(tech_id) + "_" + str(d)) == job_data:
@@ -170,7 +155,6 @@ func _on_job_resized(job_data, tech_id, new_end_day):
 	
 	if start_day == -1: return
 	
-	# Neue Dauer berechnen
 	var new_dur = (new_end_day - start_day) + 1
 	if new_dur < 1: new_dur = 1
 	
@@ -192,10 +176,10 @@ func _remove_assignment(job):
 
 
 # ==========================================
-# INTERNE KLASSEN (Design & DragDrop)
+# INTERNE KLASSEN
 # ==========================================
 
-# 1. Pool Item (Ticket links)
+# 1. Pool Item
 class DraggablePoolItem extends PanelContainer:
 	var job
 	signal drag_successful(job, tech, day)
@@ -225,7 +209,7 @@ class DraggablePoolItem extends PanelContainer:
 		set_drag_preview(p)
 		return {"job": job, "source": "pool"}
 
-# 2. Timeline Slot (Tag im Raster)
+# 2. Timeline Slot
 class TimelineSlot extends Panel:
 	var tech_id
 	var day_index
@@ -243,12 +227,11 @@ class TimelineSlot extends Panel:
 		size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		mouse_filter = Control.MOUSE_FILTER_PASS
 		
-		# Style mit STRICH RECHTS
+		# Style mit STRICH RECHTS (Sichtbarer gemacht)
 		style_normal.bg_color = Color(1, 1, 1, 0.03)
 		style_normal.border_width_right = 1
-		style_normal.border_color = Color(1, 1, 1, 0.1) # Sichtbarer Strich
+		style_normal.border_color = Color(1, 1, 1, 0.2) 
 		style_normal.border_width_bottom = 1
-		style_normal.border_color = Color(1, 1, 1, 0.1)
 		
 		style_hover.bg_color = Color(1, 1, 1, 0.1)
 		style_hover.border_width_right = 1
@@ -292,6 +275,8 @@ class TimelineSlot extends Panel:
 		style.corner_radius_top_right = 0
 		style.corner_radius_bottom_right = 0
 		
+		task_panel.add_theme_stylebox_override("panel", style)
+		
 		# --- RESIZE GRIFF (Rechts) ---
 		var resize_handle = ResizeHandle.new(job)
 		resize_handle.custom_minimum_size.x = 15
@@ -333,18 +318,16 @@ class ResizeHandle extends Control:
 	
 	func _init(job):
 		job_ref = job
-		# FIX: Wir nutzen direkt den Integer-Wert 10 (für H_SPLIT)
-		mouse_default_cursor_shape = 10 
+		mouse_default_cursor_shape = 10 # Fix für "Identifier not found"
 		mouse_filter = Control.MOUSE_FILTER_STOP
 	
 	func _get_drag_data(at_position):
 		var p = ColorRect.new()
-		p.custom_minimum_size = Vector2(4, 60)
-		p.color = Color(1, 1, 1, 0.5)
+		p.custom_minimum_size = Vector2(4, 50)
+		p.color = Color(1, 1, 1, 0.8)
 		set_drag_preview(p)
-		
 		return {"resize_job": job_ref}
 	
 	func _draw():
-		var color = Color(0, 0, 0, 0.3)
-		draw_rect(Rect2(4, 10, 4, 40), color)
+		var color = Color(1, 1, 1, 0.3)
+		draw_rect(Rect2(4, 10, 4, 30), color)
