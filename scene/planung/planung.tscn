@@ -1,0 +1,178 @@
+[gd_scene load_steps=6 format=3 uid="uid://bugqykioegkog"]
+
+[ext_resource type="Script" uid="uid://br3g1uq3bf1bs" path="res://scene/planung/planung.gd" id="1_plan_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pool_bg"]
+bg_color = Color(0.05, 0.05, 0.08, 1)
+border_width_right = 2
+border_color = Color(0.2, 0.2, 0.2, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_glass"]
+bg_color = Color(0.08, 0.08, 0.12, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.3, 0.5, 0.4)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header_col"]
+bg_color = Color(0.1, 0.1, 0.15, 0.8)
+border_width_bottom = 2
+border_color = Color(0.2, 0.4, 0.8, 1)
+
+[node name="Planung" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_plan_script")
+
+[node name="BG" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.05, 0.07, 1)
+
+[node name="MainHBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="PoolPanel" type="PanelContainer" parent="MainHBox"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pool_bg")
+
+[node name="VBox" type="VBoxContainer" parent="MainHBox/PoolPanel"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="M" type="MarginContainer" parent="MainHBox/PoolPanel/VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+
+[node name="Label" type="Label" parent="MainHBox/PoolPanel/VBox/M"]
+layout_mode = 2
+text = "Offene Aufträge"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="ScrollPool" type="ScrollContainer" parent="MainHBox/PoolPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PoolContainer" type="VBoxContainer" parent="MainHBox/PoolPanel/VBox/ScrollPool"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="RightSide" type="VBoxContainer" parent="MainHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HeaderPanel" type="PanelContainer" parent="MainHBox/RightSide"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_glass")
+
+[node name="M" type="MarginContainer" parent="MainHBox/RightSide/HeaderPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 15
+
+[node name="HBox" type="HBoxContainer" parent="MainHBox/RightSide/HeaderPanel/M"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="MainHBox/RightSide/HeaderPanel/M/HBox"]
+layout_mode = 2
+text = "Einsatzplanung"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="VSeparator" type="VSeparator" parent="MainHBox/RightSide/HeaderPanel/M/HBox"]
+layout_mode = 2
+
+[node name="DateLabel" type="Label" parent="MainHBox/RightSide/HeaderPanel/M/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.8, 1)
+text = "Dezember 2025 - Woche 50"
+
+[node name="PlanContainer" type="HBoxContainer" parent="MainHBox/RightSide"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="LeftColEmployees" type="VBoxContainer" parent="MainHBox/RightSide/PlanContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="HeaderEmpty" type="Panel" parent="MainHBox/RightSide/PlanContainer/LeftColEmployees"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_header_col")
+
+[node name="Label" type="Label" parent="MainHBox/RightSide/PlanContainer/LeftColEmployees/HeaderEmpty"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mitarbeiter"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollEmp" type="ScrollContainer" parent="MainHBox/RightSide/PlanContainer/LeftColEmployees"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 0
+
+[node name="EmpList" type="VBoxContainer" parent="MainHBox/RightSide/PlanContainer/LeftColEmployees/ScrollEmp"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="RightColTimeline" type="VBoxContainer" parent="MainHBox/RightSide/PlanContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HeaderDays" type="HBoxContainer" parent="MainHBox/RightSide/PlanContainer/RightColTimeline"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ScrollTime" type="ScrollContainer" parent="MainHBox/RightSide/PlanContainer/RightColTimeline"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Grid" type="VBoxContainer" parent="MainHBox/RightSide/PlanContainer/RightColTimeline/ScrollTime"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
