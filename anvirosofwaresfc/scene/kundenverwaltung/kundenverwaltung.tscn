@@ -259,16 +259,6 @@ layout_mode = 2
 [node name="HSeparator4" type="HSeparator" parent="HBox/ContentMargin/DetailPanel/VBox/TabContainer/Stammdaten/Grid"]
 layout_mode = 2
 
-[node name="L4" type="Label" parent="HBox/ContentMargin/DetailPanel/VBox/TabContainer/Stammdaten/Grid"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
-text = "E-Mail (Allgemein):"
-
-[node name="ValEmail" type="Label" parent="HBox/ContentMargin/DetailPanel/VBox/TabContainer/Stammdaten/Grid"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "info@firma.de"
-
 [node name="L7" type="Label" parent="HBox/ContentMargin/DetailPanel/VBox/TabContainer/Stammdaten/Grid"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
@@ -515,6 +505,11 @@ placeholder_text = "Name (Optional)"
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_input")
 placeholder_text = "Telefon (Optional)"
+
+[node name="InputEmail2" type="LineEdit" parent="EditOverlay/Panel/M/VBox/Scroll/Grid/VBoxC2"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+placeholder_text = "E-Mail (Optional)"
 
 [node name="Sep5" type="HSeparator" parent="EditOverlay/Panel/M/VBox/Scroll/Grid"]
 layout_mode = 2

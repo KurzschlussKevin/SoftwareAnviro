@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bugqykioegkog"]
 
-[ext_resource type="Script" uid="uid://br3g1uq3bf1bs" path="res://scene/planung/planung.gd" id="1_plan_script"]
+[ext_resource type="Script" path="res://scene/planung/planung.gd" id="1_plan_script"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pool_bg"]
 bg_color = Color(0.05, 0.05, 0.08, 1)

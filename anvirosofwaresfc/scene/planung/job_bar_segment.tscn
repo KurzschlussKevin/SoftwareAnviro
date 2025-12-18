@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxbmv853msd42"]
+
+[ext_resource type="Script" uid="uid://d1uuv80lnx748" path="res://scene/planung/job_bar_segment.gd" id="1_bar_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar"]
+bg_color = Color(0.2, 0.4, 0.9, 1)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0.2)
+
+[node name="JobBarSegment" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 4.0
+offset_right = -1.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bar")
+script = ExtResource("1_bar_script")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Kunde"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="ResizeHandle" type="Control" parent="."]
+visible = false
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+mouse_default_cursor_shape = 10

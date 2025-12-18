@@ -7,12 +7,13 @@ var customers = [
 		"name": "Bäckerei Müller GmbH", 
 		"city": "Berlin", 
 		"address": "Hauptstr. 5\n10115 Berlin",
-		"service_address": "Backstube Hinterhof\nHauptstr. 5a\n10115 Berlin", # Abweichend
+		"service_address": "Backstube Hinterhof\nHauptstr. 5a\n10115 Berlin", 
 		"contact": "Hr. Müller", 
 		"phone": "030-12345",
 		"email": "chef@baeckerei.de",
 		"contact2_name": "Fr. Meier (Büro)",
 		"contact2_phone": "030-12346",
+		"contact2_email": "buchhaltung@baeckerei.de",
 		"notes": "Schlüssel beim Nachbarn holen.",
 		"next_due": "2023-12-01", 
 		"status": "overdue",
@@ -24,12 +25,13 @@ var customers = [
 		"name": "Kfz-Werkstatt Schrauber", 
 		"city": "Hamburg",
 		"address": "Hafenstr. 12\n20457 Hamburg", 
-		"service_address": "", # Identisch (leer)
+		"service_address": "", 
 		"contact": "Fr. Schulze", 
 		"phone": "040-998877",
 		"email": "werkstatt@schrauber.com",
 		"contact2_name": "",
 		"contact2_phone": "",
+		"contact2_email": "",
 		"notes": "",
 		"next_due": "2025-05-15", 
 		"status": "ok",
@@ -47,6 +49,7 @@ var customers = [
 		"email": "technik@industrie-ag.de",
 		"contact2_name": "Pforte Tor 3",
 		"contact2_phone": "089-112244",
+		"contact2_email": "pforte@industrie-ag.de",
 		"notes": "Sicherheitsschuhe erforderlich!",
 		"next_due": "2024-01-20", 
 		"status": "soon",
@@ -66,21 +69,20 @@ var customers = [
 @onready var lbl_name = %LblName
 @onready var lbl_id = %LblID
 @onready var val_address = %ValAddress
-@onready var val_service_address = %ValServiceAddress # Neu
+@onready var val_service_address = %ValServiceAddress
 @onready var val_contact = %ValContact
-@onready var val_contact2 = %ValContact2 # Neu
-@onready var val_email = %ValEmail
+@onready var val_contact2 = %ValContact2 
 @onready var val_notes = %ValNotes
 
 @onready var obj_list = %ObjList
 @onready var hist_list = %HistList
 
-# --- EDIT OVERLAY REFERENZEN (Pfade angepasst an VBoxAddr) ---
+# --- EDIT OVERLAY REFERENZEN ---
 @onready var edit_overlay = %EditOverlay
 @onready var input_name = $EditOverlay/Panel/M/VBox/Scroll/Grid/InputName
 @onready var input_id = $EditOverlay/Panel/M/VBox/Scroll/Grid/InputID
 
-# Container für Adressen (damit Layout stabil bleibt)
+# Container für Adressen
 @onready var input_addr = $EditOverlay/Panel/M/VBox/Scroll/Grid/VBoxAddr/InputAddr
 @onready var check_service_loc = $EditOverlay/Panel/M/VBox/Scroll/Grid/VBoxAddr/CheckServiceLoc
 @onready var container_service_addr = $EditOverlay/Panel/M/VBox/Scroll/Grid/VBoxAddr/ContainerServiceAddr
@@ -94,6 +96,7 @@ var customers = [
 # Container Kontakt 2
 @onready var input_contact2 = $EditOverlay/Panel/M/VBox/Scroll/Grid/VBoxC2/InputContact2
 @onready var input_phone2 = $EditOverlay/Panel/M/VBox/Scroll/Grid/VBoxC2/InputPhone2
+@onready var input_email2 = $EditOverlay/Panel/M/VBox/Scroll/Grid/VBoxC2/InputEmail2
 
 @onready var input_notes = $EditOverlay/Panel/M/VBox/Scroll/Grid/InputNotes
 
@@ -113,10 +116,10 @@ func _ready():
 	btn_cancel_edit.pressed.connect(func(): edit_overlay.visible = false)
 	btn_save_edit.pressed.connect(_on_save_changes_pressed)
 	
-	# Checkbox Logik (zeigt/versteckt das zusätzliche Adressfeld)
+	# Checkbox Logik
 	check_service_loc.toggled.connect(func(active): container_service_addr.visible = active)
 
-# --- ALARM SYSTEM (Für Dashboard Glocke) ---
+# --- ALARM SYSTEM ---
 func get_overdue_customer_recall_count() -> int:
 	var count = 0
 	for c in customers:
@@ -151,9 +154,9 @@ func _create_list_item(c):
 	style.content_margin_left = 10
 	style.border_width_left = 5
 	
-	if c.status == "overdue": style.border_color = Color(0.9, 0.3, 0.3) # Rot
-	elif c.status == "soon": style.border_color = Color(0.9, 0.7, 0.2) # Gelb
-	else: style.border_color = Color(0.3, 0.8, 0.5) # Grün
+	if c.status == "overdue": style.border_color = Color(0.9, 0.3, 0.3) 
+	elif c.status == "soon": style.border_color = Color(0.9, 0.7, 0.2) 
+	else: style.border_color = Color(0.3, 0.8, 0.5) 
 	
 	btn.add_theme_stylebox_override("normal", style)
 	btn.add_theme_stylebox_override("hover", style.duplicate())
@@ -185,13 +188,24 @@ func _show_details(c):
 		val_service_address.text = s_addr
 		val_service_address.add_theme_color_override("font_color", Color(0.2, 0.8, 0.6))
 	
-	# Kontakte
-	val_contact.text = c.contact + "\n" + c.phone
-	val_email.text = c.get("email", "-")
+	# Kontakt 1 (inkl. E-Mail)
+	var c1_text = c.contact + "\n" + c.phone
+	if c.get("email", "") != "":
+		c1_text += "\n" + c.get("email", "")
+	val_contact.text = c1_text
 	
+	# Kontakt 2 (inkl. E-Mail)
 	var c2_name = c.get("contact2_name", "")
 	if c2_name != "":
-		val_contact2.text = c2_name + "\n" + c.get("contact2_phone", "")
+		var c2_text = c2_name
+		
+		if c.get("contact2_phone", "") != "":
+			c2_text += "\n" + c.get("contact2_phone", "")
+			
+		if c.get("contact2_email", "") != "":
+			c2_text += "\n" + c.get("contact2_email", "")
+			
+		val_contact2.text = c2_text
 	else:
 		val_contact2.text = "-"
 		
@@ -220,9 +234,8 @@ func _on_edit_pressed():
 	input_id.text = current_customer.id
 	input_addr.text = current_customer.address
 	
-	# 2. Prüfort Logik setzen
+	# 2. Prüfort Logik
 	var s_addr = current_customer.get("service_address", "")
-	# Wenn Leistungsort existiert UND anders ist als Rechnungsadresse
 	if s_addr != "" and s_addr != current_customer.address:
 		check_service_loc.button_pressed = true
 		container_service_addr.visible = true
@@ -230,15 +243,17 @@ func _on_edit_pressed():
 	else:
 		check_service_loc.button_pressed = false
 		container_service_addr.visible = false
-		input_service_addr.text = "" # Leer lassen
+		input_service_addr.text = ""
 
-	# 3. Kontakte füllen
+	# 3. Kontakt 1 füllen
 	input_contact.text = current_customer.contact
 	input_phone.text = current_customer.phone
 	input_email.text = current_customer.get("email", "")
 	
+	# 4. Kontakt 2 füllen
 	input_contact2.text = current_customer.get("contact2_name", "")
 	input_phone2.text = current_customer.get("contact2_phone", "")
+	input_email2.text = current_customer.get("contact2_email", "")
 	
 	input_notes.text = current_customer.get("notes", "")
 	
@@ -251,18 +266,20 @@ func _on_save_changes_pressed():
 	current_customer.name = input_name.text
 	current_customer.address = input_addr.text
 	
-	# Prüfort speichern
 	if check_service_loc.button_pressed:
 		current_customer.service_address = input_service_addr.text
 	else:
-		current_customer.service_address = "" # Leer = Identisch
+		current_customer.service_address = "" 
 	
+	# Kontakt 1 speichern
 	current_customer.contact = input_contact.text
 	current_customer.phone = input_phone.text
 	current_customer.email = input_email.text
 	
+	# Kontakt 2 speichern
 	current_customer.contact2_name = input_contact2.text
 	current_customer.contact2_phone = input_phone2.text
+	current_customer.contact2_email = input_email2.text
 	
 	current_customer.notes = input_notes.text
 	

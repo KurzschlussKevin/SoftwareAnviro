@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://employee_item_scene"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_emp"]
+content_margin_left = 10.0
+bg_color = Color(0.15, 0.15, 0.2, 1)
+border_width_left = 4
+border_color = Color(0, 0.96, 0.83, 1)
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+
+[node name="EmployeeItem" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 60)
+offset_right = 200.0
+offset_bottom = 60.0
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_emp")
+
+[node name="NameLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Max Mustermann"
+vertical_alignment = 1
