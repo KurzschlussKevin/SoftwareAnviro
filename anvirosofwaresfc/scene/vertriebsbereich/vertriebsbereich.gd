@@ -1,169 +1,138 @@
 extends Control
 
-@onready var blur_layer = $BlurLayer
+# --- UI REFERENZEN (Links: Kunde & Ansprechpartner) ---
+@onready var input_firma = $MainMargin/HBox/LeftCol/KundenPanel/M/Scroll/VBox/Firma
+@onready var input_kundennr = $MainMargin/HBox/LeftCol/KundenPanel/M/Scroll/VBox/Kundennr
+@onready var input_strasse = $MainMargin/HBox/LeftCol/KundenPanel/M/Scroll/VBox/Strasse
+@onready var input_plz = $MainMargin/HBox/LeftCol/KundenPanel/M/Scroll/VBox/RowCity/PLZ
+@onready var input_stadt = $MainMargin/HBox/LeftCol/KundenPanel/M/Scroll/VBox/RowCity/Stadt
 
-# --- ALTE ANSICHT (HBox mit LeftCol/RightCol) ---
-@onready var main_view_container = $HBox
-@onready var scroll_container_table = $HBox/RightCol/PositionsPanel/M/VBox/ScrollContainer
-@onready var header_spacer = $HBox/RightCol/PositionsPanel/M/VBox/HeaderRow/HBox/ScrollbarSpacer
-@onready var check_work_loc = $HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/CheckWorkLoc
-@onready var check_ap2 = $HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/CheckAP2
-@onready var container_work_loc = $HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/ContainerWorkLoc
-@onready var container_ap2 = $HBox/LeftCol/KundenPanel/M/ScrollContainer/VBox/ContainerAP2
-@onready var btn_report_general = $HBox/LeftCol/ReportPanel/M/VBox/BtnReportGeneral
-@onready var btn_report_travel = $HBox/LeftCol/ReportPanel/M/VBox/BtnReportTravel
-@onready var btn_report_combined = $HBox/LeftCol/ReportPanel/M/VBox/BtnReportCombined
+# Leistungsort
+@onready var check_work_loc = $MainMargin/HBox/LeftCol/KundenPanel/M/Scroll/VBox/CheckWorkLoc
+@onready var container_work_loc = $MainMargin/HBox/LeftCol/KundenPanel/M/Scroll/VBox/ContainerWorkLoc
 
-# --- MODAL 1: KUNDEN AUSWÄHLEN ---
-@onready var select_modal = $SelectCustomerModal
-@onready var btn_select_cancel = $SelectCustomerModal/Panel/M/VBox/HBoxButtons/CancelSelect
-@onready var btn_select_next = $SelectCustomerModal/Panel/M/VBox/HBoxButtons/NextBtn
-@onready var customer_option = $SelectCustomerModal/Panel/M/VBox/CustomerOption
+# 2. Ansprechpartner (Neu!)
+@onready var check_ap2 = $MainMargin/HBox/LeftCol/KundenPanel/M/Scroll/VBox/CheckAP2
+@onready var container_ap2 = $MainMargin/HBox/LeftCol/KundenPanel/M/Scroll/VBox/ContainerAP2
 
-# --- MODAL 2: ANGEBOT ERSTELLEN (Nur Positionen) ---
-@onready var create_modal = $CreateOfferModal
-@onready var btn_create_cancel = $CreateOfferModal/Panel/M/VBox/HBoxButtons/CancelCreate
-@onready var btn_create_save = $CreateOfferModal/Panel/M/VBox/HBoxButtons/SaveCreate
-@onready var subtitle_label = $CreateOfferModal/Panel/M/VBox/Subtitle
-@onready var positions_list = $CreateOfferModal/Panel/M/VBox/ScrollContainer/PositionsList
-@onready var pos_template = $CreateOfferModal/Panel/M/VBox/ScrollContainer/PositionsList/PositionTemplate
-@onready var btn_add_pos = $CreateOfferModal/Panel/M/VBox/AddPosBtn
+# --- UI REFERENZEN (Links: Berichtstyp - Neu!) ---
+@onready var btn_report_general = $MainMargin/HBox/LeftCol/ReportPanel/M/VBox/BtnGeneral
+@onready var btn_report_travel = $MainMargin/HBox/LeftCol/ReportPanel/M/VBox/BtnTravel
+@onready var btn_report_combined = $MainMargin/HBox/LeftCol/ReportPanel/M/VBox/BtnCombined
 
-# --- TEMPLATE LOGIK IM MODAL ---
-@onready var template_option_modal = $CreateOfferModal/Panel/M/VBox/TemplateHBox/TemplateOption
-@onready var btn_load_template_modal = $CreateOfferModal/Panel/M/VBox/TemplateHBox/LoadTemplateBtn
+# --- UI REFERENZEN (Rechts: Positionen & Templates) ---
+@onready var template_option = $MainMargin/HBox/RightCol/TemplatePanel/M/HBox/TemplateOption
+@onready var btn_load_template = $MainMargin/HBox/RightCol/TemplatePanel/M/HBox/LoadTemplateBtn
+
+@onready var positions_list = $MainMargin/HBox/RightCol/PositionsPanel/M/VBox/Scroll/PositionsList
+@onready var position_template_row = $MainMargin/HBox/RightCol/PositionsPanel/M/VBox/Scroll/PositionsList/PositionTemplate
+
+@onready var btn_add_pos = $MainMargin/HBox/RightCol/ButtonsRow/AddPosBtn
+@onready var btn_save_all = $MainMargin/HBox/RightCol/ButtonsRow/SaveAllBtn
+@onready var total_sum_label = $MainMargin/HBox/RightCol/PositionsPanel/M/VBox/HBoxSum/TotalSumLabel
+
+# Variable für Berichtstyp
+var selected_report_type = "general" # general, travel, combined
+
+# Vorlagen
+var templates = {
+	1: [{"bez": "Prüfung DGUV V3", "menge": 50, "preis": 4.50}, {"bez": "Anfahrt", "menge": 1, "preis": 45.00}],
+	2: [{"bez": "Anlagenprüfung", "menge": 1, "preis": 120.00}],
+	3: [{"bez": "Maschinenprüfung", "menge": 1, "preis": 180.00}]
+}
 
 func _ready():
-	# Initialzustand: Alte Ansicht sichtbar, Modals unsichtbar
-	blur_layer.visible = false
-	select_modal.visible = false
-	create_modal.visible = false
-	main_view_container.visible = true
-	
-	# Alte Logik (Scrollbar fix)
-	await get_tree().process_frame
-	if is_instance_valid(scroll_container_table):
-		var width = scroll_container_table.get_v_scroll_bar().size.x
-		header_spacer.custom_minimum_size.x = width if width > 0 else 12.0
-	
-	# Alte Logik (Toggle Container)
-	check_work_loc.toggled.connect(func(t): container_work_loc.visible = t)
-	check_ap2.toggled.connect(func(t): container_ap2.visible = t)
+	# 1. Startzustand UI
 	container_work_loc.visible = false
 	container_ap2.visible = false
+	position_template_row.visible = false
 	
-	# --- BERICHTE BUTTONS (Wiederhergestellt) ---
-	if btn_report_general: 
-		btn_report_general.pressed.connect(func(): print("Erstelle Montagebericht (Typen)..."))
-	if btn_report_travel: 
-		btn_report_travel.pressed.connect(func(): print("Erstelle Reisebericht (Übernachtung)..."))
-	if btn_report_combined: 
-		btn_report_combined.pressed.connect(func(): print("Erstelle Kombi-Bericht..."))
+	# 2. Signale verbinden
+	check_work_loc.toggled.connect(_on_work_loc_toggled)
+	check_ap2.toggled.connect(_on_ap2_toggled)
 	
-	# --- MODALS VERBINDEN ---
+	# Berichtstyp Buttons
+	btn_report_general.pressed.connect(func(): _set_report_type("general"))
+	btn_report_travel.pressed.connect(func(): _set_report_type("travel"))
+	btn_report_combined.pressed.connect(func(): _set_report_type("combined"))
 	
-	# Modal 1 Buttons
-	btn_select_cancel.pressed.connect(close_all_modals)
-	btn_select_next.pressed.connect(_on_next_pressed)
+	# Restliche Buttons
+	btn_add_pos.pressed.connect(func(): _add_new_position())
+	btn_load_template.pressed.connect(_on_load_template_pressed)
+	btn_save_all.pressed.connect(_on_save_all_pressed)
 	
-	# Modal 2 Buttons
-	btn_create_cancel.pressed.connect(close_all_modals)
-	btn_create_save.pressed.connect(_on_save_offer_pressed)
-	btn_add_pos.pressed.connect(_on_add_pos_pressed)
-	
-	# Vorlage laden
-	btn_load_template_modal.pressed.connect(_on_load_template_modal_pressed)
+	# Erste Zeile einfügen
+	_add_new_position()
 
-func close_all_modals():
-	blur_layer.visible = false
-	select_modal.visible = false
-	create_modal.visible = false
-	# Alte Ansicht wieder anzeigen
-	main_view_container.visible = true
+func _on_work_loc_toggled(active):
+	container_work_loc.visible = active
 
-func _on_next_pressed():
-	# Prüfen ob Kunde gewählt wurde
-	if customer_option.selected == 0:
-		print("Bitte wähle einen Kunden aus!")
-		return
-		
-	var selected_customer_name = customer_option.get_item_text(customer_option.selected)
-	
-	# Modal 1 schließen, Modal 2 öffnen
-	select_modal.visible = false
-	create_modal.visible = true
-	
-	# Untertitel aktualisieren
-	subtitle_label.text = "für " + selected_customer_name
-	
-	# Animation für Modal 2
-	create_modal.scale = Vector2(0.9, 0.9)
-	var tween = create_tween()
-	tween.tween_property(create_modal, "scale", Vector2(1.0, 1.0), 0.1).set_trans(Tween.TRANS_CUBIC)
+func _on_ap2_toggled(active):
+	container_ap2.visible = active
 
-func _on_save_offer_pressed():
-	print("Neues Angebot gespeichert!")
-	close_all_modals()
+func _set_report_type(type):
+	selected_report_type = type
+	
+	# Visuelles Feedback (Radio-Button Verhalten)
+	btn_report_general.button_pressed = (type == "general")
+	btn_report_travel.button_pressed = (type == "travel")
+	btn_report_combined.button_pressed = (type == "combined")
+	
+	print("Berichtstyp gewählt: ", type)
 
-func _on_add_pos_pressed():
-	var new_row = pos_template.duplicate()
+# --- POSITIONS LOGIK ---
+func _add_new_position(data = null):
+	var new_row = position_template_row.duplicate()
 	new_row.visible = true
-	_clear_row(new_row)
-	positions_list.add_child(new_row)
-
-func _clear_row(row):
-	for child in row.get_children():
-		if child is LineEdit:
-			child.text = ""
-			if child.name == "Menge": child.text = "1"
-			if child.name == "Preis" or child.name == "Gesamt": child.text = "0.00"
-			if child.name == "Pos": child.text = str(positions_list.get_child_count() + 1)
-
-# --- VORLAGE IM MODAL LADEN ---
-func _on_load_template_modal_pressed():
-	var selected_id = template_option_modal.selected
-	print("Lade Vorlage ID: ", selected_id)
 	
-	# 1. Bestehende (sichtbare) Zeilen löschen, außer Template
+	# Laufende Nummer
+	var current_count = 0
 	for child in positions_list.get_children():
-		if child != pos_template:
-			child.queue_free()
+		if child.visible: current_count += 1
+	new_row.get_node("Pos").text = str(current_count + 1)
 	
-	# 2. Neue Zeilen basierend auf Auswahl einfügen
-	if selected_id == 1: # Website Standard
-		_add_pos_row("Webdesign Grundpaket", "1", "1500.00")
-		_add_pos_row("Hosting Einrichtung", "1", "250.00")
-	elif selected_id == 2: # SEO
-		_add_pos_row("SEO Analyse", "1", "800.00")
-		_add_pos_row("Content Optimierung", "10", "120.00")
+	# Daten füllen
+	if data:
+		new_row.get_node("Bez").text = data.get("bez", "")
+		new_row.get_node("Menge").text = str(data.get("menge", 1))
+		new_row.get_node("Preis").text = "%.2f" % data.get("preis", 0.0)
 	else:
-		print("Keine Vorlage gewählt")
-
-func _add_pos_row(bez, menge, preis):
-	var new_row = pos_template.duplicate()
-	new_row.visible = true
+		new_row.get_node("Menge").text = "1"
+		new_row.get_node("Preis").text = "0.00"
+	
+	# Signale verbinden
+	new_row.get_node("Menge").text_changed.connect(func(t): _recalc_row(new_row))
+	new_row.get_node("Preis").text_changed.connect(func(t): _recalc_row(new_row))
+	
 	positions_list.add_child(new_row)
-	
-	# Werte setzen
-	new_row.get_node("Bez").text = bez
-	new_row.get_node("Menge").text = menge
-	new_row.get_node("Preis").text = preis
-	# Gesamt berechnen (simuliert)
-	var gesamt = float(menge) * float(preis)
-	new_row.get_node("Gesamt").text = "%.2f" % gesamt
-	new_row.get_node("Pos").text = str(positions_list.get_child_count() - 1) # -1 wegen hidden template
+	_recalc_row(new_row)
 
-# --- WIRD VOM DASHBOARD AUFGERUFEN ---
-func start_new_offer():
-	print("Vertrieb: Starte neues Angebot...")
-	main_view_container.visible = false
-	blur_layer.visible = true
-	select_modal.visible = true
-	create_modal.visible = false
-	
-	if customer_option:
-		customer_option.selected = 0
-	
-	select_modal.scale = Vector2(0.9, 0.9)
-	var tween = create_tween()
-	tween.tween_property(select_modal, "scale", Vector2(1.0, 1.0), 0.1).set_trans(Tween.TRANS_CUBIC)
+func _recalc_row(row):
+	var m = float(row.get_node("Menge").text.replace(",", "."))
+	var p = float(row.get_node("Preis").text.replace(",", "."))
+	row.get_node("Gesamt").text = "%.2f €" % (m * p)
+	_recalc_total()
+
+func _recalc_total():
+	var total = 0.0
+	for child in positions_list.get_children():
+		if !child.visible or child.is_queued_for_deletion(): continue
+		var val = child.get_node("Gesamt").text.replace(" €", "").replace(",", ".")
+		total += float(val)
+	total_sum_label.text = "%.2f €" % total
+
+func _on_load_template_pressed():
+	var id = template_option.get_selected_id()
+	if templates.has(id):
+		# Alles leeren außer Template
+		for child in positions_list.get_children():
+			if child != position_template_row: child.queue_free()
+		# Neu füllen
+		for item in templates[id]:
+			_add_new_position(item)
+
+func _on_save_all_pressed():
+	print("Speichere Angebot...")
+	print("Firma: ", input_firma.text)
+	print("Berichtstyp: ", selected_report_type)
+	print("Summe: ", total_sum_label.text)

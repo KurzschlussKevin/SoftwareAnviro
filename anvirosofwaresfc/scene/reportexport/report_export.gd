@@ -1,66 +1,133 @@
 extends Control
 
-# Referenzen UI Settings
-@onready var option_customer = $VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet/OptionCustomer
-@onready var spin_kw = $VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet/HBoxTime/SpinKW
-@onready var spin_year = $VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet/HBoxTime/SpinYear
-@onready var btn_export = $VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet/BtnExport
-@onready var btn_email = $VBox/HBoxContent/MarginLeft/SettingsPanel/M/VBoxSet/BtnEmail
+# Simulierte Dokumenten-Datenbank
+var documents = [
+	{"id": 1, "name": "Prüfprotokoll_Anlage_3.pdf", "date": "18.12.2025", "type": "protocol", "size": "1.2 MB", "customer": "Bäckerei Müller"},
+	{"id": 2, "name": "Rechnung_RE-2025-004.pdf", "date": "15.12.2025", "type": "invoice", "size": "0.4 MB", "customer": "Industrie AG"},
+	{"id": 3, "name": "Montagebericht_KW50.pdf", "date": "12.12.2025", "type": "report", "size": "2.1 MB", "customer": "Kfz Schrauber"},
+	{"id": 4, "name": "Mängelliste_Halle1.pdf", "date": "01.12.2025", "type": "protocol", "size": "0.8 MB", "customer": "Industrie AG"}
+]
 
-# Referenzen UI Preview (Das "Papier")
-@onready var prev_val_customer = $VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/GridInfo/ValCustomer
-@onready var prev_val_time = $VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/GridInfo/ValTime
-@onready var prev_list = $VBox/HBoxContent/MarginRight/PreviewPanel/M/VBoxDoc/PanelTable/Margin/LabelPlaceholder
+@onready var doc_list = %DocList
+@onready var filter_input = %FilterInput
+@onready var option_filter = %OptionFilter
+@onready var btn_upload = %BtnUpload
+@onready var file_dialog = %FileDialog
+
+# Details Bereich
+@onready var details_box = %DetailsBox
+@onready var empty_state = %EmptyState
+@onready var val_name = %ValName
+@onready var val_date = %ValDate
+@onready var val_size = %ValSize
+@onready var progress_bar = %ProgressBar
+
+# Buttons im Detail Bereich
+@onready var btn_open = $MainLayout/Inspector/M/DetailsBox/BtnOpen
+@onready var btn_print = $MainLayout/Inspector/M/DetailsBox/BtnPrint
+@onready var btn_mail = $MainLayout/Inspector/M/DetailsBox/BtnMail
+
+var selected_doc = null
 
 func _ready():
-	# Standard Datum setzen
-	var time = Time.get_datetime_dict_from_system()
-	spin_year.value = time.year
-	# KW grob schätzen (für Demo reicht das)
-	spin_kw.value = 50 
+	_refresh_list()
 	
 	# Signale verbinden
-	option_customer.item_selected.connect(_on_settings_changed)
-	spin_kw.value_changed.connect(func(v): _on_settings_changed(0))
-	spin_year.value_changed.connect(func(v): _on_settings_changed(0))
+	filter_input.text_changed.connect(func(t): _refresh_list())
+	option_filter.item_selected.connect(func(i): _refresh_list())
+	btn_upload.pressed.connect(_on_upload_pressed)
+	file_dialog.file_selected.connect(_on_file_selected)
 	
-	btn_export.pressed.connect(_on_export_pressed)
-	btn_email.pressed.connect(_on_email_pressed)
-	
-	# Initial Update
-	_on_settings_changed(0)
+	# Action Buttons
+	btn_print.pressed.connect(_simulate_action.bind("Drucken..."))
+	btn_mail.pressed.connect(_simulate_action.bind("Sende E-Mail..."))
+	btn_open.pressed.connect(func(): OS.shell_open("https://google.com")) # Dummy Link
 
-func _on_settings_changed(_idx):
-	# Update Preview Texte
-	var cust_name = option_customer.get_item_text(option_customer.selected)
-	if option_customer.selected == 0:
-		cust_name = "---"
-		prev_list.text = "Bitte Kunde wählen..."
-	else:
-		# Hier würden wir echte Daten laden. Demo:
-		prev_list.text = "- 10x Filterwechsel\n- 5x Reinigung\n- 2h Arbeitszeit (Max M.)"
+func _refresh_list():
+	# Liste leeren
+	for child in doc_list.get_children():
+		child.queue_free()
 	
-	prev_val_customer.text = cust_name
-	prev_val_time.text = "KW %d / %d" % [spin_kw.value, spin_year.value]
+	var filter_txt = filter_input.text.to_lower()
+	var type_filter = option_filter.get_selected_id() # 0=All, 1=Protocol, 2=Invoice
 	
-	# Email Button Text anpassen
-	if option_customer.selected > 0:
-		btn_email.text = "An kontakt@musterfirma.de senden"
-	else:
-		btn_email.text = "Per E-Mail senden"
+	for doc in documents:
+		# Suche
+		if filter_txt != "" and not filter_txt in doc.name.to_lower() and not filter_txt in doc.customer.to_lower():
+			continue
+			
+		# Typ Filter
+		if type_filter == 1 and doc.type != "protocol": continue
+		if type_filter == 2 and doc.type != "invoice": continue
+		
+		_create_doc_item(doc)
 
-func _on_export_pressed():
-	# Demo Export
-	btn_export.text = "Exportiere..."
-	await get_tree().create_timer(1.0).timeout
-	btn_export.text = "Erfolgreich gespeichert! ✓"
-	await get_tree().create_timer(2.0).timeout
-	btn_export.text = "HERUNTERLADEN"
+func _create_doc_item(doc):
+	var btn = Button.new()
+	btn.custom_minimum_size.y = 60
+	
+	# Style
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.15, 0.15, 0.2)
+	style.border_width_left = 4
+	style.content_margin_left = 15
+	
+	if doc.type == "invoice": style.border_color = Color(0.8, 0.6, 0.2) # Orange
+	else: style.border_color = Color(0.3, 0.5, 0.9) # Blau
+	
+	btn.add_theme_stylebox_override("normal", style)
+	btn.add_theme_stylebox_override("hover", style.duplicate()) # Todo: Heller machen
+	
+	# Text Layout
+	btn.text = " " + doc.name + " (" + doc.customer + ") - " + doc.date
+	btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	
+	# Klick Event
+	btn.pressed.connect(func(): _select_document(doc))
+	
+	doc_list.add_child(btn)
 
-func _on_email_pressed():
-	if option_customer.selected == 0: return
-	btn_email.text = "Sende..."
-	await get_tree().create_timer(1.0).timeout
-	btn_email.text = "Gesendet! ✓"
-	await get_tree().create_timer(2.0).timeout
-	_on_settings_changed(0)
+func _select_document(doc):
+	selected_doc = doc
+	empty_state.visible = false
+	details_box.visible = true
+	
+	val_name.text = doc.name
+	val_date.text = doc.date
+	val_size.text = doc.size
+
+func _on_upload_pressed():
+	file_dialog.visible = true
+
+func _on_file_selected(path):
+	# Simuliert den Upload
+	var file_name = path.get_file()
+	var new_doc = {
+		"id": randi(),
+		"name": file_name,
+		"date": Time.get_date_string_from_system(),
+		"type": "protocol",
+		"size": "Unknown",
+		"customer": "Upload"
+	}
+	documents.push_front(new_doc)
+	_refresh_list()
+	_select_document(new_doc)
+
+func _simulate_action(action_name):
+	if progress_bar.visible: return
+	
+	btn_print.disabled = true
+	btn_mail.disabled = true
+	progress_bar.visible = true
+	progress_bar.value = 0
+	
+	# Fake Ladebalken
+	var tween = create_tween()
+	tween.tween_property(progress_bar, "value", 100, 1.5)
+	await tween.finished
+	
+	progress_bar.visible = false
+	btn_print.disabled = false
+	btn_mail.disabled = false
+	print(action_name + " abgeschlossen!")

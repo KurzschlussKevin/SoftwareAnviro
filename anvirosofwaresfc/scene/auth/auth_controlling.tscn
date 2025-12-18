@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://52r5nsr6cu5r"]
+[gd_scene load_steps=12 format=3 uid="uid://52r5nsr6cu5r"]
 
+[ext_resource type="Script" uid="uid://igctcekvfcvi" path="res://scene/auth/auth_controlling.gd" id="1_j7wyv"]
 [ext_resource type="Texture2D" uid="uid://c20dfha2jb4q3" path="res://icon.svg" id="1_logo"]
 
 [sub_resource type="Environment" id="Environment_glow"]
@@ -99,27 +100,18 @@ shadow_size = 20
 
 [node name="AuthControlling" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_j7wyv")
+metadata/_edit_group_ = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_glow")
-
-[node name="BackgroundVibe" parent="."]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-modulate = Color(0.6, 0.6, 0.6, 1)
-script = null
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1

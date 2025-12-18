@@ -1,196 +1,350 @@
 extends Control
 
-# Referenzen auf die Container im Szenenbaum
-@onready var scroll_emp = $VBox/PlanContainer/LeftColEmployees/ScrollEmp
-@onready var emp_list_container = $VBox/PlanContainer/LeftColEmployees/ScrollEmp/EmpList
-@onready var scroll_time = $VBox/PlanContainer/RightColTimeline/ScrollTime
-@onready var header_days_container = $VBox/PlanContainer/RightColTimeline/HeaderDays
-@onready var grid_container = $VBox/PlanContainer/RightColTimeline/ScrollTime/Grid
+# --- DATEN ---
+var technicians = [
+	{"id": 1, "name": "Max Mustermann", "role": "Meister"},
+	{"id": 2, "name": "Lisa Prüfer", "role": "Technikerin"},
+	{"id": 3, "name": "Tom Azubi", "role": "Lehrling"}
+]
 
-# Timer für die 3-Sekunden-Verzögerung
-var hover_timer: Timer
-# Referenz auf das Popup-Fenster (wird im Code erstellt)
-var info_popup: PanelContainer
-var popup_label: Label
-# Speichert temporär die Daten des Blocks, über dem die Maus schwebt
-var current_hover_data = {}
+# Offene Jobs (Pool)
+var jobs_pool = [
+	{"id": "J1", "cust": "Müller GmbH", "task": "Montage Anlage X", "dur": 1, "col": Color(0.2, 0.4, 0.9, 0.8)},
+	{"id": "J2", "cust": "Industrie AG", "task": "Wartung", "dur": 2, "col": Color(0.8, 0.5, 0.2, 0.8)},
+	{"id": "J3", "cust": "Kfz Meier", "task": "Hebebühne", "dur": 1, "col": Color(0.2, 0.7, 0.4, 0.8)},
+	{"id": "J4", "cust": "Büro West", "task": "E-Check", "dur": 3, "col": Color(0.6, 0.3, 0.6, 0.8)}
+]
+
+# Assignments: Key="TechID_DayIdx", Value=JobData
+var assignments = {}
+
+var days = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+
+# --- UI REFERENZEN ---
+# Diese Pfade passen exakt zu deinem "alten" Design (VBox/PlanContainer/...)
+@onready var emp_list = $VBox/PlanContainer/LeftColEmployees/ScrollEmp/EmpList
+@onready var header_days = $VBox/PlanContainer/RightColTimeline/HeaderDays
+@onready var grid = $VBox/PlanContainer/RightColTimeline/ScrollTime/Grid
+@onready var scroll_time = $VBox/PlanContainer/RightColTimeline/ScrollTime
+@onready var scroll_emp = $VBox/PlanContainer/LeftColEmployees/ScrollEmp
 
 func _ready():
-	# 1. Synchronisiertes Scrollen (wie gehabt)
-	scroll_time.get_v_scroll_bar().value_changed.connect(_on_scroll_time_changed)
-	scroll_emp.get_v_scroll_bar().value_changed.connect(_on_scroll_emp_changed)
-	scroll_emp.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
+	# Sync Scrolling: Wenn man rechts scrollt, scrollt links mit
+	if scroll_time and scroll_emp:
+		scroll_time.get_v_scroll_bar().value_changed.connect(func(val): scroll_emp.scroll_vertical = val)
 	
-	# 2. Setup für das Hover-System
-	_setup_hover_system()
+	_build_header()
+	_refresh_ui()
+
+func _build_header():
+	# Alte Header löschen
+	for c in header_days.get_children(): c.queue_free()
 	
-	# 3. Wochenansicht generieren (Dummy-Daten)
-	# Hier löschen wir erst die Platzhalter aus dem Editor, damit wir sauber neu bauen können
-	_clear_placeholders()
-	_generate_week_view()
-
-# --- Synchronisation ---
-func _on_scroll_time_changed(value):
-	scroll_emp.set_v_scroll(int(value))
-
-func _on_scroll_emp_changed(value):
-	scroll_time.set_v_scroll(int(value))
-
-# --- Setup & Hilfsfunktionen ---
-
-func _clear_placeholders():
-	# Löscht die Dummy-Elemente, die du im Editor zum Designen erstellt hast
-	for child in header_days_container.get_children():
-		child.queue_free()
-	for child in emp_list_container.get_children():
-		child.queue_free()
-	for child in grid_container.get_children():
-		child.queue_free()
-
-func _setup_hover_system():
-	# Timer erstellen
-	hover_timer = Timer.new()
-	hover_timer.wait_time = 3.0 # 3 Sekunden Wartezeit
-	hover_timer.one_shot = true
-	hover_timer.timeout.connect(_on_hover_timeout)
-	add_child(hover_timer)
-	
-	# Popup erstellen (Ein einfaches Panel, das über allem schwebt)
-	info_popup = PanelContainer.new()
-	info_popup.visible = false
-	info_popup.z_index = 100 # Sicherstellen, dass es ganz oben liegt
-	# Ein bisschen Styling für das Popup (optional)
-	var style = StyleBoxFlat.new()
-	style.bg_color = Color(0.1, 0.1, 0.15, 0.95)
-	style.border_color = Color(0.0, 0.8, 0.5) # Anviro Grün ;)
-	style.set_border_width_all(2)
-	style.content_margin_left = 10
-	style.content_margin_top = 10
-	style.content_margin_right = 10
-	style.content_margin_bottom = 10
-	info_popup.add_theme_stylebox_override("panel", style)
-	
-	popup_label = Label.new()
-	popup_label.text = "Lade Daten..."
-	info_popup.add_child(popup_label)
-	add_child(info_popup)
-
-func _generate_week_view():
-	# Definieren wir die Woche (Mo-So)
-	var days = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
-	
-	# 1. Header erstellen (Wochentage)
-	for day in days:
-		var panel = Panel.new()
-		panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL # Wichtig: Verteilt Platz gleichmäßig
-		panel.custom_minimum_size.y = 50
-		# Optional: StyleBox zuweisen, damit es aussieht wie deine Vorlage
+	# Neuen Header bauen
+	for d in days:
+		var p = Panel.new()
+		p.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		p.custom_minimum_size.y = 50
 		
-		var lbl = Label.new()
-		lbl.text = day
-		lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
+		var style = StyleBoxFlat.new()
+		style.bg_color = Color(0.1, 0.1, 0.15, 0.8)
+		style.border_width_bottom = 2
+		style.border_color = Color(0.2, 0.4, 0.8, 1)
+		style.border_width_right = 1 # Trennstrich
+		style.border_color = Color(1, 1, 1, 0.1)
+		p.add_theme_stylebox_override("panel", style)
 		
-		panel.add_child(lbl)
-		header_days_container.add_child(panel)
+		var l = Label.new()
+		l.text = d
+		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		l.set_anchors_preset(Control.PRESET_FULL_RECT)
+		
+		p.add_child(l)
+		header_days.add_child(p)
 
-	# 2. Mitarbeiter und Zeilen erstellen (Beispiel: 5 Mitarbeiter)
-	for i in range(5):
-		var emp_name = "Mitarbeiter " + str(i + 1)
+func _refresh_ui():
+	# 1. Linke Spalte: Pool & Mitarbeiter
+	for c in emp_list.get_children(): c.queue_free()
+	
+	# -- POOL BEREICH --
+	var pool_header = Label.new()
+	pool_header.text = "--- POOL ---"
+	pool_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	pool_header.add_theme_color_override("font_color", Color(0.9, 0.6, 0.2))
+	emp_list.add_child(pool_header)
+	
+	for job in jobs_pool:
+		var ticket = DraggablePoolItem.new(job)
+		ticket.drag_successful.connect(_on_job_assigned)
+		emp_list.add_child(ticket)
 		
-		# A) Linke Spalte: Mitarbeiter-Karte
-		var emp_card = PanelContainer.new()
-		emp_card.custom_minimum_size.y = 80 # Feste Höhe pro Zeile
-		var emp_lbl = Label.new()
-		emp_lbl.text = "  " + emp_name
-		emp_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		emp_card.add_child(emp_lbl)
-		emp_list_container.add_child(emp_card)
+	var sep = HSeparator.new()
+	emp_list.add_child(sep)
+	
+	# -- MITARBEITER BEREICH --
+	for tech in technicians:
+		var p = PanelContainer.new()
+		p.custom_minimum_size.y = 60
 		
-		# B) Rechte Spalte: Die Zeitleiste (Row)
+		var style = StyleBoxFlat.new()
+		style.bg_color = Color(0.15, 0.15, 0.2, 1)
+		style.border_width_left = 4
+		style.border_color = Color(0, 0.96, 0.83, 1)
+		style.content_margin_left = 10
+		style.corner_radius_top_right = 6
+		style.corner_radius_bottom_right = 6
+		p.add_theme_stylebox_override("panel", style)
+		
+		var l = Label.new()
+		l.text = tech.name
+		l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		p.add_child(l)
+		
+		emp_list.add_child(p)
+
+	# 2. Rechte Spalte: Timeline Grid
+	for c in grid.get_children(): c.queue_free()
+	
+	# Dummy-Zeilen für den Pool-Bereich (damit Tech 1 auf gleicher Höhe startet)
+	var pool_offset_count = jobs_pool.size() + 2
+	for i in range(pool_offset_count): 
+		var dummy = Control.new()
+		dummy.custom_minimum_size.y = 60
+		grid.add_child(dummy)
+	
+	# Grid Zeilen pro Techniker
+	for tech in technicians:
 		var row = HBoxContainer.new()
-		row.custom_minimum_size.y = 80
-		row.add_theme_constant_override("separation", 0) # Keine Lücken zwischen Tagen
+		row.custom_minimum_size.y = 60
+		row.add_theme_constant_override("separation", 0)
 		
-		# Für jeden Tag der Woche eine "Zelle" erstellen
-		for d in range(7):
-			var day_slot = Panel.new()
-			day_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL # Gleichmäßig verteilen
-			day_slot.name = "Slot_" + str(d)
+		for i in range(days.size()):
+			var slot = TimelineSlot.new(tech.id, i)
+			slot.data_dropped_signal.connect(_on_job_assigned)
+			slot.resize_signal.connect(_on_job_resized)
 			
-			# HIER FÜGEN WIR TESTWEISE AUFGABEN EIN
-			# Sagen wir, an Tag 2 (Mittwoch) und Tag 4 (Freitag) gibt es Aufgaben
-			if (i == 0 and d == 2) or (i == 1 and d == 4): 
-				_add_task_to_slot(day_slot, "Kunde Müller", 12.5) # 12.5 Stunden gearbeitet
+			var key = str(tech.id) + "_" + str(i)
+			var job = assignments.get(key, null)
 			
-			row.add_child(day_slot)
+			if job:
+				# Prüfen ob dies der Start-Tag des Jobs ist
+				var start_day = -1
+				for d in range(days.size()):
+					if assignments.get(str(tech.id) + "_" + str(d)) == job:
+						start_day = d
+						break
+				
+				if i == start_day:
+					slot.set_content(job, true) # Master (Start)
+				else:
+					slot.set_content(job, false) # Slave (Verlängerung)
 			
-		grid_container.add_child(row)
-
-func _add_task_to_slot(parent_slot: Control, kunden_name: String, stunden: float):
-	# Erstellt den visuellen Block für die Aufgabe
-	var task_panel = PanelContainer.new()
-	task_panel.name = "TaskBlock"
-	
-	# Damit der Block etwas Abstand zum Rand hat (Margin)
-	var margin = MarginContainer.new()
-	margin.add_theme_constant_override("margin_left", 4)
-	margin.add_theme_constant_override("margin_right", 4)
-	margin.add_theme_constant_override("margin_top", 4)
-	margin.add_theme_constant_override("margin_bottom", 4)
-	
-	# Styling für den Block (Blau)
-	var style = StyleBoxFlat.new()
-	style.bg_color = Color(0.2, 0.4, 0.9, 0.8)
-	style.set_corner_radius_all(6)
-	task_panel.add_theme_stylebox_override("panel", style)
-	
-	var lbl = Label.new()
-	lbl.text = kunden_name
-	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	lbl.clip_text = true # Text abschneiden wenn zu lang
-	
-	task_panel.add_child(lbl)
-	margin.add_child(task_panel)
-	
-	# Layout im Slot (füllt den ganzen Tag aus für dieses Beispiel)
-	margin.set_anchors_preset(Control.PRESET_FULL_RECT)
-	parent_slot.add_child(margin)
-	
-	# --- SIGNAL VERBINDUNG FÜR HOVER ---
-	# Wir speichern die Infos direkt im Node (oder in einem Dictionary)
-	task_panel.set_meta("info_data", {"kunde": kunden_name, "stunden": stunden})
-	
-	# Maus betritt Block
-	task_panel.mouse_entered.connect(func(): _on_task_mouse_entered(task_panel))
-	# Maus verlässt Block
-	task_panel.mouse_exited.connect(_on_task_mouse_exited)
-
-# --- HOVER LOGIK ---
-
-func _on_task_mouse_entered(task_node):
-	# Daten holen
-	current_hover_data = task_node.get_meta("info_data")
-	# Timer starten
-	hover_timer.start()
-
-func _on_task_mouse_exited():
-	# Timer abbrechen, wenn man rausgeht bevor die 3 Sek. um sind
-	hover_timer.stop()
-	# Popup verstecken
-	info_popup.visible = false
-
-func _on_hover_timeout():
-	# Diese Funktion wird nach 3 Sekunden aufgerufen
-	if current_hover_data.is_empty():
-		return
+			row.add_child(slot)
 		
-	# Popup Text setzen
-	var txt = "Kunde: %s\nBereits gearbeitet: %s Std.\nStatus: In Arbeit" % [current_hover_data.get("kunde"), str(current_hover_data.get("stunden"))]
-	popup_label.text = txt
+		grid.add_child(row)
+
+# --- LOGIK ---
+
+func _on_job_assigned(job_data, tech_id, day_index):
+	# Aus Pool entfernen
+	if jobs_pool.has(job_data): jobs_pool.erase(job_data)
+	# Alte Position entfernen (falls verschoben)
+	_remove_assignment(job_data)
 	
-	# Popup Position setzen (neben der Maus)
-	info_popup.global_position = get_global_mouse_position() + Vector2(15, 15)
-	info_popup.visible = true
+	# Neue Zuweisung schreiben
+	for i in range(job_data.dur):
+		var t = day_index + i
+		if t < days.size():
+			assignments[str(tech_id) + "_" + str(t)] = job_data
+			
+	_refresh_ui()
+
+func _on_job_resized(job_data, tech_id, new_end_day):
+	# Start suchen
+	var start_day = -1
+	for d in range(days.size()):
+		if assignments.get(str(tech_id) + "_" + str(d)) == job_data:
+			start_day = d
+			break
+	
+	if start_day == -1: return
+	
+	# Neue Dauer berechnen
+	var new_dur = (new_end_day - start_day) + 1
+	if new_dur < 1: new_dur = 1
+	
+	job_data.dur = new_dur
+	
+	_remove_assignment(job_data)
+	for i in range(new_dur):
+		var t = start_day + i
+		if t < days.size():
+			assignments[str(tech_id) + "_" + str(t)] = job_data
+			
+	_refresh_ui()
+
+func _remove_assignment(job):
+	var keys = []
+	for k in assignments:
+		if assignments[k] == job: keys.append(k)
+	for k in keys: assignments.erase(k)
+
+
+# ==========================================
+# INTERNE KLASSEN (Design & DragDrop)
+# ==========================================
+
+# 1. Pool Item (Ticket links)
+class DraggablePoolItem extends PanelContainer:
+	var job
+	signal drag_successful(job, tech, day)
+	
+	func _init(j):
+		job = j
+		custom_minimum_size.y = 60
+		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		
+		var style = StyleBoxFlat.new()
+		style.bg_color = job.col
+		style.border_width_left = 4
+		style.border_color = Color(1,1,1,0.5)
+		style.corner_radius_top_right = 6
+		style.corner_radius_bottom_right = 6
+		add_theme_stylebox_override("panel", style)
+		
+		var l = Label.new()
+		l.text = job.cust + "\n(" + str(job.dur) + " Tage)"
+		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		add_child(l)
+
+	func _get_drag_data(at_position):
+		var p = Label.new()
+		p.text = job.cust
+		set_drag_preview(p)
+		return {"job": job, "source": "pool"}
+
+# 2. Timeline Slot (Tag im Raster)
+class TimelineSlot extends Panel:
+	var tech_id
+	var day_index
+	signal data_dropped_signal(job, tech, day)
+	signal resize_signal(job, tech, day_end)
+	
+	var style_normal = StyleBoxFlat.new()
+	var style_hover = StyleBoxFlat.new()
+	
+	var current_job = null
+	
+	func _init(tid, did):
+		tech_id = tid
+		day_index = did
+		size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		mouse_filter = Control.MOUSE_FILTER_PASS
+		
+		# Style mit STRICH RECHTS
+		style_normal.bg_color = Color(1, 1, 1, 0.03)
+		style_normal.border_width_right = 1
+		style_normal.border_color = Color(1, 1, 1, 0.1) # Sichtbarer Strich
+		style_normal.border_width_bottom = 1
+		style_normal.border_color = Color(1, 1, 1, 0.1)
+		
+		style_hover.bg_color = Color(1, 1, 1, 0.1)
+		style_hover.border_width_right = 1
+		style_hover.border_color = Color(1, 1, 1, 0.3)
+		
+		add_theme_stylebox_override("panel", style_normal)
+
+	func set_content(job, master):
+		current_job = job
+		
+		var task_panel = PanelContainer.new()
+		task_panel.set_anchors_preset(Control.PRESET_FULL_RECT)
+		task_panel.offset_top = 4
+		task_panel.offset_bottom = -4
+		task_panel.mouse_filter = Control.MOUSE_FILTER_PASS
+		
+		var style = StyleBoxFlat.new()
+		style.bg_color = job.col
+		style.border_width_top = 2
+		style.border_width_bottom = 2
+		style.border_color = Color(0.4, 0.6, 1, 1)
+		
+		if master:
+			style.border_width_left = 2
+			style.corner_radius_top_left = 6
+			style.corner_radius_bottom_left = 6
+			
+			var l = Label.new()
+			l.text = job.cust
+			l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+			l.add_theme_font_size_override("font_size", 11)
+			task_panel.add_child(l)
+		else:
+			style.border_width_left = 0
+			style.corner_radius_top_left = 0
+			style.corner_radius_bottom_left = 0
+			
+		style.border_width_right = 0
+		style.corner_radius_top_right = 0
+		style.corner_radius_bottom_right = 0
+		
+		# --- RESIZE GRIFF (Rechts) ---
+		var resize_handle = ResizeHandle.new(job)
+		resize_handle.custom_minimum_size.x = 15
+		resize_handle.set_anchors_preset(Control.PRESET_RIGHT_WIDE)
+		
+		task_panel.add_child(resize_handle)
+		add_child(task_panel)
+
+	# --- DRAG & DROP ---
+	func _get_drag_data(at_position):
+		if current_job:
+			var p = Label.new()
+			p.text = current_job.cust
+			set_drag_preview(p)
+			return {"job": current_job, "source": "timeline"}
+		return null
+
+	func _can_drop_data(at_position, data):
+		if data.has("resize_job"):
+			return true
+		add_theme_stylebox_override("panel", style_hover)
+		return data.has("job")
+
+	func _drop_data(at_position, data):
+		if data.has("resize_job"):
+			resize_signal.emit(data["resize_job"], tech_id, day_index)
+		elif data.has("job"):
+			data_dropped_signal.emit(data["job"], tech_id, day_index)
+		add_theme_stylebox_override("panel", style_normal)
+
+	func _notification(what):
+		if what == NOTIFICATION_DRAG_END:
+			if not get_rect().has_point(get_global_mouse_position()):
+				add_theme_stylebox_override("panel", style_normal)
+
+# HILFSKLASSE FÜR DEN GRIFF
+class ResizeHandle extends Control:
+	var job_ref
+	
+	func _init(job):
+		job_ref = job
+		# FIX: Wir nutzen direkt den Integer-Wert 10 (für H_SPLIT)
+		mouse_default_cursor_shape = 10 
+		mouse_filter = Control.MOUSE_FILTER_STOP
+	
+	func _get_drag_data(at_position):
+		var p = ColorRect.new()
+		p.custom_minimum_size = Vector2(4, 60)
+		p.color = Color(1, 1, 1, 0.5)
+		set_drag_preview(p)
+		
+		return {"resize_job": job_ref}
+	
+	func _draw():
+		var color = Color(0, 0, 0, 0.3)
+		draw_rect(Rect2(4, 10, 4, 40), color)
