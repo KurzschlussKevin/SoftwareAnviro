@@ -126,6 +126,15 @@ visible = false
 layout_mode = 2
 text = "+ Neuer Kunde"
 
+[node name="MarginBtnNew" type="MarginContainer" parent="HBox/Sidebar/VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_right = 15
+
+[node name="BtnNeuerKunde" type="Button" parent="HBox/Sidebar/VBox/MarginBtnNew"]
+layout_mode = 2
+text = "Neuen Kunden anlegen"
+
 [node name="Scroll" type="ScrollContainer" parent="HBox/Sidebar/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
