@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=14 format=3 uid="uid://ba2oumgovb5cf"]
+[gd_resource type="Theme" load_steps=19 format=3 uid="uid://ba2oumgovb5cf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Button_Hover"]
 content_margin_left = 20.0
@@ -34,6 +34,59 @@ content_margin_top = 10.0
 content_margin_right = 20.0
 content_margin_bottom = 10.0
 bg_color = Color(0.15, 0.4, 0.8, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Card_Light"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.95, 0.95, 0.98, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.1)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Btn_Danger_Hover"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.9, 0.35, 0.35, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Btn_Danger_Normal"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.8, 0.25, 0.25, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Btn_Danger_Pressed"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.7, 0.15, 0.15, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -142,6 +195,15 @@ corner_radius_bottom_left = 4
 shadow_color = Color(0, 0.96, 0.83, 0.3)
 shadow_size = 6
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Panel_Sidebar"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.08, 0.08, 0.1, 1)
+border_width_right = 1
+border_color = Color(0.25, 0.25, 0.3, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_TabPanel"]
 bg_color = Color(0.1, 0.1, 0.12, 0.4)
 border_width_left = 1
@@ -174,6 +236,12 @@ Button/colors/font_color = Color(1, 1, 1, 1)
 Button/styles/hover = SubResource("StyleBoxFlat_Button_Hover")
 Button/styles/normal = SubResource("StyleBoxFlat_Button_Normal")
 Button/styles/pressed = SubResource("StyleBoxFlat_Button_Pressed")
+CardPanel/base_type = &"PanelContainer"
+CardPanel/styles/panel = SubResource("StyleBoxFlat_Card_Light")
+DangerButton/base_type = &"Button"
+DangerButton/styles/hover = SubResource("StyleBoxFlat_Btn_Danger_Hover")
+DangerButton/styles/normal = SubResource("StyleBoxFlat_Btn_Danger_Normal")
+DangerButton/styles/pressed = SubResource("StyleBoxFlat_Btn_Danger_Pressed")
 DashboardActionBtn/base_type = &"Button"
 DashboardActionBtn/styles/hover = SubResource("StyleBoxFlat_ActionBtn_Hover")
 DashboardActionBtn/styles/normal = SubResource("StyleBoxFlat_ActionBtn_Normal")
@@ -185,8 +253,14 @@ LineEdit/colors/font_placeholder_color = Color(1, 1, 1, 0.3)
 LineEdit/styles/focus = SubResource("StyleBoxFlat_Input_Focus")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_Input_Normal")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_Panel_Card")
+PrimaryButton/base_type = &"Button"
+PrimaryButton/styles/hover = SubResource("StyleBoxFlat_Button_Hover")
+PrimaryButton/styles/normal = SubResource("StyleBoxFlat_Button_Normal")
+PrimaryButton/styles/pressed = SubResource("StyleBoxFlat_Button_Pressed")
 ProgressBar/styles/background = SubResource("StyleBoxFlat_Progress_Bg")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_Progress_Fill")
+SidebarPanel/base_type = &"PanelContainer"
+SidebarPanel/styles/panel = SubResource("StyleBoxFlat_Panel_Sidebar")
 TabContainer/styles/panel = SubResource("StyleBoxFlat_TabPanel")
 TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_Tab_Unselected")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_Tab_Selected")
