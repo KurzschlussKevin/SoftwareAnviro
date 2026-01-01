@@ -129,7 +129,13 @@ func get_overdue_customer_recall_count() -> int:
 func get_overdue_alerts() -> Array:
 	var alerts = []
 	for c in customers:
-		if c.status == "overdue": alerts.append("Prüfung fällig: " + c.name)
+		if c.status == "overdue": 
+			# WICHTIG: Hier ein Dictionary senden, keinen String!
+			alerts.append({
+				"title": "Prüfung fällig",
+				"text": c.name,
+				"color": Color(1, 0.3, 0.3) # Rot als Warnfarbe
+			})
 	return alerts
 
 # --- LISTEN ANSICHT ---
